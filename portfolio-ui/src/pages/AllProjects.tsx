@@ -1,33 +1,33 @@
 import Header from '../components/home/Header';
 import styles from '../styles/AllProjects.module.css';
-import { FaExternalLinkAlt } from 'react-icons/fa';
+// import { FaExternalLinkAlt } from 'react-icons/fa';
 
-type Project = {
-  title: string;
-  description: string;
-  image: string;
-  tech: string[];
-  link: string;
-};
+// type Project = {
+//   title: string;
+//   description: string;
+//   image: string;
+//   tech: string[];
+//   link: string;
+// };
 
-const projects: Project[] = [
-  {
-    title: 'Spherix Marketing Website',
-    description:
-      'A marketing website made for Spherix, built while I was working with Apex Technologies.',
-    image: '/images/spherix.png', // Update this path
-    tech: ['Astro', 'Spline'],
-    link: '#',
-  },
-  {
-    title: 'GGL Fitness App',
-    description:
-      'Fitness app packed with features like calorie counter, workouts, and measurement journal to help users achieve their fitness goals.',
-    image: '/images/ggl.png', // Update this path
-    tech: ['Next.js', 'Chakra UI'],
-    link: '#',
-  },
-];
+// const projects: Project[] = [
+//   {
+//     title: 'Spherix Marketing Website',
+//     description:
+//       'A marketing website made for Spherix, built while I was working with Apex Technologies.',
+//     image: '/images/spherix.png', // Update this path
+//     tech: ['Astro', 'Spline'],
+//     link: '#',
+//   },
+//   {
+//     title: 'GGL Fitness App',
+//     description:
+//       'Fitness app packed with features like calorie counter, workouts, and measurement journal to help users achieve their fitness goals.',
+//     image: '/images/ggl.png', // Update this path
+//     tech: ['Next.js', 'Chakra UI'],
+//     link: '#',
+//   },
+// ];
 
 export default function Projects() {
   return (
