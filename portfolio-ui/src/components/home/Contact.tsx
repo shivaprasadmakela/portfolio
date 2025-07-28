@@ -15,10 +15,10 @@ export default function Contact() {
 
     emailjs
       .sendForm(
-        'service_821ge3h',    // Your EmailJS service ID
-        'template_mqnnjzz',   // Your EmailJS template ID
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         form.current,
-        'imfRHb6VLep1kQfe0'   // Your EmailJS public key
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
       .then(
         () => {
@@ -40,7 +40,7 @@ export default function Contact() {
           I'm currently specializing in <span className={styles.highlight}>SDE -1</span>
           <br />
           Feel free to get in touch and talk more about your projects.
-        </p>  
+        </p>
 
         <div className={styles.buttonGroup}>
           <a href="https://linkedin.com/in/shiva-prasad-m" target="_blank" className={styles.button} rel="noreferrer">
@@ -57,7 +57,7 @@ export default function Contact() {
           </a>
         </div>
       </div>
-      
+
 
       {status === 'success' ? (
         <img src={success} alt="Success" className={styles.successImage} />
