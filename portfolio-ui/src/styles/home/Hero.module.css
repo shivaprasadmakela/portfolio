@@ -1,0 +1,238 @@
+.hero {
+  color: white;
+ 
+  margin: var(--primary-margin);
+}
+
+.mainHero{
+    padding: 6rem 1rem 3rem 1rem;
+ position: relative;
+}
+
+.pattern {
+  position: absolute;
+  top: 1rem;
+  left: -2rem;
+  width: 120px;
+  opacity: 0.15;
+}
+
+.greeting {
+  font-size: 2.1rem;
+  font-weight: 600;
+  color: var(--color-text-primary-green);
+  margin-left: -15px;
+}
+
+.name {
+  font-size: calc(5rem + ((1vw - 7.68px) * 5.555555555555555));
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 1.7rem;
+
+}
+
+.jobTitle {
+  color: #fff;
+}
+
+.subtitle {
+  font-size: calc(1.5rem + ((1vw - 7.68px) * 1.0416666666666667));
+  font-weight: 600;
+  margin-bottom: 2.3rem;
+  color: var(--color-text-secondary);
+  width: 70%;
+  line-height: 1.2;
+}
+
+.note {
+  font-size: calc(0.9rem + ((1vw - 7.68px) * 0.6944444444444444));
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+.description a {
+  color: #22c55e;
+  text-decoration: none;
+}
+
+.description {
+  margin-bottom: 2.5rem;
+}
+
+.links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: start;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.button {
+  background-color: #111;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.button:hover {
+  background-color: #1f1f1f;
+}
+
+.icon {
+  font-size: 1.2rem;
+  color: var(--color-text-primary-green);
+}
+
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 4rem 1rem 2rem 1rem;
+    margin: 0; /* Remove large desktop margin */
+  }
+
+  .pattern {
+    width: 80px;
+    top: 0.5rem;
+    left: -1rem;
+  }
+
+  .greeting {
+    font-size: 1.5rem;
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .name {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1.2rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .note {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .description {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .buttonGroup {
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .icon {
+    font-size: 1rem;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .projectsSection {
+    padding: 2rem 1rem 3rem 1rem;
+    margin: 0; /* Reset the large desktop margin */
+  }
+
+  .heading {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .subheading {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .exploreMore {
+    display: inline-block;
+    margin-top: 0.5rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr; /* Single column on small screens */
+    gap: 1.5rem;
+  }
+
+  .card {
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .projectTitle {
+    font-size: 1.1rem;
+    text-align: center;
+  }
+
+  .tags {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .description {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+}
+
+
+.fullScreenBurst {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: visible;
+}
+
+.paperPiece {
+  position: fixed;
+  width: 10px;
+  height: 14px;
+  opacity: 0.9;
+  border-radius: 2px;
+  background-color: #fce38a;
+  animation: paperBurst 1.2s forwards;
+  transform: translate(0, 0) rotate(0deg);
+}
+
+/* More natural burst with rotate, fall and scale */
+@keyframes paperBurst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(var(--x), var(--y))
+      rotate(calc(var(--r, 1) * 720deg))
+      scale(0.8);
+  }
+}

@@ -1,0 +1,17 @@
+/* src/styles/variables.css */
+:root {
+  --color-background: #000000;
+  --color-text-primary: #ffffff;
+  --color-text-primary-green: #3CCF91;
+  --color-text-secondary: #8F9094;
+
+  --primary-margin: 0 150px 0 150px;
+
+
+  --font-size-base: 1rem;
+  --font-size-display: 3rem;
+  
+  --ring-width: 3px;
+  --ring-color: rgba(66, 153, 225, 0.6);
+  --ring-shadow: 0 0 0 var(--ring-width) var(--ring-color);
+}

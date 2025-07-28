@@ -1,0 +1,141 @@
+.projects {
+  padding: 4rem 1rem;
+  height: 100vw;
+  margin: var(--primary-margin);
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-bottom: 2rem;
+}
+
+.search {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  background-color: #111;
+  color: #fff;
+  border: 1px solid #333;
+  font-size: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  background-color: #111;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #222;
+  display: flex;
+  flex-direction: column;
+}
+
+.image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.cardContent {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon {
+  color: #fff;
+  font-size: 1rem;
+}
+
+.techStack {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tech {
+  background-color: #222;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  color: #ccc;
+  border: 1px solid #333;
+}
+
+.description {
+  font-size: 0.95rem;
+  color: #aaa;
+}
+
+
+@media (max-width: 768px) {
+  .projects {
+    
+    margin: 0;
+  }
+
+  .title {
+    font-size: 2.2rem;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    text-align: center;
+    padding: 0 0.5rem;
+  }
+
+  .search {
+    width: 90%;
+
+    font-size: 1rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr; /* Stack cards */
+  }
+
+  .image {
+    height: 180px;
+  }
+
+  .cardContent {
+    padding: 1rem;
+  }
+
+  .tech {
+    font-size: 0.8rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
+
+  .cardHeader h2 {
+    font-size: 1.1rem;
+  }
+
+  .icon {
+    font-size: 0.9rem;
+  }
+}

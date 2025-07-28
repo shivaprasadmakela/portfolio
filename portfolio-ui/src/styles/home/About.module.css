@@ -1,0 +1,64 @@
+/* src/components/About/About.module.css */
+.about {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: auto;
+  align-items: center;
+}
+
+.text {
+  flex: 1 1 55%;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.text p {
+ color: var(--color-text-secondary);
+font-weight: 500;
+}
+
+.highlight {
+  color: #22c55e;
+  font-weight: 500;
+}
+
+.green {
+  color: #10b981;
+  font-weight: 500;
+}
+
+.imageContainer {
+  flex: 1 1 35%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile {
+  border-radius: 50%;
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  z-index: 2;
+}
+
+.pattern {
+  position: absolute;
+  top: 10%;
+  right: 0;
+  width: 130px;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.selfDescription{
+  padding: 15px 0px 15px 0px;
+}
+.aboutText{
+  margin-bottom: 1.2rem;
+}

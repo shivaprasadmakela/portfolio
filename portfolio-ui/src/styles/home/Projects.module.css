@@ -1,0 +1,165 @@
+.projectsSection {
+  margin: var(--primary-margin);
+  padding: 2rem 1rem 5rem 1rem;
+  color: #fff;
+}
+
+.heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.subheading {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #bdbdbd;
+}
+
+.exploreMore {
+  color: #22c55e;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  
+  border-radius: 1rem;
+  overflow: hidden;
+  border-color:rgba(255, 255, 255, 0.16);
+  border-width: 1px;
+  border-style: solid;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.externalLink {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: #111;
+  border-radius: 50%;
+  padding: 0.4rem;
+  color: #fff;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.externalLink:hover {
+  background: #22c55e;
+  color: #111;
+}
+
+.cardBody {
+  padding: 1rem 1.2rem 1.2rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.projectTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0.5rem 0 0.7rem 0;
+}
+
+.tags {
+  margin-bottom: 0.7rem;
+}
+
+.tag {
+  display: inline-block;
+  background: #23272f;
+  color: #bdbdbd;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.7rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.description {
+  font-size: 1rem;
+  color: #bdbdbd;
+  margin-top: 0.5rem;
+}
+
+
+@media (max-width: 768px) {
+  .projectsSection {
+    padding: 2rem 1rem 3rem 1rem;
+    margin: 0; /* Reset the large desktop margin */
+  }
+
+  .heading {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .subheading {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .exploreMore {
+    display: inline-block;
+    margin-top: 0.5rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr; /* Single column on small screens */
+    gap: 1.5rem;
+  }
+
+  .card {
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .projectTitle {
+    font-size: 1.1rem;
+    text-align: center;
+  }
+
+  .tags {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .description {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+}
