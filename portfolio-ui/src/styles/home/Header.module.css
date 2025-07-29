@@ -10,6 +10,7 @@
 }
 
 .mainHeader {
+  background-color: #000000;
   position: sticky;
   top: 0;
   z-index: 100;
