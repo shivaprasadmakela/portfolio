@@ -1,3 +1,4 @@
+
 import Header from '../components/home/Header';
 import styles from '../styles/BlogList.module.css';
 
@@ -47,6 +48,8 @@ import styles from '../styles/BlogList.module.css';
 // ];
 
 export default function BlogList() {
+
+
   return (
     <>
     <Header />
