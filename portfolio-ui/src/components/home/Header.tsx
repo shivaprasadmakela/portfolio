@@ -1,25 +1,29 @@
 import styles from '../../styles/home/Header.module.css';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 function Logo() {
   return (
-    <a className={styles.logo} href="/">
+    <Link to="/" className={styles.logo}>
       <h5 className={styles.logoText}>
         <span className={styles.brace}>{"{"}</span>
         S
         <span className={styles.brace}>{"}"}</span>
       </h5>
-    </a>
+    </Link>
   );
 }
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { pathname } = useLocation();
 
-  const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
-  };
+  const toggleMenu = () => setMenuOpen(prev => !prev);
+  const closeMenu = () => setMenuOpen(false);
+
+  const getLinkClass = (path: string) =>
+    `${styles.link} ${pathname === path ? styles.active : ''}`;
 
   return (
     <motion.header
@@ -34,9 +38,9 @@ export default function Header() {
           ☰
         </button>
         <nav className={`${styles.nav} ${menuOpen ? styles.open : ''}`}>
-          <a href="/" className={styles.link} onClick={() => setMenuOpen(false)}>Home</a>
-          <a href="/projects" className={styles.link} onClick={() => setMenuOpen(false)}>Projects</a>
-          <a href="/blogs" className={styles.link} onClick={() => setMenuOpen(false)}>Blog</a>
+          <Link to="/" className={getLinkClass('/')} onClick={closeMenu}>Home</Link>
+          <Link to="/projects" className={getLinkClass('/projects')} onClick={closeMenu}>Projects</Link>
+          <Link to="/blogs" className={getLinkClass('/blogs')} onClick={closeMenu}>Blog</Link>
         </nav>
       </header>
     </motion.header>

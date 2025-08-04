@@ -104,3 +104,19 @@
     font-size: 18px;
   }
 }
+
+.link {
+  text-decoration: none;
+  color: #ccc;
+  margin: 0 10px;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: white;
+}
+
+.active {
+  color: #22c55e;
+  font-weight: bold;
+}
