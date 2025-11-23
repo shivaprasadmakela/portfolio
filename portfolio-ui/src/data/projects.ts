@@ -20,12 +20,12 @@ export const projects: Project[] = [
     description: 'FLAMES Fun is a modern, interactive web application that predicts the relationship compatibility between two people using the classic "FLAMES" algorithm.',
     tags: ['Javascript', 'React'],
     link: 'https://flames-fun.vercel.app/',
-  }
-  // {
-  //   title: 'Prayer Time API',
-  //   image: '/images/prayertime.png',
-  //   description: "It's an easy to use API to get today's (and tomorrow!) prayer time in any city in the world, based on Muslim Pro.",
-  //   tags: ['Python', 'Flask', 'Beautiful Soup'],
-  //   link: 'https://prayertimeapi.example.com',
-  // },
+  },
+  {
+    title: 'Integrated Door Landing Page',
+    image: '/assets/integratedDoor.png',
+    description: "A modern, responsive landing page for Integrated Door, a company that provides door solutions for various industries.",
+    tags: ['React', 'CSS', 'HTML'],
+    link: 'https://integrated-door.vercel.app',
+  },
 ];

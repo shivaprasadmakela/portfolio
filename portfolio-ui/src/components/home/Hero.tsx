@@ -70,7 +70,7 @@ export default function Hero() {
           <h1 className={styles.name}>
             Shiva Prasad M<span className={styles.dot}>.</span>
           </h1>
-        
+
         </div>
 
         <h2 className={styles.subtitle}>
@@ -79,7 +79,7 @@ export default function Hero() {
 
         <div className={styles.description}>
           <p className={styles.note}>🚀 Currently specializing in Frontend and Backend(React / Java)</p>
-          <p className={styles.note}>⚡ SDE -1 at <a href="#">Modilx</a></p>
+          <p className={styles.note}>⚡ SDE -1 at <a href="#">Modlix</a></p>
         </div>
 
         <div className={styles.buttonGroup}>
