@@ -35,7 +35,7 @@ export default function Header() {
       <header className={styles.header}>
         <Logo />
         <button className={styles.menuButton} onClick={toggleMenu} aria-label="Toggle navigation">
-          ☰
+          {menuOpen ? '✕' : '☰'}
         </button>
         <nav className={`${styles.nav} ${menuOpen ? styles.open : ''}`}>
           <Link to="/" className={getLinkClass('/')} onClick={closeMenu}>Home</Link>

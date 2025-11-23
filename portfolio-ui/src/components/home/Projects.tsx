@@ -1,28 +1,5 @@
 import styles from '../../styles/home/Projects.module.css';
-
-// const projects = [
-//   {
-//     title: 'Opiniometer',
-//     image: '/images/opiniometer.png',
-//     description: 'A web app to analyze whether an opinion on specific topic is positive or negative based on recent tweets using Natural Language Processing concept called Sentiment Analysis.',
-//     tags: ['React', 'Python', 'Chart.js'],
-//     link: 'https://opiniometer.example.com',
-//   },
-//   {
-//     title: 'creative@home',
-//     image: '/images/creativehome.png',
-//     description: 'A website that provides roadmap for various fields in Programming and help people learn to code for free.',
-//     tags: ['Javascript', 'Sass'],
-//     link: 'https://creativehome.example.com',
-//   },
-//   {
-//     title: 'Prayer Time API',
-//     image: '/images/prayertime.png',
-//     description: "It's an easy to use API to get today's (and tomorrow!) prayer time in any city in the world, based on Muslim Pro.",
-//     tags: ['Python', 'Flask', 'Beautiful Soup'],
-//     link: 'https://prayertimeapi.example.com',
-//   },
-// ];
+import { projects } from '../../data/projects';
 
 export default function Projects() {
   return (
@@ -32,11 +9,15 @@ export default function Projects() {
         Here's some of my projects that I have worked on.<br />
         <a href="/projects" className={styles.exploreMore}>Explore more →</a>
       </p>
-      {/* <div className={styles.grid}>
+      <div className={styles.grid}>
         {projects.map((project) => (
           <div className={styles.card} key={project.title}>
             <div className={styles.imageWrapper}>
-              <img src={project.image} alt={project.title} className={styles.image} />
+              {/* Placeholder image if actual image is missing, or use the real one */}
+              <div className={styles.imagePlaceholder}>
+                <img src={project.image} alt={project.title} className={styles.image} />
+              </div>
+
               <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.externalLink}>
                 <span aria-label="Open in new tab" role="img">🔗</span>
               </a>
@@ -52,7 +33,7 @@ export default function Projects() {
             </div>
           </div>
         ))}
-      </div> */}
+      </div>
     </section>
   );
 }

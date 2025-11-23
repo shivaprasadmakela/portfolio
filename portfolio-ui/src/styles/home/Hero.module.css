@@ -1,12 +1,11 @@
 .hero {
   color: white;
- 
   margin: var(--primary-margin);
 }
 
-.mainHero{
-    padding: 6rem 1rem 3rem 1rem;
- position: relative;
+.mainHero {
+  padding: 6rem 1rem 3rem 1rem;
+  position: relative;
 }
 
 .pattern {
@@ -99,8 +98,13 @@
 
 @media (max-width: 768px) {
   .hero {
-    padding: 4rem 1rem 2rem 1rem;
-    margin: 0; /* Remove large desktop margin */
+    padding: 2rem 1rem;
+    margin: 0;
+    /* Remove large desktop margin */
+  }
+
+  .mainHero {
+    padding: 2rem 0;
   }
 
   .pattern {
@@ -153,56 +157,6 @@
   }
 }
 
-
-
-@media (max-width: 768px) {
-  .projectsSection {
-    padding: 2rem 1rem 3rem 1rem;
-    margin: 0; /* Reset the large desktop margin */
-  }
-
-  .heading {
-    font-size: 1.6rem;
-    text-align: center;
-  }
-
-  .subheading {
-    font-size: 1rem;
-    text-align: center;
-  }
-
-  .exploreMore {
-    display: inline-block;
-    margin-top: 0.5rem;
-  }
-
-  .grid {
-    grid-template-columns: 1fr; /* Single column on small screens */
-    gap: 1.5rem;
-  }
-
-  .card {
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  .projectTitle {
-    font-size: 1.1rem;
-    text-align: center;
-  }
-
-  .tags {
-    justify-content: center;
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .description {
-    font-size: 0.95rem;
-    text-align: center;
-  }
-}
-
-
 .fullScreenBurst {
   pointer-events: none;
   position: fixed;
@@ -228,11 +182,10 @@
     opacity: 1;
     transform: translate(0, 0) rotate(0deg) scale(1);
   }
+
   100% {
     opacity: 0;
     transform:
-      translate(var(--x), var(--y))
-      rotate(calc(var(--r, 1) * 720deg))
-      scale(0.8);
+      translate(var(--x), var(--y)) rotate(calc(var(--r, 1) * 720deg)) scale(0.8);
   }
 }

@@ -6,11 +6,34 @@ import profileImage from '../assets/profile.png';
 
 
 export default function MyYoutube() {
-    const previewVideos = youtubeVideos;
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6; // Adjust as needed
+
+    // Calculate total pages
+    const totalPages = Math.ceil(youtubeVideos.length / itemsPerPage);
+
+    // Get current videos
+    const indexOfLastVideo = currentPage * itemsPerPage;
+    const indexOfFirstVideo = indexOfLastVideo - itemsPerPage;
+    const currentVideos = youtubeVideos.slice(indexOfFirstVideo, indexOfLastVideo);
 
     const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 
     const handleClose = () => setSelectedVideoId(null);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(prev => prev + 1);
+            window.scrollTo(0, 0);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(prev => prev - 1);
+            window.scrollTo(0, 0);
+        }
+    };
 
     return (
         <>
@@ -52,7 +75,7 @@ export default function MyYoutube() {
                     </p>
                 </div>
                 <div className={styles.allVideos}>
-                    {previewVideos.map((video) => (
+                    {currentVideos.map((video) => (
                         <div key={video.id} className={styles.videoCards} onClick={() => setSelectedVideoId(video.id)}>
                             <img src={video.thumbnailUrl} alt={video.title} />
                             <div className={styles.videoInfo}>
@@ -60,6 +83,27 @@ export default function MyYoutube() {
                             </div>
                         </div>
                     ))}
+                </div>
+
+                {/* Pagination Controls */}
+                <div className={styles.pagination}>
+                    <button
+                        onClick={handlePrevPage}
+                        disabled={currentPage === 1}
+                        className={styles.pageButton}
+                    >
+                        Previous
+                    </button>
+                    <span className={styles.pageInfo}>
+                        Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                        onClick={handleNextPage}
+                        disabled={currentPage === totalPages}
+                        className={styles.pageButton}
+                    >
+                        Next
+                    </button>
                 </div>
             </div>
 

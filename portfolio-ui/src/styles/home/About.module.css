@@ -6,7 +6,7 @@
   gap: 2rem;
   padding: 4rem 2rem;
   max-width: 1200px;
- margin: var(--primary-margin);
+  margin: var(--primary-margin);
   align-items: center;
 }
 
@@ -17,8 +17,8 @@
 }
 
 .text p {
- color: var(--color-text-secondary);
-font-weight: 500;
+  color: var(--color-text-secondary);
+  font-weight: 500;
 }
 
 .highlight {
@@ -56,9 +56,42 @@ font-weight: 500;
   z-index: 1;
 }
 
-.selfDescription{
+.selfDescription {
   padding: 15px 0px 15px 0px;
 }
-.aboutText{
+
+.aboutText {
   margin-bottom: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .about {
+    flex-direction: column-reverse;
+    /* Image on top, text below? Or Text top? usually Image top is nice but let's stick to flow */
+    /* Actually, DOM order is Text then Image. column-reverse makes Image top. */
+    padding: 2rem 1rem;
+    margin: 0;
+    gap: 3rem;
+  }
+
+  .text {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .imageContainer {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .profile {
+    width: 200px;
+    height: 200px;
+  }
+
+  .pattern {
+    width: 100px;
+    top: 0;
+    right: 10%;
+  }
 }
