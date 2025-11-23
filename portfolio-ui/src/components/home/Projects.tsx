@@ -13,7 +13,6 @@ export default function Projects() {
         {projects.map((project) => (
           <div className={styles.card} key={project.title}>
             <div className={styles.imageWrapper}>
-              {/* Placeholder image if actual image is missing, or use the real one */}
               <div className={styles.imagePlaceholder}>
                 <img src={project.image} alt={project.title} className={styles.image} />
               </div>

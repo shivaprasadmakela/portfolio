@@ -18,17 +18,29 @@ a {
 }
 
 
-body, blockquote, dl, dd, h1, h2, h3, h4, h5, h6, hr, figure, p, pre {
-    margin: 0;
-    background-color: #000;
+body,
+blockquote,
+dl,
+dd,
+h1,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+pre {
+  margin: 0;
+  background-color: #000;
   color: white;
-  
+
 }
 
 /* index.css or global.css */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #000 #111; /* thumb, track for Firefox */
+  scrollbar-color: #000 #111;
+  /* thumb, track for Firefox */
 }
 
 /* Chrome, Edge, Safari */
@@ -44,7 +56,6 @@ body, blockquote, dl, dd, h1, h2, h3, h4, h5, h6, hr, figure, p, pre {
 *::-webkit-scrollbar-thumb {
   background-color: #000;
   border-radius: 10px;
-  border: 2px solid #111; /* space around thumb */
+  border: 2px solid #111;
+  /* space around thumb */
 }
-
-
