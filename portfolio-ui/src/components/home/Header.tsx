@@ -1,4 +1,5 @@
 import styles from '../../styles/home/Header.module.css';
+import { ThemeToggle } from './ThemeToggle';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -42,6 +43,7 @@ export default function Header() {
           <Link to="/projects" className={getLinkClass('/projects')} onClick={closeMenu}>Projects</Link>
           <Link to="/blogs" className={getLinkClass('/blogs')} onClick={closeMenu}>Blog</Link>
         </nav>
+        <ThemeToggle />
       </header>
     </motion.header>
   );

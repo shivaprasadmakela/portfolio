@@ -22,12 +22,12 @@
 }
 
 .highlight {
-  color: #22c55e;
+  color: var(--color-text-primary-green);
   font-weight: 500;
 }
 
 .green {
-  color: #10b981;
+  color: var(--color-text-primary-green);
   font-weight: 500;
 }
 

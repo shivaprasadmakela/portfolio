@@ -1,28 +1,28 @@
 .contactSection {
   text-align: center;
- 
+
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  margin : var(--primary-margin);
+  margin: var(--primary-margin);
   padding: 6rem 0 10rem 0;
 }
 
 .title {
   font-size: 3rem;
-  color: #fff;
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
 }
 
 .subtitle {
   font-size: 1.1rem;
-  color: #9ca3af;
+  color: var(--color-text-secondary);
   margin-bottom: 2rem;
 }
 
 .highlight {
-  color: #3CCF91;
+  color: var(--color-text-primary-green);
   font-weight: 500;
 }
 
@@ -35,10 +35,10 @@
 }
 
 .button {
-  background-color: #111;
+  background-color: var(--color-surface);
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
-  color: white;
+  color: var(--color-text-primary);
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -48,7 +48,7 @@
 }
 
 .button:hover {
-  background-color: #1f1f1f;
+  background-color: var(--color-border);
 }
 
 .icon {
@@ -67,16 +67,16 @@
 .textarea {
   padding: 0.75rem 1rem;
   border-radius: 6px;
-  border: 1px solid #333;
-  background: #111;
-  color: white;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
   font-size: 1rem;
 }
 
 .input:focus,
 .textarea:focus {
   outline: none;
-  border-color: #ffffff;
+  border-color: var(--color-text-primary-green);
 }
 
 .textarea {
@@ -86,8 +86,8 @@
 
 .submitButton {
   padding: 0.75rem 1rem;
-  background-color: #3CCF91;
-  color: black;
+  background-color: var(--color-text-primary-green);
+  color: var(--color-background);
   border: none;
   border-radius: 6px;
   font-weight: bold;
@@ -96,7 +96,8 @@
 }
 
 .submitButton:hover {
-  background-color: #ffffff;
+  background-color: var(--color-text-primary);
+  color: var(--color-background);
 }
 
 @media (max-width: 768px) {
@@ -137,6 +138,6 @@
   }
 }
 
-.successImage{
+.successImage {
   height: 500px;
 }

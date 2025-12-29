@@ -1,7 +1,7 @@
 .projectsSection {
   margin: var(--primary-margin);
   padding: 2rem 1rem 5rem 1rem;
-  color: #fff;
+  color: var(--color-text-primary);
 }
 
 .heading {
@@ -13,7 +13,7 @@
 .subheading {
   font-size: 1.1rem;
   margin-bottom: 2rem;
-  color: #bdbdbd;
+  color: var(--color-text-secondary);
 }
 
 .imagePlaceholder {
@@ -22,7 +22,7 @@
 }
 
 .exploreMore {
-  color: #22c55e;
+  color: var(--color-text-primary-green);
   text-decoration: none;
   font-weight: 500;
   margin-left: 0.5rem;
@@ -35,10 +35,9 @@
 }
 
 .card {
-
   border-radius: 1rem;
   overflow: hidden;
-  border-color: rgba(255, 255, 255, 0.16);
+  border-color: var(--color-border);
   border-width: 1px;
   border-style: solid;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
@@ -46,6 +45,7 @@
   flex-direction: column;
   transition: transform 0.15s;
   position: relative;
+  background-color: var(--color-background);
 }
 
 .card:hover {
@@ -57,7 +57,7 @@
   width: 100%;
   height: 100%;
   aspect-ratio: 16/9;
-  background: #222;
+  background: var(--color-surface);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,18 +73,18 @@
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
-  background: #111;
+  background: var(--color-surface);
   border-radius: 50%;
   padding: 0.4rem;
-  color: #fff;
+  color: var(--color-text-primary);
   font-size: 1.2rem;
   text-decoration: none;
   transition: background 0.2s;
 }
 
 .externalLink:hover {
-  background: #22c55e;
-  color: #111;
+  background: var(--color-text-primary-green);
+  color: var(--color-background);
 }
 
 .cardBody {
@@ -106,8 +106,8 @@
 
 .tag {
   display: inline-block;
-  background: #23272f;
-  color: #bdbdbd;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
   font-size: 0.85rem;
   font-weight: 500;
   border-radius: 0.5rem;
@@ -118,7 +118,7 @@
 
 .description {
   font-size: 1rem;
-  color: #bdbdbd;
+  color: var(--color-text-secondary);
   margin-top: 0.5rem;
 }
 

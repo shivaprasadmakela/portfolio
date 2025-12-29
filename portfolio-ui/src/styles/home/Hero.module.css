@@ -1,5 +1,5 @@
 .hero {
-  color: white;
+  color: var(--color-text-primary);
   margin: var(--primary-margin);
 }
 
@@ -32,7 +32,7 @@
 }
 
 .jobTitle {
-  color: #fff;
+  color: var(--color-text-primary);
 }
 
 .subtitle {
@@ -51,7 +51,7 @@
 }
 
 .description a {
-  color: #22c55e;
+  color: var(--color-text-primary-green);
   text-decoration: none;
 }
 
@@ -74,10 +74,10 @@
 }
 
 .button {
-  background-color: #111;
+  background-color: var(--color-surface);
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
-  color: white;
+  color: var(--color-text-primary);
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -87,7 +87,7 @@
 }
 
 .button:hover {
-  background-color: #1f1f1f;
+  background-color: var(--color-border);
 }
 
 .icon {

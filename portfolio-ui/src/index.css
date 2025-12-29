@@ -4,8 +4,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -31,15 +31,14 @@ hr,
 figure,
 pre {
   margin: 0;
-  background-color: #000;
-  color: white;
-
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
 }
 
 /* index.css or global.css */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #000 #111;
+  scrollbar-color: var(--color-background) var(--color-surface);
   /* thumb, track for Firefox */
 }
 
@@ -50,12 +49,12 @@ pre {
 }
 
 *::-webkit-scrollbar-track {
-  background: #111;
+  background: var(--color-surface);
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #000;
+  background-color: var(--color-background);
   border-radius: 10px;
-  border: 2px solid #111;
+  border: 2px solid var(--color-surface);
   /* space around thumb */
 }

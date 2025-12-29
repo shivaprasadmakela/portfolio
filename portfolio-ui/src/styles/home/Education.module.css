@@ -2,7 +2,7 @@
   position: relative;
   padding: 3rem 0 6rem 0;
   text-align: center;
-  color: #fff;
+  color: var(--color-text-primary);
   overflow: hidden;
 }
 
@@ -27,9 +27,8 @@
   padding: 0.2rem 1.2rem;
   font-weight: 500;
   letter-spacing: 0.08em;
-    color: var(--color-text-primary-green);
-  font-size: 1rem;
-    border-color:rgba(255, 255, 255, 0.16);
+  color: var(--color-text-primary-green);
+  border-color: var(--color-border);
   border-width: 1px;
   border-style: solid;
 }
@@ -52,7 +51,7 @@
 .timelineDot {
   width: 14px;
   height: 14px;
-  background: #ffffff;
+  background: var(--color-text-primary);
   border-radius: 50%;
   margin-top: 0;
 }
@@ -75,7 +74,7 @@
 }
 
 .institution {
-  color: #bdbdbd;
+  color: var(--color-text-secondary);
   font-size: 1.05rem;
   margin-bottom: 0.2rem;
 }
@@ -90,7 +89,7 @@
 .connectorYears {
   color: var(--color-text-primary-green);
   font-size: 1rem;
-    border-color:rgba(255, 255, 255, 0.16);
+  border-color: var(--color-border);
   border-width: 1px;
   border-style: solid;
   border-radius: 1.5rem;
@@ -102,7 +101,7 @@
 .connectorLine {
   width: 2px;
   height: 48px;
-  background: #00eaff;
+  background: var(--color-text-primary-green);
   opacity: 0.4;
   margin: 0 auto;
   border-radius: 1px;
@@ -114,23 +113,25 @@
   right: 0;
   bottom: 10%;
   font-size: 10vw;
-  color: #0a0a0b;
+  color: var(--color-text-secondary);
   font-weight: 900;
   letter-spacing: 0.05em;
   z-index: 0;
   user-select: none;
   pointer-events: none;
-  opacity: 0.25;
+  opacity: 0.1;
 }
 
 @media (max-width: 600px) {
   .heading {
     font-size: 2rem;
   }
+
   .bgText {
     font-size: 16vw;
     bottom: 5%;
   }
+
   .degree {
     font-size: 1.1rem;
   }
