@@ -66,6 +66,27 @@
   font-size: 1rem;
 }
 
+.headerLinks {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.iconLink {
+  color: var(--color-text-secondary);
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconLink:hover {
+  color: var(--color-text-primary-green);
+  transform: translateY(-2px);
+}
+
+
 .techStack {
   display: flex;
   gap: 0.5rem;

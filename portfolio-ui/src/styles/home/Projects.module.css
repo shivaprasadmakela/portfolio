@@ -69,23 +69,47 @@
   object-fit: cover;
 }
 
-.externalLink {
+.linksOverlay {
   position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  background: var(--color-surface);
-  border-radius: 50%;
-  padding: 0.4rem;
-  color: var(--color-text-primary);
-  font-size: 1.2rem;
-  text-decoration: none;
-  transition: background 0.2s;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.externalLink:hover {
-  background: var(--color-text-primary-green);
-  color: var(--color-background);
+.card:hover .linksOverlay {
+  opacity: 1;
 }
+
+.iconLink {
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.iconLink:hover {
+  background: var(--color-text-primary-green);
+  color: white;
+  transform: translateY(-5px) scale(1.1);
+}
+
 
 .cardBody {
   padding: 1rem 1.2rem 1.2rem 1.2rem;

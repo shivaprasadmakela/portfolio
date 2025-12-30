@@ -1,6 +1,7 @@
 import { projects } from '../data/projects';
 import Header from '../components/home/Header';
 import styles from '../styles/AllProjects.module.css';
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 
 export default function Projects() {
   return (
@@ -26,10 +27,18 @@ export default function Projects() {
               <div className={styles.cardContent}>
                 <div className={styles.cardHeader}>
                   <h2>{project.title}</h2>
-                  <a href={project.link} target="_blank" rel="noopener noreferrer">
-                    <span aria-label="Open in new tab" role="img">🔗</span>
-                  </a>
+                  <div className={styles.headerLinks}>
+                    {project.github && (
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className={styles.iconLink} title="View Source">
+                        <FaGithub />
+                      </a>
+                    )}
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.iconLink} title="Live Demo">
+                      <FaExternalLinkAlt />
+                    </a>
+                  </div>
                 </div>
+
 
                 <div className={styles.techStack}>
                   {project.tags.map((tech) => (

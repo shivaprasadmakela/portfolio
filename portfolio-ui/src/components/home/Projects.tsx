@@ -1,5 +1,6 @@
 import styles from '../../styles/home/Projects.module.css';
 import { projects } from '../../data/projects';
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 
 export default function Projects() {
   return (
@@ -17,9 +18,16 @@ export default function Projects() {
                 <img src={project.image} alt={project.title} className={styles.image} />
               </div>
 
-              <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.externalLink}>
-                <span aria-label="Open in new tab" role="img">🔗</span>
-              </a>
+              <div className={styles.linksOverlay}>
+                {project.github && (
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" className={styles.iconLink} title="View Source">
+                    <FaGithub />
+                  </a>
+                )}
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.iconLink} title="Live Demo">
+                  <FaExternalLinkAlt />
+                </a>
+              </div>
             </div>
             <div className={styles.cardBody}>
               <h3 className={styles.projectTitle}>{project.title}</h3>

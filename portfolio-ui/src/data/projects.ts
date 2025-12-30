@@ -4,6 +4,7 @@ export interface Project {
   description: string;
   tags: string[];
   link: string;
+  github?: string;
 }
 
 export const projects: Project[] = [
@@ -13,6 +14,7 @@ export const projects: Project[] = [
     description: 'It’s a simple web app where you can: Create or join private chat rooms instantly Chat in real-time with others (no sign-up needed) Share room links with friends See messages with timestamps',
     tags: ['React', 'Node.js + Express', 'Socket.io'],
     link: 'https://talknow-link.vercel.app/',
+    github: 'https://github.com/shivaprasadmakela/chat-app.git',
   },
   {
     title: 'FLAMES Fun',
@@ -20,6 +22,7 @@ export const projects: Project[] = [
     description: 'FLAMES Fun is a modern, interactive web application that predicts the relationship compatibility between two people using the classic "FLAMES" algorithm.',
     tags: ['Javascript', 'React'],
     link: 'https://flames-fun.vercel.app/',
+    github: 'https://github.com/shivaprasadmakela/flames-fun.git',
   },
   {
     title: 'Integrated Door Landing Page',
@@ -27,5 +30,7 @@ export const projects: Project[] = [
     description: "A modern, responsive landing page for Integrated Door, a company that provides door solutions for various industries.",
     tags: ['React', 'CSS', 'HTML'],
     link: 'https://integrated-door.vercel.app',
+    github: 'https://github.com/shivaprasadmakela/integrated-door.git',
   },
 ];
+
