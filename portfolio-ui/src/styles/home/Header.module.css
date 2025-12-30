@@ -16,25 +16,64 @@
   z-index: 100;
 }
 
-.logo {
-  font-size: 35px;
-  cursor: pointer;
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.logoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
   text-decoration: none;
-  font-weight: 700;
+  align-items: center;
 }
 
-.logoText:hover {
-  color: var(--color-text-primary-green);
-}
-
-.brace {
-  color: var(--color-text-secondary);
-  font-weight: 600;
-}
-
-.brace:hover {
+.logoBox {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-text-primary-green);
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: 800;
   color: var(--color-text-primary);
-  font-weight: 600;
+  transition: all 0.3s ease;
+  animation: blinkEye 2s infinite;
+}
+
+.logoBox:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.logoBox:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.logoBox:nth-child(3) {
+  animation-delay: 1s;
+}
+
+@keyframes blinkEye {
+
+  0%,
+  45%,
+  55%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(0.1);
+  }
+}
+
+.logoGrid:hover .logoBox {
+  border-color: var(--color-text-primary-green);
 }
 
 .nav {

@@ -6,12 +6,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 function Logo() {
   return (
-    <Link to="/" className={styles.logo}>
-      <h5 className={styles.logoText}>
-        <span className={styles.brace}>{"{"}</span>
-        S
-        <span className={styles.brace}>{"}"}</span>
-      </h5>
+    <Link to="/" className={styles.logoGrid}>
+      <div className={styles.logoBox}>S</div>
     </Link>
   );
 }
@@ -35,15 +31,19 @@ export default function Header() {
     >
       <header className={styles.header}>
         <Logo />
-        <button className={styles.menuButton} onClick={toggleMenu} aria-label="Toggle navigation">
-          {menuOpen ? '✕' : '☰'}
-        </button>
-        <nav className={`${styles.nav} ${menuOpen ? styles.open : ''}`}>
-          <Link to="/" className={getLinkClass('/')} onClick={closeMenu}>Home</Link>
-          <Link to="/projects" className={getLinkClass('/projects')} onClick={closeMenu}>Projects</Link>
-          <Link to="/blogs" className={getLinkClass('/blogs')} onClick={closeMenu}>Blog</Link>
-        </nav>
-        <ThemeToggle />
+
+        <div className={styles.navContainer}>
+
+          <nav className={`${styles.nav} ${menuOpen ? styles.open : ''}`}>
+            <Link to="/" className={getLinkClass('/')} onClick={closeMenu}>Home</Link>
+            <Link to="/projects" className={getLinkClass('/projects')} onClick={closeMenu}>Projects</Link>
+            <Link to="/blogs" className={getLinkClass('/blogs')} onClick={closeMenu}>Blog</Link>
+          </nav>
+          <ThemeToggle />
+          <button className={styles.menuButton} onClick={toggleMenu} aria-label="Toggle navigation">
+            {menuOpen ? '✕' : '☰'}
+          </button>
+        </div>
       </header>
     </motion.header>
   );
