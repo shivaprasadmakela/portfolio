@@ -65,7 +65,7 @@ export default function Hero() {
         <div
           className={styles.nameContainer}
 
-          style={{ cursor: 'pointer', display: 'inline-block', position: 'relative' }}
+          style={{ width: '100%', cursor: 'pointer', display: 'inline-block', position: 'relative' }}
         >
           <h1 className={styles.name}>
             Shiva Prasad M<span className={styles.dot}>.</span>
