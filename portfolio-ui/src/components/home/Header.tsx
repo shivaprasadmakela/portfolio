@@ -14,10 +14,14 @@ function Logo() {
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  // const [prepDropdownOpen, setPrepDropdownOpen] = useState(false);
   const { pathname } = useLocation();
 
   const toggleMenu = () => setMenuOpen(prev => !prev);
-  const closeMenu = () => setMenuOpen(false);
+  const closeMenu = () => {
+    setMenuOpen(false);
+    // setPrepDropdownOpen(false);
+  };
 
   const getLinkClass = (path: string) =>
     `${styles.link} ${pathname === path ? styles.active : ''}`;
@@ -37,6 +41,25 @@ export default function Header() {
           <nav className={`${styles.nav} ${menuOpen ? styles.open : ''}`}>
             <Link to="/" className={getLinkClass('/')} onClick={closeMenu}>Home</Link>
             <Link to="/projects" className={getLinkClass('/projects')} onClick={closeMenu}>Projects</Link>
+
+            {/* <div className={styles.dropdownContainer}
+              onMouseEnter={() => setPrepDropdownOpen(true)}
+              onMouseLeave={() => setPrepDropdownOpen(false)}>
+              <Link to="/interview-prep" className={getLinkClass('/interview-prep')} onClick={closeMenu}>
+                Interview Prep
+              </Link>
+              {prepDropdownOpen && (
+                <div className={styles.dropdownMenu}>
+                  <Link to="/interview-prep/javascript" onClick={closeMenu}>JavaScript Questions</Link>
+                  <Link to="/interview-prep/react" onClick={closeMenu}>React Questions</Link>
+                  <Link to="/interview-prep/dsa" onClick={closeMenu}>DSA Questions</Link>
+                  <Link to="/interview-prep/system-design" onClick={closeMenu}>System Design</Link>
+                  <Link to="/youtube-sets" onClick={closeMenu}>YouTube Question Sets</Link>
+                </div>
+              )}
+            </div> */}
+
+            <Link to="/youtube-sets" className={getLinkClass('/youtube-sets')} onClick={closeMenu}>YouTube Sets</Link>
             <Link to="/blogs" className={getLinkClass('/blogs')} onClick={closeMenu}>Blog</Link>
           </nav>
           <ThemeToggle />

@@ -18,12 +18,14 @@
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.16.0",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.6.3",
+    "remark-gfm": "^4.0.1",
     "three": "^0.178.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
-    "@types/react": "^19.1.8",
+    "@types/react": "^19.2.7",
     "@types/react-dom": "^19.1.6",
     "@types/three": "^0.178.1",
     "@vitejs/plugin-react": "^4.5.2",
