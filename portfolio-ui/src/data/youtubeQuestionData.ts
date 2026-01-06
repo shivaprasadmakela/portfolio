@@ -15,7 +15,7 @@ export const youtubeQuestionData: YoutubeVideoSet[] = [
   {
     id: 'lKLdDy9v-_w',
     title: 'My Interview Experience Full Stack Developer: Insights & Tips',
-    thumbnailUrl: 'https://i9.ytimg.com/vi_webp/lKLdDy9v-_w/maxresdefault.webp?v=65e2e36a&sqp=CIzR6MoG&rs=AOn4CLADZNv1K4gvBZp0FiH3mLo3PycAxA',
+    thumbnailUrl: 'https://i.ytimg.com/vi/eWaEQ39XHNI/hqdefault.jpg',
     description: 'My Interview Experience Full Stack Developer: Insights & Tips',
     publishDate: 'Oct 15, 2025',
     questionCount: 1,

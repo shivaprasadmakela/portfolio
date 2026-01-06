@@ -5,6 +5,7 @@ import Header from '../../components/home/Header';
 import styles from '../../styles/interview/Interview.module.css';
 import { youtubeQuestionData } from '../../data/youtubeQuestionData';
 import { FiSearch, FiCalendar, FiBookOpen } from 'react-icons/fi';
+import { Input } from '../../components/ui';
 
 export default function YoutubeSetsHub() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -29,17 +30,15 @@ export default function YoutubeSetsHub() {
                 <p className={styles.subtitle}>Structured interview questions explained in each of my YouTube videos</p>
 
                 <div className={styles.controls} style={{ marginBottom: '40px' }}>
-                    <div style={{ position: 'relative' }}>
-                        <FiSearch style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-secondary)' }} />
-                        <input
-                            type="text"
-                            className={styles.searchBar}
-                            placeholder="Search videos or topics..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            style={{ paddingLeft: '48px', marginBottom: 0 }}
-                        />
-                    </div>
+                    <Input
+                        type="text"
+                        className={styles.searchBar}
+                        placeholder="Search videos or topics..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        icon={<FiSearch />}
+                        style={{ marginBottom: 0 }}
+                    />
                 </div>
 
                 <div className={styles.categoryGrid}>

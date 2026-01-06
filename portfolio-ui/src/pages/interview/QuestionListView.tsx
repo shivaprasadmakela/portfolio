@@ -1,31 +1,33 @@
 import { useParams, Link } from 'react-router-dom';
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import Header from '../../components/home/Header';
 import QuestionCard from '../../components/interview/QuestionCard';
 import QuestionDrawer from '../../components/interview/QuestionDrawer';
 import styles from '../../styles/interview/Interview.module.css';
 import { interviewData } from '../../data/interviewData';
-import type { Difficulty } from '../../data/interviewData';
 import { motion } from 'framer-motion';
+import { Input, Button } from '../../components/ui';
 import { FiSearch } from 'react-icons/fi';
 
-export default function QuestionListView() {
+const QuestionListView: React.FC = () => {
     const { categoryId } = useParams<{ categoryId: string }>();
-    const category = interviewData.find(c => c.id === categoryId);
-
     const [searchQuery, setSearchQuery] = useState('');
-    const [filterDifficulty, setFilterDifficulty] = useState<Difficulty | 'All'>('All');
+    const [filter, setFilter] = useState<'All' | 'Easy' | 'Medium' | 'Hard'>('All');
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
+
+    // Find the category data
+    const category = interviewData.find(cat => cat.id === categoryId);
 
     const filteredQuestions = useMemo(() => {
         if (!category) return [];
         return category.questions.filter(q => {
             const matchesSearch = q.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                q.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
-            const matchesDifficulty = filterDifficulty === 'All' || q.difficulty === filterDifficulty;
-            return matchesSearch && matchesDifficulty;
+                q.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (q.summary && q.summary.toLowerCase().includes(searchQuery.toLowerCase()));
+            const matchesFilter = filter === 'All' || q.difficulty === filter;
+            return matchesSearch && matchesFilter;
         });
-    }, [category, searchQuery, filterDifficulty]);
+    }, [category, searchQuery, filter]);
 
     const selectedQuestion = useMemo(() =>
         category?.questions.find(q => q.id === selectedQuestionId) || null
@@ -70,27 +72,25 @@ export default function QuestionListView() {
                 </div>
 
                 <div className={styles.controls}>
-                    <div style={{ position: 'relative' }}>
-                        <FiSearch style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-secondary)' }} />
-                        <input
-                            type="text"
-                            className={styles.searchBar}
-                            placeholder="Search questions..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            style={{ paddingLeft: '48px' }}
-                        />
-                    </div>
+                    <Input
+                        type="text"
+                        className={styles.searchBar}
+                        placeholder="Search questions..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        icon={<FiSearch />}
+                    />
 
                     <div className={styles.filters}>
                         {(['All', 'Easy', 'Medium', 'Hard'] as const).map(d => (
-                            <button
+                            <Button
                                 key={d}
-                                className={`${styles.filterBtn} ${filterDifficulty === d ? styles.filterBtnActive : ''}`}
-                                onClick={() => setFilterDifficulty(d)}
+                                variant={filter === d ? 'primary' : 'secondary'}
+                                className={`${styles.filterBtn} ${filter === d ? styles.filterBtnActive : ''}`}
+                                onClick={() => setFilter(d)}
                             >
                                 {d}
-                            </button>
+                            </Button>
                         ))}
                     </div>
                 </div>
@@ -122,4 +122,6 @@ export default function QuestionListView() {
             />
         </div>
     );
-}
+};
+
+export default QuestionListView;

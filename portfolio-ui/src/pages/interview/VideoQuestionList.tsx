@@ -8,6 +8,7 @@ import { youtubeQuestionData } from '../../data/youtubeQuestionData';
 import type { Difficulty } from '../../data/interviewData';
 import { motion } from 'framer-motion';
 import { FiSearch, FiExternalLink } from 'react-icons/fi';
+import { Input, Button } from '../../components/ui';
 
 export default function VideoQuestionList() {
     const { videoId } = useParams<{ videoId: string }>();
@@ -83,27 +84,25 @@ export default function VideoQuestionList() {
                 </div>
 
                 <div className={styles.controls}>
-                    <div style={{ position: 'relative' }}>
-                        <FiSearch style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-secondary)' }} />
-                        <input
-                            type="text"
-                            className={styles.searchBar}
-                            placeholder="Search questions..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            style={{ paddingLeft: '48px' }}
-                        />
-                    </div>
+                    <Input
+                        type="text"
+                        className={styles.searchBar}
+                        placeholder="Search questions..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        icon={<FiSearch />}
+                    />
 
                     <div className={styles.filters}>
                         {(['All', 'Easy', 'Medium', 'Hard'] as const).map(d => (
-                            <button
+                            <Button
                                 key={d}
+                                variant={filterDifficulty === d ? 'primary' : 'secondary'}
                                 className={`${styles.filterBtn} ${filterDifficulty === d ? styles.filterBtnActive : ''}`}
                                 onClick={() => setFilterDifficulty(d)}
                             >
                                 {d}
-                            </button>
+                            </Button>
                         ))}
                     </div>
                 </div>

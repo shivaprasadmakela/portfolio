@@ -1,7 +1,6 @@
-/* src/features/challenge/components/Leaderboard.tsx */
 import React from 'react';
-import styles from './Challenge.module.css';
-import { getLeaderboard } from '../utils/streakUtils';
+import styles from '../../styles/Challenge.module.css';
+import { getLeaderboard } from '../../utils/streakUtils';
 
 export const Leaderboard: React.FC = () => {
     const users = getLeaderboard();
@@ -13,7 +12,7 @@ export const Leaderboard: React.FC = () => {
                 <h2 className={styles.leaderboardTitle}>Streak Leaderboard</h2>
             </header>
 
-            <div className={styles.tableWrapper}>
+            <div className={styles.tableContainer}>
                 <table className={styles.table}>
                     <thead>
                         <tr>

@@ -1,0 +1,181 @@
+/* src/components/ui/SharedUI.module.css */
+
+/* Button Styles */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    gap: 8px;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.primary {
+    background: var(--color-text-primary-green);
+    color: #000;
+}
+
+.primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(60, 207, 145, 0.3);
+}
+
+.secondary {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    color: var(--color-text-primary);
+}
+
+.secondary:hover:not(:disabled) {
+    border-color: var(--color-text-primary-green);
+    color: var(--color-text-primary-green);
+}
+
+.ghost {
+    background: transparent;
+    color: var(--color-text-secondary);
+}
+
+.ghost:hover:not(:disabled) {
+    color: var(--color-text-primary);
+}
+
+.icon {
+    padding: 8px;
+    background: transparent;
+    color: var(--color-text-secondary);
+}
+
+.icon:hover:not(:disabled) {
+    color: var(--color-text-primary);
+}
+
+/* Input Styles */
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.label {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.inputWrapper:focus-within {
+    border-color: var(--color-text-primary-green);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 2px rgba(60, 207, 145, 0.1);
+}
+
+.inputIcon {
+    position: absolute;
+    left: 14px;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.input {
+    width: 100%;
+    background: transparent !important;
+    border: none !important;
+    padding: 12px 16px;
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    outline: none;
+}
+
+.withIcon {
+    padding-left: 44px !important;
+}
+
+.errorBorder {
+    border-color: #ff4757 !important;
+}
+
+.errorText {
+    color: #ff4757;
+    font-size: 0.85rem;
+}
+
+/* Checkbox Styles */
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+}
+
+.checkbox {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid var(--color-border);
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.checkbox:checked {
+    background: var(--color-text-primary-green);
+    border-color: var(--color-text-primary-green);
+}
+
+.checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Select Styles */
+.select {
+    width: 100%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    appearance: none;
+    cursor: pointer;
+}
+
+.select:focus {
+    outline: none;
+    border-color: var(--color-text-primary-green);
+    box-shadow: 0 0 0 2px var(--color-text-primary-green);
+
+}

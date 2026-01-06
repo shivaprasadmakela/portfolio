@@ -3,6 +3,7 @@ import emailjs from '@emailjs/browser';
 import styles from '../../styles/home/Contact.module.css';
 import success from '../../assets/SentMail.gif';
 import { FaLinkedin, FaEnvelope, FaFileAlt } from 'react-icons/fa';
+import { Input, Button } from '../ui';
 
 export default function Contact() {
   const form = useRef<HTMLFormElement>(null);
@@ -64,10 +65,10 @@ export default function Contact() {
       ) : (
         <div>
           <form className={styles.form} ref={form} onSubmit={sendEmail}>
-            <input type="text" name="name" placeholder="Your Name" className={styles.input} required />
-            <input type="email" name="email" placeholder="Your Email" className={styles.input} required />
+            <Input type="text" name="name" placeholder="Your Name" required />
+            <Input type="email" name="email" placeholder="Your Email" required />
             <textarea name="message" placeholder="Your Message" className={styles.textarea} required />
-            <button type="submit" className={styles.submitButton}>Send Message</button>
+            <Button type="submit" className={styles.submitButton}>Send Message</Button>
           </form>
           {status === 'error' && <h4 style={{ color: 'red' }}>Something went wrong. Please try again!</h4>}
         </div>

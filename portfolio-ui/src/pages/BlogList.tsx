@@ -1,6 +1,8 @@
 
 import Header from '../components/home/Header';
 import styles from '../styles/BlogList.module.css';
+import { Input } from '../components/ui';
+import { FiSearch } from 'react-icons/fi';
 
 // const posts = [
 //   {
@@ -52,22 +54,22 @@ export default function BlogList() {
 
   return (
     <>
-    <Header />
-    <main className={styles.blogMain}>
-      <h1 className={styles.heading}>Blog</h1>
-      <p className={styles.desc}>
-        This is where I share my writings on programming, tutorials, and my experiences.
-      </p>
-      <div className={styles.searchBar}>
-        <input type="text" placeholder="Search articles" />
-        <span className={styles.searchIcon}>
-          {/* Search SVG */}
-          <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="#bdbdbd" strokeWidth="2"/><path stroke="#bdbdbd" strokeWidth="2" strokeLinecap="round" d="M20 20l-3.5-3.5"/></svg>
-        </span>
-      </div>
+      <Header />
+      <main className={styles.blogMain}>
+        <h1 className={styles.heading}>Blog</h1>
+        <p className={styles.desc}>
+          This is where I share my writings on programming, tutorials, and my experiences.
+        </p>
+        <div className={styles.searchBar}>
+          <Input
+            type="text"
+            placeholder="Search articles"
+            icon={<FiSearch />}
+          />
+        </div>
         <h1>Coming Soon</h1>
 
-      {/* <ul className={styles.list}>
+        {/* <ul className={styles.list}>
         {posts.map((post) => (
           <li className={styles.item} key={post.title}>
             <div className={styles.meta}>
@@ -82,7 +84,7 @@ export default function BlogList() {
           </li>
         ))}
       </ul> */}
-    </main>
+      </main>
     </>
   );
 }

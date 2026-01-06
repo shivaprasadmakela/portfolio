@@ -5,6 +5,7 @@ import styles from '../../styles/interview/Interview.module.css';
 import type { Question } from '../../data/interviewData';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { Button } from '../ui';
 
 interface QuestionDrawerProps {
     question: Question | null;
@@ -72,12 +73,12 @@ export default function QuestionDrawer({
                                 <h2 className={styles.drawerTitle}>{question.title}</h2>
                             </div>
                             <div style={{ display: 'flex', gap: '8px' }}>
-                                <button className={styles.closeBtn} title="Bookmark">
+                                <Button variant="icon" className={styles.closeBtn} title="Bookmark">
                                     <FiBookmark />
-                                </button>
-                                <button className={styles.closeBtn} onClick={onClose} title="Close">
+                                </Button>
+                                <Button variant="icon" className={styles.closeBtn} onClick={onClose} title="Close">
                                     <FiX />
-                                </button>
+                                </Button>
                             </div>
                         </div>
 
@@ -85,12 +86,13 @@ export default function QuestionDrawer({
                             <div dangerouslySetInnerHTML={{ __html: question.content }} />
                         </div>
 
-                        <button
+                        <Button
+                            variant="secondary"
                             className={styles.solutionBtn}
                             onClick={() => setShowSolution(!showSolution)}
                         >
                             {showSolution ? 'Hide Solution' : 'Show Solution'}
-                        </button>
+                        </Button>
 
                         <AnimatePresence>
                             {showSolution && (
@@ -108,22 +110,24 @@ export default function QuestionDrawer({
                         </AnimatePresence>
 
                         <div className={styles.navButtons}>
-                            <button
+                            <Button
+                                variant="secondary"
                                 className={styles.navBtn}
                                 onClick={onPrev}
                                 disabled={!hasPrev}
+                                icon={<FiChevronLeft style={{ verticalAlign: 'middle' }} />}
                             >
-                                <FiChevronLeft style={{ verticalAlign: 'middle', marginRight: '4px' }} />
                                 Previous Question
-                            </button>
-                            <button
+                            </Button>
+                            <Button
+                                variant="secondary"
                                 className={styles.navBtn}
                                 onClick={onNext}
                                 disabled={!hasNext}
                             >
                                 Next Question
                                 <FiChevronRight style={{ verticalAlign: 'middle', marginLeft: '4px' }} />
-                            </button>
+                            </Button>
                         </div>
                     </motion.div>
                 </>

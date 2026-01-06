@@ -226,13 +226,6 @@
     margin-top: 4px;
 }
 
-.tableWrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: 0 -20px;
-    padding: 0 20px;
-}
-
 .windowClosedMessage {
     text-align: center;
     padding: 40px;
@@ -241,37 +234,15 @@
 }
 
 @media (max-width: 768px) {
-    .container {
-        padding: 60px 16px;
-    }
-
     .title {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
     }
 
-    .subtitle {
-        font-size: 1.1rem;
+    .primary-margin {
+        margin: 0 20px;
     }
 
-    .card {
-        padding: 24px 16px;
-    }
-
-    .cardTitle {
-        font-size: 1.3rem;
-    }
-
-    .th,
-    .td {
-        padding: 12px 8px;
-        font-size: 0.9rem;
-    }
-
-    .rank {
-        font-size: 0.85rem;
-    }
-
-    .streak {
-        font-size: 0.9rem;
+    .table-container {
+        overflow-x: auto;
     }
 }

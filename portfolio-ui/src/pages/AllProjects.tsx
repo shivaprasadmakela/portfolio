@@ -2,6 +2,8 @@ import { projects } from '../data/projects';
 import Header from '../components/home/Header';
 import styles from '../styles/AllProjects.module.css';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { Input } from '../components/ui';
+import { FiSearch } from 'react-icons/fi';
 
 export default function Projects() {
   return (
@@ -13,10 +15,11 @@ export default function Projects() {
           I love building projects and practicing my engineering skills, here's an archive of things that I've worked on.
         </p>
 
-        <input
+        <Input
           type="text"
           className={styles.search}
           placeholder="Search projects"
+          icon={<FiSearch />}
         />
 
         <div className={styles.grid}>

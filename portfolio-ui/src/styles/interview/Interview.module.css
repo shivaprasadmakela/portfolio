@@ -74,7 +74,7 @@
 
 /* Question List */
 .listHeader {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .breadcrumb {
@@ -92,13 +92,6 @@
 .searchBar {
   width: 100%;
   max-width: 600px;
-  padding: 12px 20px;
-  border-radius: 12px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-primary);
-  font-size: 1rem;
-  margin-bottom: 24px;
 }
 
 .filters {
@@ -107,6 +100,7 @@
   margin-bottom: 32px;
   overflow-x: auto;
   padding-bottom: 8px;
+  padding-top: 2rem;
   scrollbar-width: none;
   /* Firefox */
 }
@@ -176,8 +170,7 @@
 .meta {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: 16px;
   font-size: 0.85rem;
 }
 
@@ -247,26 +240,12 @@
 
 @media (max-width: 768px) {
   .drawer {
-    width: 90%;
-    padding: 20px;
-  }
-
-  .drawerTitle {
-    font-size: 1.5rem;
-  }
-
-  .drawerMeta {
-    margin-bottom: 24px;
-    flex-wrap: wrap;
+    width: 100%;
+    padding: 24px;
   }
 
   .container {
-    margin: 30px auto;
-    padding: 0 16px;
-  }
-
-  .title {
-    font-size: 2rem;
+    margin: 50px auto;
   }
 }
 
@@ -339,21 +318,9 @@
 .navButtons {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
   margin-top: 60px;
   padding-top: 32px;
   border-top: 1px solid var(--color-border);
-}
-
-@media (max-width: 768px) {
-  .navButtons {
-    flex-direction: column;
-  }
-
-  .navBtn {
-    width: 100%;
-    text-align: center;
-  }
 }
 
 .navBtn {

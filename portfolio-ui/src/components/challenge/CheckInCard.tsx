@@ -1,10 +1,10 @@
-/* src/features/challenge/components/CheckInCard.tsx */
 import React, { useState, useEffect } from 'react';
-import styles from './Challenge.module.css';
-import { getISTTimeDisplay, isSubmissionWindowActive } from '../utils/timeUtils';
-import { generateQuestion, validateAnswer } from '../utils/verificationUtils';
-import type { VerificationQuestion } from '../utils/verificationUtils';
-import { processCheckIn } from '../utils/streakUtils';
+import styles from '../../styles/Challenge.module.css';
+import { getISTTimeDisplay, isSubmissionWindowActive } from '../../utils/timeUtils';
+import { generateQuestion, validateAnswer } from '../../utils/verificationUtils';
+import type { VerificationQuestion } from '../../utils/verificationUtils';
+import { processCheckIn } from '../../utils/streakUtils';
+import { Input, Button } from '../ui';
 
 export const CheckInCard: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     const [currentTime, setCurrentTime] = useState(getISTTimeDisplay());
@@ -67,38 +67,31 @@ export const CheckInCard: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) 
                 </div>
             ) : (
                 <form className={styles.form} onSubmit={handleSubmit}>
-                    <div className={styles.formGroup}>
-                        <label className={styles.label}>Name</label>
-                        <input
-                            type="text"
-                            required
-                            className={styles.input}
-                            placeholder="Your name"
-                            value={formData.name}
-                            onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                        />
-                    </div>
+                    <Input
+                        label="Name"
+                        type="text"
+                        required
+                        placeholder="Your name"
+                        value={formData.name}
+                        onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                    />
 
-                    <div className={styles.formGroup}>
-                        <label className={styles.label}>Email</label>
-                        <input
-                            type="email"
-                            required
-                            className={styles.input}
-                            placeholder="Your email"
-                            value={formData.email}
-                            onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                        />
-                    </div>
+                    <Input
+                        label="Email"
+                        type="email"
+                        required
+                        placeholder="Your email"
+                        value={formData.email}
+                        onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                    />
 
                     <div className={styles.verificationBox}>
                         <p className={styles.verificationQuestion}>
                             {question ? question.question : 'Loading today\'s verification question...'}
                         </p>
-                        <input
+                        <Input
                             type="text"
                             required
-                            className={styles.input}
                             placeholder={question?.placeholder}
                             value={formData.answer}
                             onChange={e => setFormData(prev => ({ ...prev, answer: e.target.value }))}
@@ -108,11 +101,12 @@ export const CheckInCard: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) 
                     {error && <p className={styles.errorText}>{error}</p>}
                     {statusMessage && <p style={{ color: 'var(--color-text-primary-green)', textAlign: 'center' }}>{statusMessage}</p>}
 
-                    <button type="submit" className={styles.submitButton}>
+                    <Button type="submit" className={styles.submitButton}>
                         Check In Now
-                    </button>
+                    </Button>
                 </form>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 };

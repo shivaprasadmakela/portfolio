@@ -1,10 +1,10 @@
 /* src/pages/WakeUpChallenge.tsx */
 import React, { useState } from 'react';
 import Header from '../components/home/Header';
-import { ChallengeHero } from '../features/challenge/components/ChallengeHero';
-import { CheckInCard } from '../features/challenge/components/CheckInCard';
-import { Leaderboard } from '../features/challenge/components/Leaderboard';
-import styles from '../features/challenge/components/Challenge.module.css';
+import { ChallengeHero } from '../components/challenge/ChallengeHero';
+import { CheckInCard } from '../components/challenge/CheckInCard';
+import { Leaderboard } from '../components/challenge/Leaderboard';
+import styles from '../styles/Challenge.module.css';
 import FadeInSection from '../components/FadeInSection';
 
 const WakeUpChallenge: React.FC = () => {
