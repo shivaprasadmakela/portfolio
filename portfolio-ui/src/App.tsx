@@ -7,6 +7,7 @@ import CategoryGrid from './pages/interview/CategoryGrid';
 import QuestionListView from './pages/interview/QuestionListView';
 import YoutubeSetsHub from './pages/interview/YoutubeSetsHub';
 import VideoQuestionList from './pages/interview/VideoQuestionList';
+import WakeUpChallenge from './pages/WakeUpChallenge';
 import ScrollToTop from './components/ScrollToTop';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/interview-prep/:categoryId" element={<QuestionListView />} />
         <Route path="/youtube-sets" element={<YoutubeSetsHub />} />
         <Route path="/youtube-sets/:videoId" element={<VideoQuestionList />} />
+        <Route path="/challenge" element={<WakeUpChallenge />} />
       </Routes>
     </Router>
   );

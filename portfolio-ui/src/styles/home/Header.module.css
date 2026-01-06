@@ -111,7 +111,7 @@
   .header {
     margin: 0;
     /* Remove large margin on mobile */
-    padding: 1rem;
+    padding: 1rem 1.5rem;
   }
 
   .nav {
