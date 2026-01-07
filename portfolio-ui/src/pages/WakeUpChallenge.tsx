@@ -17,7 +17,7 @@ const WakeUpChallenge: React.FC = () => {
     const scrollToJoin = () => {
         const section = document.getElementById('check-in-section');
         if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
+            section.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     };
 
