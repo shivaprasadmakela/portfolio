@@ -68,7 +68,7 @@ export default function Contact() {
             <Input type="text" name="name" placeholder="Your Name" required />
             <Input type="email" name="email" placeholder="Your Email" required />
             <textarea name="message" placeholder="Your Message" className={styles.textarea} required />
-            <Button type="submit" className={styles.submitButton}>Send Message</Button>
+            <Button type="submit" className={styles.cbutton}>Send Message</Button>
           </form>
           {status === 'error' && <h4 style={{ color: 'red' }}>Something went wrong. Please try again!</h4>}
         </div>

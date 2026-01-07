@@ -1,3 +1,4 @@
+import { useState, useMemo } from 'react';
 import { projects } from '../data/projects';
 import Header from '../components/home/Header';
 import styles from '../styles/AllProjects.module.css';
@@ -6,6 +7,16 @@ import { Input } from '../components/ui';
 import { FiSearch } from 'react-icons/fi';
 
 export default function Projects() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredProjects = useMemo(() => {
+    return projects.filter((project) =>
+      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      project.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery]);
+
   return (
     <>
       <Header />
@@ -20,10 +31,12 @@ export default function Projects() {
           className={styles.search}
           placeholder="Search projects"
           icon={<FiSearch />}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
 
         <div className={styles.grid}>
-          {projects.map((project) => (
+          {filteredProjects.map((project) => (
             <div key={project.title} className={styles.card}>
               <img src={project.image} alt={project.title} className={styles.image} />
 
@@ -55,6 +68,11 @@ export default function Projects() {
               </div>
             </div>
           ))}
+          {filteredProjects.length === 0 && (
+            <p style={{ gridColumn: '1 / -1', textAlign: 'center', color: 'var(--color-text-secondary)', marginTop: '2rem' }}>
+              No projects found matching "{searchQuery}"
+            </p>
+          )}
         </div>
       </section>
     </>

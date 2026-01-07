@@ -101,7 +101,7 @@ export const CheckInCard: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) 
                     {error && <p className={styles.errorText}>{error}</p>}
                     {statusMessage && <p style={{ color: 'var(--color-text-primary-green)', textAlign: 'center' }}>{statusMessage}</p>}
 
-                    <Button type="submit" className={styles.submitButton}>
+                    <Button type="submit" >
                         Check In Now
                     </Button>
                 </form>

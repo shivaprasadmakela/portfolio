@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../../styles/Challenge.module.css';
 import { motion } from 'framer-motion';
-import { Button } from '../ui';
+import { Button } from '../ui/Button';
 
 interface ChallengeHeroProps {
     onJoin: () => void;
@@ -21,7 +21,7 @@ export const ChallengeHero: React.FC<ChallengeHeroProps> = ({ onJoin }) => {
                     Master your mornings and build unstoppable discipline.
                     Check in daily between 5:00 AM and 6:00 AM IST to build your streak.
                 </p>
-                <Button className={styles.ctaButton} onClick={onJoin}>
+                <Button onClick={onJoin}>
                     Join The Challenge
                 </Button>
             </motion.div>
