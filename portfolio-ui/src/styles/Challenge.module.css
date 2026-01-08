@@ -66,10 +66,17 @@
     margin-bottom: 60px;
 }
 
-.cardHeader {
-    margin-bottom: 30px;
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 20px;
+@media (max-width: 768px) {
+    .card {
+        padding: 24px 16px;
+        border-radius: 12px;
+        margin-bottom: 40px;
+    }
+
+    .cardHeader {
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
 }
 
 .cardTitle {
@@ -206,7 +213,20 @@
         margin: 0 20px;
     }
 
-    .table-container {
+    .tableContainer {
         overflow-x: auto;
+        margin: 0 -16px;
+        padding: 0 16px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table {
+        min-width: 600px;
+    }
+
+    .th,
+    .td {
+        padding: 12px 8px;
+        font-size: 0.85rem;
     }
 }
