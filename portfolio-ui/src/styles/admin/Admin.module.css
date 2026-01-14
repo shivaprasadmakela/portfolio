@@ -1,0 +1,238 @@
+.loginContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    padding: 20px;
+}
+
+.loginCard {
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--color-surface);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--color-border);
+}
+
+.loginHeader {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.loginHeader h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    color: var(--color-text-primary-green);
+}
+
+.loginHeader p {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.formGroup input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.formGroup input:focus {
+    outline: none;
+    border-color: var(--color-text-primary-green);
+    box-shadow: 0 0 0 2px rgba(60, 207, 145, 0.2);
+}
+
+.loginButton {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--color-text-primary-green);
+    color: #000;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    margin-top: 10px;
+}
+
+.loginButton:hover {
+    opacity: 0.9;
+}
+
+.loginButton:active {
+    transform: translateY(1px);
+}
+
+.errorMsg {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #ff4d4d;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Dashboard Layout Styles */
+.adminLayout {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--color-background);
+}
+
+.sidebar {
+    width: 260px;
+    background-color: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.mainContent {
+    flex: 1;
+    margin-left: 260px;
+    padding: 40px;
+    color: var(--color-text-primary);
+}
+
+.sidebarHeader {
+    padding: 24px;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebarHeader h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text-primary-green);
+    margin: 0;
+}
+
+.navMenu {
+    flex: 1;
+    padding: 20px 0;
+    list-style: none;
+    margin: 0;
+}
+
+.navItem {
+    padding: 4px 16px;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.navLink:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-primary);
+}
+
+.navLinkActive {
+    background-color: rgba(60, 207, 145, 0.1);
+    color: var(--color-text-primary-green);
+}
+
+.sidebarFooter {
+    padding: 20px;
+    border-top: 1px solid var(--color-border);
+}
+
+.logoutBtn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background: transparent;
+    color: #ff4d4d;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.logoutBtn:hover {
+    background-color: rgba(255, 77, 77, 0.1);
+}
+
+/* Dashboard Home */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.statCard {
+    background-color: var(--color-surface);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+}
+
+.statCard h3 {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 8px;
+}
+
+.statCard p {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+/* Page Header */
+.pageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.pageHeader h1 {
+    font-size: 2rem;
+    margin: 0;
+}

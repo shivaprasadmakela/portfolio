@@ -1,0 +1,110 @@
+.errorContainer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    text-align: center;
+    padding: 2rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.errorCode {
+    font-size: clamp(8rem, 20vw, 15rem);
+    font-weight: 900;
+    line-height: 1;
+    margin: 0;
+    background: linear-gradient(135deg, var(--color-text-primary-green), #2db07a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(60, 207, 145, 0.3));
+    font-family: 'Outfit', sans-serif;
+    z-index: 1;
+}
+
+.errorTitle {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    margin: 1.5rem 0 1rem;
+    color: var(--color-text-primary);
+    z-index: 1;
+}
+
+.errorDescription {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    z-index: 1;
+}
+
+.homeButton {
+    padding: 0.8rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    border: none;
+    background: var(--color-text-primary-green);
+    color: var(--color-background);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    box-shadow: 0 10px 20px rgba(60, 207, 145, 0.2);
+    z-index: 1;
+}
+
+.homeButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(60, 207, 145, 0.3);
+    opacity: 0.9;
+}
+
+.iconContainer {
+    margin-bottom: 2rem;
+    font-size: 5rem;
+    color: var(--color-text-primary-green);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+/* Background elements for extra flair */
+.backgroundShapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.3;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--color-text-primary-green);
+    filter: blur(80px);
+}
+
+.shape1 {
+    width: 300px;
+    height: 300px;
+    top: -150px;
+    right: -150px;
+}
+
+.shape2 {
+    width: 250px;
+    height: 250px;
+    bottom: -125px;
+    left: -125px;
+}

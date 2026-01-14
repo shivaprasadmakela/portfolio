@@ -10,6 +10,18 @@ import VideoQuestionList from './pages/interview/VideoQuestionList';
 import WakeUpChallenge from './pages/WakeUpChallenge';
 import ScrollToTop from './components/ScrollToTop';
 
+// Admin Pages
+import LoginPage from './pages/admin/LoginPage';
+import AdminLayout from './components/admin/AdminLayout';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminProfile from './pages/admin/AdminProfile';
+import AdminQuestionSets from './pages/admin/AdminQuestionSets';
+import ProtectedRoute from './components/admin/ProtectedRoute';
+
+// Error Pages
+import NotFound from './pages/error/NotFound';
+import Forbidden from './pages/error/Forbidden';
+
 function App() {
   return (
     <Router>
@@ -24,6 +36,26 @@ function App() {
         <Route path="/youtube-sets" element={<YoutubeSetsHub />} />
         <Route path="/youtube-sets/:videoId" element={<VideoQuestionList />} />
         <Route path="/challenge" element={<WakeUpChallenge />} />
+
+        {/* Admin Routes */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="question-sets" element={<AdminQuestionSets />} />
+          <Route path="configuration" element={<AdminQuestionSets />} />
+          <Route path="profile" element={<AdminProfile />} />
+        </Route>
+
+        {/* Error Routes */}
+        <Route path="/forbidden" element={<Forbidden />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
