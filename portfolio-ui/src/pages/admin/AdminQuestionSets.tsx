@@ -4,7 +4,7 @@ import styles from '../../styles/admin/Admin.module.css';
 import { MdAdd, MdEdit, MdDelete, MdVisibility } from 'react-icons/md';
 
 const AdminQuestionSets: React.FC = () => {
-    const [sets, setSets] = useState<YoutubeVideoSet[]>(youtubeQuestionData);
+    const [sets] = useState<YoutubeVideoSet[]>(youtubeQuestionData);
 
     return (
         <div className={styles.questionSets}>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Question, Difficulty } from '../../data/interviewData';
+import type { Question } from '../../data/interviewData';
 import styles from '../../styles/admin/Admin.module.css';
 import { MdClose, MdVisibility, MdCode } from 'react-icons/md';
 import ReactMarkdown from 'react-markdown';
