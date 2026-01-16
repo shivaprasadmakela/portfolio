@@ -4,6 +4,7 @@ import styles from '../../styles/interview/Interview.module.css';
 import { interviewData } from '../../data/interviewData';
 import { youtubeQuestionData } from '../../data/youtubeQuestionData';
 import { motion } from 'framer-motion';
+import Footer from '../../components/home/Footer';
 
 export default function CategoryGrid() {
     return (
@@ -34,6 +35,7 @@ export default function CategoryGrid() {
 
                 </div>
             </motion.main>
+            <Footer />
         </div>
     );
 }

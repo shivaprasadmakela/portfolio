@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS portfolio;
+USE portfolio;
+
 CREATE TABLE users (
   id BINARY(16) PRIMARY KEY,
   email VARCHAR(255) UNIQUE NOT NULL,
@@ -51,3 +54,4 @@ CREATE TABLE verification_questions (
   active BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+

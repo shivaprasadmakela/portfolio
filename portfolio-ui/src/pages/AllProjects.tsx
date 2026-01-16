@@ -5,6 +5,7 @@ import styles from '../styles/AllProjects.module.css';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import { Input } from '../components/ui';
 import { FiSearch } from 'react-icons/fi';
+import Footer from '../components/home/Footer';
 
 export default function Projects() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -75,6 +76,7 @@ export default function Projects() {
           )}
         </div>
       </section>
+      <Footer />
     </>
   );
 }

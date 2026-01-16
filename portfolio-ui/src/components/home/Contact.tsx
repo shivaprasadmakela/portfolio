@@ -1,78 +1,105 @@
-import { useRef, useState } from 'react';
-import emailjs from '@emailjs/browser';
+import { useState } from 'react';
 import styles from '../../styles/home/Contact.module.css';
-import success from '../../assets/SentMail.gif';
-import { FaLinkedin, FaEnvelope, FaFileAlt } from 'react-icons/fa';
-import { Input, Button } from '../ui';
+import {
+  FaLinkedin,
+  FaGithub,
+  FaInstagram,
+  FaEnvelope,
+  FaRegCopy,
+  FaPaperPlane
+} from 'react-icons/fa';
+import { FiArrowUpRight } from 'react-icons/fi';
+
+const socialLinks = [
+  {
+    name: 'LinkedIn',
+    handle: '@in/shiva-prasad-m',
+    url: 'https://linkedin.com/in/shiva-prasad-m',
+    icon: <FaLinkedin />
+  },
+  {
+    name: 'GitHub',
+    handle: '@shivaprasadmakela',
+    url: 'https://github.com/shivaprasadmakela',
+    icon: <FaGithub />
+  },
+
+  {
+    name: 'Instagram',
+    handle: '@shivaprasad',
+    url: 'https://instagram.com/mr_chiva',
+    icon: <FaInstagram />
+  }
+];
 
 export default function Contact() {
-  const form = useRef<HTMLFormElement>(null);
-  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [copied, setCopied] = useState(false);
+  const email = 'shivaprasadmekala@gmail.com';
 
-  const sendEmail = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!form.current) return;
-
-    emailjs
-      .sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        form.current,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
-      .then(
-        () => {
-          setStatus('success');
-          form.current?.reset();
-        },
-        (error) => {
-          console.error(error);
-          setStatus('error');
-        }
-      );
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
     <section className={styles.contactSection}>
-      <div>
-        <h1 className={styles.title}>Keep In Touch.</h1>
-        <p className={styles.subtitle}>
-          I'm currently specializing in <span className={styles.highlight}>SDE -1</span>
-          <br />
-          Feel free to get in touch and talk more about your projects.
-        </p>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <span className={styles.tag}>CONNECT</span>
+          <h1 className={styles.title}>Let's Connect</h1>
+          <p className={styles.description}>
+            I'm always open to discussing new projects, creative ideas, or being part of
+            your visions. Join my <span className={styles.highlight}>journey</span> of consistency.
+          </p>
+        </div>
 
-        <div className={styles.buttonGroup}>
-          <a href="https://linkedin.com/in/shiva-prasad-m" target="_blank" className={styles.button} rel="noreferrer">
-            <FaLinkedin className={styles.icon} />
-            LinkedIn
-          </a>
-          <a href="mailto:shivaprasadmekala@gmail.com" className={styles.button}>
-            <FaEnvelope className={styles.icon} />
-            Email
-          </a>
-          <a href="/resume.pdf" className={styles.button} download>
-            <FaFileAlt className={styles.icon} />
-            Resume
-          </a>
+        <div className={styles.grid}>
+          <div className={styles.messageCard}>
+            <div className={styles.iconWrapper}>
+              <FaEnvelope />
+            </div>
+            <h2 className={styles.cardTitle}>Drop me a message</h2>
+            <p className={styles.cardSubtitle}>
+              For collaborations, inquiries, or just a virtual coffee.
+            </p>
+
+            <div className={styles.actionButtons}>
+              <a href={`mailto:${email}`} className={styles.sendButton}>
+                <FaPaperPlane className={styles.btnIcon} />
+                Send Email
+              </a>
+              <button onClick={copyToClipboard} className={styles.copyButton}>
+                <FaRegCopy className={styles.btnIcon} />
+                {copied ? 'Copied!' : 'Copy Email'}
+              </button>
+            </div>
+          </div>
+
+          <div className={styles.socialList}>
+            {socialLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.url}
+                target="_blank"
+                rel="noreferrer"
+                className={styles.socialCard}
+              >
+                <div className={styles.socialInfo}>
+                  <div className={styles.socialIcon}>
+                    {link.icon}
+                  </div>
+                  <div className={styles.socialText}>
+                    <span className={styles.socialName}>{link.name}</span>
+                    <span className={styles.socialHandle}>{link.handle}</span>
+                  </div>
+                </div>
+                <FiArrowUpRight className={styles.externalLinkIcon} />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
-
-
-      {status === 'success' ? (
-        <img src={success} alt="Success" className={styles.successImage} />
-      ) : (
-        <div>
-          <form className={styles.form} ref={form} onSubmit={sendEmail}>
-            <Input type="text" name="name" placeholder="Your Name" required />
-            <Input type="email" name="email" placeholder="Your Email" required />
-            <textarea name="message" placeholder="Your Message" className={styles.textarea} required />
-            <Button type="submit" className={styles.cbutton}>Send Message</Button>
-          </form>
-          {status === 'error' && <h4 style={{ color: 'red' }}>Something went wrong. Please try again!</h4>}
-        </div>
-      )}
     </section>
   );
 }

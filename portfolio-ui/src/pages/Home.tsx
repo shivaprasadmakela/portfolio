@@ -7,6 +7,7 @@ import Projects from '../components/home/Projects';
 
 import FadeInSection from '../components/FadeInSection';
 import YouTubeHome from '../components/home/YouTubeHome';
+import Footer from '../components/home/Footer';
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <FadeInSection><Education /></FadeInSection>
       <FadeInSection><YouTubeHome /></FadeInSection>
       <FadeInSection><Contact /></FadeInSection>
+      <Footer />
     </>
   );
 }

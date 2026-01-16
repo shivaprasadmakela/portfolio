@@ -3,6 +3,7 @@ import Header from '../components/home/Header';
 import styles from '../styles/BlogList.module.css';
 import { Input } from '../components/ui';
 import { FiSearch } from 'react-icons/fi';
+import Footer from '../components/home/Footer';
 
 // const posts = [
 //   {
@@ -85,6 +86,7 @@ export default function BlogList() {
         ))}
       </ul> */}
       </main>
+      <Footer />
     </>
   );
 }

@@ -3,6 +3,7 @@ import { youtubeVideos } from '../data/videos';
 import styles from '../styles/home/YoutubeHome.module.css';
 import Header from '../components/home/Header';
 import profileImage from '../assets/profile.png';
+import Footer from '../components/home/Footer';
 
 
 export default function MyYoutube() {
@@ -123,6 +124,7 @@ export default function MyYoutube() {
                     </div>
                 </div>
             )}
+            <Footer />
         </>
     );
 }
