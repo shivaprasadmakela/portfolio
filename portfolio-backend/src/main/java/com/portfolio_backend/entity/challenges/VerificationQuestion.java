@@ -1,5 +1,6 @@
 package com.portfolio_backend.entity.challenges;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -12,6 +13,7 @@ import java.util.UUID;
 public class VerificationQuestion {
 
     @Id
+    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
     private String prompt;

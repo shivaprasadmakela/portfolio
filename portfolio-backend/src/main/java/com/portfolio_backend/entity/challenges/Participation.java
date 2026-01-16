@@ -1,5 +1,6 @@
 package com.portfolio_backend.entity.challenges;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -17,10 +18,13 @@ import java.util.UUID;
 public class Participation {
 
     @Id
+    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
+    @Column(columnDefinition = "BINARY(16)")
     private UUID userId;
 
+    @Column(columnDefinition = "BINARY(16)")
     private UUID challengeId;
 
     private int currentStreak;
