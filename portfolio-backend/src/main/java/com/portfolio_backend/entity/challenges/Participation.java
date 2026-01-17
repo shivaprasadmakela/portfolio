@@ -1,30 +1,24 @@
 package com.portfolio_backend.entity.challenges;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 @Table(
-        name = "user_challenge_participation",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id","challenge_id"})
+        name = "user_challenge_participation"
 )
 @Data
 public class Participation {
 
     @Id
-    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(columnDefinition = "BINARY(16)")
     private UUID userId;
 
-    @Column(columnDefinition = "BINARY(16)")
     private UUID challengeId;
 
     private int currentStreak;

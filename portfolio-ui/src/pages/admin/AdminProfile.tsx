@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import styles from '../../styles/admin/Admin.module.css';
 
 const AdminProfile: React.FC = () => {
