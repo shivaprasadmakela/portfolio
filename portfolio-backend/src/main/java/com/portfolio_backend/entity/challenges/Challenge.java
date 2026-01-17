@@ -1,6 +1,5 @@
 package com.portfolio_backend.entity.challenges;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -14,7 +13,6 @@ import java.util.UUID;
 public class Challenge {
 
     @Id
-    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
     private String title;
@@ -27,5 +25,5 @@ public class Challenge {
 
     private int durationDays;
 
-    private Boolean active;
+    private Boolean isActive;
 }
