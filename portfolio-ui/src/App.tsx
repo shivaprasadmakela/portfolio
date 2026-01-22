@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import BlogList from './pages/BlogList';
 import Home from './pages/Home';
@@ -23,6 +24,12 @@ import NotFound from './pages/error/NotFound';
 import Forbidden from './pages/error/Forbidden';
 
 function App() {
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
+
   return (
     <Router>
       <ScrollToTop />
