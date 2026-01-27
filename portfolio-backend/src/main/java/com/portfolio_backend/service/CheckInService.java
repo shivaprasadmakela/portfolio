@@ -1,12 +1,14 @@
 package com.portfolio_backend.service;
 
+import com.portfolio_backend.exception.CheckInException;
+
+import com.portfolio_backend.dto.challenges.CheckInRequest;
 import com.portfolio_backend.dto.challenges.CheckInResponse;
-import com.portfolio_backend.entity.challenges.Challenge;
 import com.portfolio_backend.entity.challenges.DailyCheckIn;
 import com.portfolio_backend.entity.challenges.Participation;
 import com.portfolio_backend.repository.challenges.DailyCheckInRepository;
 import com.portfolio_backend.repository.challenges.ParticipationRepository;
-import com.portfolio_backend.repository.challenges.ChallengeRepository;
+import com.portfolio_backend.repository.UserRepository;
 import com.portfolio_backend.util.IstTimeUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ import com.portfolio_backend.repository.challenges.VerificationQuestionRepositor
 import java.util.List;
 import com.portfolio_backend.dto.challenges.LeaderboardEntry;
 import java.time.LocalDate;
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -28,68 +30,86 @@ public class CheckInService {
 
     private final ParticipationRepository participationRepo;
     private final DailyCheckInRepository checkRepo;
-    private final ChallengeRepository challengeRepo;
     private final VerificationQuestionRepository questionRepo;
+    private final UserRepository userRepo;
 
-    public List<LeaderboardEntry> getLeaderboard(UUID challengeId) {
-        return participationRepo.findLeaderboardByChallengeId(challengeId);
+    public List<LeaderboardEntry> getLeaderboard() {
+        return participationRepo.findAllLeaderboard();
     }
 
     public VerificationQuestion getRandomQuestion() {
-        return questionRepo.findRandomQuestion()
-                .orElseThrow(() -> new RuntimeException("No verification questions found"));
+        List<VerificationQuestion> activeQuestions = questionRepo.findAllByIsActiveTrueOrderByIdAsc();
+        if (activeQuestions.isEmpty()) {
+            throw new CheckInException("No verification questions found");
+        }
+
+        long dayIndex = IstTimeUtil.today().toEpochDay();
+        int questionIndex = (int) (dayIndex % activeQuestions.size());
+
+        return activeQuestions.get(questionIndex);
+        
     }
 
     @Transactional
-    public CheckInResponse checkIn(UUID userId, UUID challengeId, UUID questionId, String answer) {
+    public CheckInResponse checkIn(CheckInRequest request) {
+        String email = request.getEmail().trim().toLowerCase();
+        String name = request.getName().trim();
 
-        VerificationQuestion q = questionRepo.findById(questionId)
-                .orElseThrow(() -> new RuntimeException("Question not found"));
-
-        if (answer == null || !hashAnswer(answer.trim().toLowerCase()).equals(q.getAnswerHash())) {
-            throw new RuntimeException("Incorrect answer. Please try again.");
-        }
-
-        Challenge c = challengeRepo.findById(challengeId)
-                .orElseThrow(() -> new RuntimeException("Challenge not found"));
-
-        if (!IstTimeUtil.inWindow(c.getWindowStart(), c.getWindowEnd())) {
-            throw new RuntimeException("Allowed only in challenge window");
-        }
+        com.portfolio_backend.entity.User user = getOrCreateUser(email, name);
+        validateAnswer(request.getQuestionId(), request.getAnswer());
+        Participation p = getOrCreateParticipation(user.getId());
 
         LocalDate today = IstTimeUtil.today();
-
-        Participation p = participationRepo
-                .findByUserIdAndChallengeId(userId, challengeId)
-                .orElseThrow(() -> new RuntimeException("User not joined"));
-
         if (checkRepo.existsByParticipationIdAndCheckInDate(p.getId(), today)) {
-            throw new RuntimeException("Already checked in today");
+            throw new CheckInException("Already checked in today");
         }
 
+        updateStreaks(p, today);
+        recordDailyCheckIn(p.getId(), today);
+
+        return new CheckInResponse(p.getCurrentStreak(), p.getLongestStreak());
+    }
+
+    private com.portfolio_backend.entity.User getOrCreateUser(String email, String name) {
+        return userRepo.findByEmail(email)
+                .orElseGet(() -> userRepo.save(new com.portfolio_backend.entity.User()
+                        .setEmail(email)
+                        .setName(name)));
+    }
+
+    private void validateAnswer(Long questionId, String answer) {
+        questionRepo.findById(questionId)
+                .filter(q -> q.getAnswerHash().equals(hashAnswer(answer.trim().toLowerCase())))
+                .orElseThrow(() -> new CheckInException("Incorrect answer. Please try again."));
+    }
+
+    private Participation getOrCreateParticipation(Long userId) {
+        return participationRepo.findByUserId(userId)
+                .orElseGet(() -> participationRepo.save(new Participation()
+                        .setUserId(userId)
+                        .setCurrentStreak(0)
+                        .setLongestStreak(0)
+                        .setTotalCheckIns(0)
+                        .setStatus("ACTIVE")));
+    }
+
+    private void updateStreaks(Participation p, LocalDate today) {
         LocalDate yesterday = today.minusDays(1);
+        LocalDate lastCheckInDate = p.getLastCheckIn() != null ? p.getLastCheckIn().toLocalDate() : null;
 
-        if (yesterday.equals(p.getLastCheckIn())) {
-            p.setCurrentStreak(p.getCurrentStreak() + 1);
-        } else {
-            p.setCurrentStreak(1);
-        }
-
+        p.setCurrentStreak(yesterday.equals(lastCheckInDate) ? p.getCurrentStreak() + 1 : 1);
         p.setLongestStreak(Math.max(p.getLongestStreak(), p.getCurrentStreak()));
-        p.setLastCheckIn(today);
+        p.setLastCheckIn(LocalDateTime.now());
         p.setTotalCheckIns(p.getTotalCheckIns() + 1);
 
         participationRepo.save(p);
+    }
 
-        DailyCheckIn d = new DailyCheckIn();
-        d.setId(UUID.randomUUID());
-        d.setParticipationId(p.getId());
-        d.setCheckInDate(today);
-        d.setVerified(true);
-
-        checkRepo.save(d);
-
-        return new CheckInResponse(p.getCurrentStreak(), p.getLongestStreak());
+    private void recordDailyCheckIn(Long participationId, LocalDate today) {
+        checkRepo.save(new DailyCheckIn()
+                .setParticipationId(participationId)
+                .setCheckInDate(today)
+                .setVerified(true));
     }
 
     private String hashAnswer(String answer) {

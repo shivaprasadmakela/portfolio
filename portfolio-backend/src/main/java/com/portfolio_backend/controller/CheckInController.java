@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/challenges")
@@ -23,13 +22,13 @@ public class CheckInController {
         return checkInService.getRandomQuestion();
     }
 
-    @GetMapping("/{challengeId}/leaderboard")
-    public List<LeaderboardEntry> getLeaderboard(@PathVariable UUID challengeId) {
-        return checkInService.getLeaderboard(challengeId);
+    @GetMapping("/leaderboard")
+    public List<LeaderboardEntry> getLeaderboard() {
+        return checkInService.getLeaderboard();
     }
 
-    @PostMapping("/{challengeId}/checkin")
-    public CheckInResponse checkIn(@PathVariable UUID challengeId, @RequestBody CheckInRequest request) {
-        return checkInService.checkIn(request.getUserId(), challengeId, request.getQuestionId(), request.getAnswer());
+    @PostMapping("/checkin")
+    public CheckInResponse checkIn(@RequestBody CheckInRequest request) {
+        return checkInService.checkIn(request);
     }
 }

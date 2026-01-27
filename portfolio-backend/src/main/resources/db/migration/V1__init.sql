@@ -1,118 +1,66 @@
--- -----------------------------------------------------
--- USERS
--- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `users`;
+CREATE DATABASE IF NOT EXISTS `portfolio` DEFAULT CHARACTER SET `UTF8MB4` COLLATE `UTF8MB4_UNICODE_CI`;
 
-CREATE TABLE `users`
-(
-    `ID`             BINARY(16)     NOT NULL COMMENT 'Primary key. UUID stored in binary form.',
-    `EMAIL`          VARCHAR(255)   NOT NULL COMMENT 'Unique email identifier for the user.',
-    `NAME`           VARCHAR(255)   NOT NULL COMMENT 'Display name of the user.',
-    `PASSWORD_HASH`  TEXT           NULL COMMENT 'Hashed password (used later for auth).',
-    `CREATED_AT`     TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'User creation time.',
-    `LAST_LOGIN_AT`  TIMESTAMP      NULL COMMENT 'Last login timestamp.',
+USE `portfolio`;
 
+-- 1. USERS
+DROP TABLE IF EXISTS `portfolio`.`users`;
+CREATE TABLE `portfolio`.`users` (
+    `ID`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary key.',
+    `EMAIL`          VARCHAR(255)   NOT NULL COMMENT 'User email address.',
+    `NAME`           VARCHAR(255)   NOT NULL COMMENT 'User full name.',
+    `PASSWORD_HASH`  TEXT           NULL COMMENT 'Hashed password.',
+    `LAST_LOGIN_AT`  TIMESTAMP      NULL COMMENT 'Last login time.',
+    `IS_ACTIVE`      TINYINT        NOT NULL DEFAULT 1 COMMENT 'Status of the user.',
+    `CREATED_AT`     TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time when this record was created.',
+    `UPDATED_AT`     TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Time when this record was last updated.',
     PRIMARY KEY (`ID`),
     UNIQUE KEY `UK_USERS_EMAIL` (`EMAIL`)
-)
-ENGINE = InnoDB
-DEFAULT CHARSET = `utf8mb4`
-COLLATE = `utf8mb4_unicode_ci`;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -----------------------------------------------------
--- CHALLENGES
--- -----------------------------------------------------
-
-DROP TABLE IF EXISTS `challenges`;
-
-CREATE TABLE `challenges`
-(
-    `ID`             BINARY(16)   NOT NULL COMMENT 'Primary key. UUID of the challenge.',
-    `TITLE`          VARCHAR(255) NOT NULL COMMENT 'Challenge title.',
-    `DESCRIPTION`    TEXT         NULL COMMENT 'Challenge description.',
-    `WINDOW_START`   TIME         NOT NULL COMMENT 'Daily submission window start time (IST).',
-    `WINDOW_END`     TIME         NOT NULL COMMENT 'Daily submission window end time (IST).',
-    `DURATION_DAYS`  INT          NOT NULL COMMENT 'Challenge duration in days.',
-    `IS_ACTIVE`      TINYINT      NOT NULL DEFAULT 1 COMMENT 'Is challenge active?',
-    `CREATED_AT`     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Creation timestamp.',
-
+-- 2. VERIFICATION QUESTIONS
+DROP TABLE IF EXISTS `portfolio`.`verification_questions`;
+CREATE TABLE `portfolio`.`verification_questions` (
+    `ID`                   BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary key.',
+    `QUESTION`             TEXT           NOT NULL COMMENT 'Question text.',
+    `ANSWER_HASH`          VARCHAR(64)    NOT NULL COMMENT 'SHA-256 hash of the answer.',
+    `PLACEHOLDER`          VARCHAR(255)   NULL COMMENT 'Input placeholder hint.',
+    `DIFFICULTY`           INT            NOT NULL DEFAULT 1 COMMENT 'Difficulty level.',
+    `IS_ACTIVE`            TINYINT        NOT NULL DEFAULT 1 COMMENT 'Flag for active status.',
+    `CREATED_AT`           TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time when this record was created.',
+    `UPDATED_AT`           TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Time when this record was last updated.',
     PRIMARY KEY (`ID`)
-)
-ENGINE = InnoDB
-DEFAULT CHARSET = `utf8mb4`
-COLLATE = `utf8mb4_unicode_ci`;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -----------------------------------------------------
--- USER CHALLENGE PARTICIPATION
--- -----------------------------------------------------
-
-DROP TABLE IF EXISTS `user_challenge_participation`;
-
-CREATE TABLE `user_challenge_participation`
-(
-    `ID`              BINARY(16) NOT NULL COMMENT 'Primary key. UUID.',
-    `USER_ID`         BINARY(16) NOT NULL COMMENT 'FK → users.ID',
-    `CHALLENGE_ID`    BINARY(16) NOT NULL COMMENT 'FK → challenges.ID',
-    `CURRENT_STREAK`  INT       NOT NULL DEFAULT 0 COMMENT 'Current active streak.',
-    `LONGEST_STREAK`  INT       NOT NULL DEFAULT 0 COMMENT 'Longest streak achieved.',
-    `LAST_CHECK_IN`   DATE      NULL COMMENT 'Last successful check-in date (IST).',
-    `TOTAL_CHECK_INS` INT       NOT NULL DEFAULT 0 COMMENT 'Total number of check-ins.',
-    `STATUS`          VARCHAR(30) NOT NULL DEFAULT 'ACTIVE' COMMENT 'ACTIVE / COMPLETED / BANNED',
-    `CREATED_AT`      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Join timestamp.',
-
+-- 3. USER PARTICIPATION
+DROP TABLE IF EXISTS `portfolio`.`user_participation`;
+CREATE TABLE `portfolio`.`user_participation` (
+    `ID`              BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary key.',
+    `USER_ID`         BIGINT UNSIGNED NOT NULL COMMENT 'ID of the user associated with this participation.',
+    `CURRENT_STREAK`  INT            NOT NULL DEFAULT 0 COMMENT 'Current check-in streak.',
+    `LONGEST_STREAK`  INT            NOT NULL DEFAULT 0 COMMENT 'Longest check-in streak.',
+    `LAST_CHECK_IN`   TIMESTAMP      NULL COMMENT 'Timestamp of last check-in.',
+    `TOTAL_CHECK_INS` INT            NOT NULL DEFAULT 0 COMMENT 'Total number of check-ins.',
+    `STATUS`          VARCHAR(30)    NOT NULL DEFAULT 'ACTIVE' COMMENT 'Status of the participation.',
+    `IS_ACTIVE`       TINYINT        NOT NULL DEFAULT 1 COMMENT 'Flag for active status.',
+    `CREATED_AT`      TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time when this record was created.',
+    `UPDATED_AT`      TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Time when this record was last updated.',
     PRIMARY KEY (`ID`),
-    UNIQUE KEY `UK_USER_CHALLENGE` (`USER_ID`, `CHALLENGE_ID`),
-    CONSTRAINT `FK_PARTICIPATION_USER`
-        FOREIGN KEY (`USER_ID`) REFERENCES `users` (`ID`),
-    CONSTRAINT `FK_PARTICIPATION_CHALLENGE`
-        FOREIGN KEY (`CHALLENGE_ID`) REFERENCES `challenges` (`ID`)
-)
-ENGINE = InnoDB
-DEFAULT CHARSET = `utf8mb4`
-COLLATE = `utf8mb4_unicode_ci`;
+    UNIQUE KEY `UK_USER_PARTICIPATION` (`USER_ID`),
+    CONSTRAINT `FK_PARTICIPATION_USER` FOREIGN KEY (`USER_ID`) REFERENCES `users` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- -----------------------------------------------------
--- DAILY CHECK-INS
--- -----------------------------------------------------
-
-DROP TABLE IF EXISTS `daily_check_ins`;
-
-CREATE TABLE `daily_check_ins`
-(
-    `ID`                BINARY(16) NOT NULL COMMENT 'Primary key. UUID.',
-    `PARTICIPATION_ID`  BINARY(16) NOT NULL COMMENT 'FK → user_challenge_participation.ID',
-    `CHECK_IN_DATE`     DATE       NOT NULL COMMENT 'Check-in date (IST).',
-    `VERIFIED`          TINYINT    NOT NULL DEFAULT 1 COMMENT 'Was verification successful?',
-    `CREATED_AT`        TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Check-in time.',
-
+-- 4. DAILY CHECK-INS
+DROP TABLE IF EXISTS `portfolio`.`daily_check_ins`;
+CREATE TABLE `portfolio`.`daily_check_ins` (
+    `ID`                BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary key.',
+    `PARTICIPATION_ID`  BIGINT UNSIGNED NOT NULL COMMENT 'ID of the participation associated with this check-in.',
+    `CHECK_IN_DATE`     DATE           NOT NULL COMMENT 'Date of the check-in.',
+    `VERIFIED`          TINYINT        NOT NULL DEFAULT 1 COMMENT 'Flag to check if this check-in is verified.',
+    `IS_ACTIVE`         TINYINT        NOT NULL DEFAULT 1 COMMENT 'Flag for active status.',
+    `CREATED_AT`        TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time when this record was created.',
+    `UPDATED_AT`        TIMESTAMP      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Time when this record was last updated.',
     PRIMARY KEY (`ID`),
     UNIQUE KEY `UK_DAILY_CHECKIN` (`PARTICIPATION_ID`, `CHECK_IN_DATE`),
-    CONSTRAINT `FK_CHECKIN_PARTICIPATION`
-        FOREIGN KEY (`PARTICIPATION_ID`) REFERENCES `user_challenge_participation` (`ID`)
-)
-ENGINE = InnoDB
-DEFAULT CHARSET = `utf8mb4`
-COLLATE = `utf8mb4_unicode_ci`;
-
--- -----------------------------------------------------
--- VERIFICATION QUESTIONS
--- -----------------------------------------------------
-
-DROP TABLE IF EXISTS `verification_questions`;
-
-CREATE TABLE `verification_questions`
-(
-    `ID`                   BINARY(16) NOT NULL COMMENT 'Primary key. UUID.',
-    `QUESTION`             TEXT       NOT NULL COMMENT 'Verification question text.',
-    `ANSWER_HASH`          VARCHAR(64) NOT NULL COMMENT 'SHA-256 hash of correct answer.',
-    `PLACEHOLDER`          VARCHAR(255) NULL COMMENT 'UI placeholder hint.',
-    `DIFFICULTY`           INT        NOT NULL DEFAULT 1 COMMENT 'Difficulty level.',
-    `IS_ACTIVE`            TINYINT    NOT NULL DEFAULT 1 COMMENT 'Is question active?',
-    `CREATED_AT`           TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Creation time.',
-
-    PRIMARY KEY (`ID`)
-)
-ENGINE = InnoDB
-DEFAULT CHARSET = `utf8mb4`
-COLLATE = `utf8mb4_unicode_ci`;
+    CONSTRAINT `FK_CHECKIN_PARTICIPATION` FOREIGN KEY (`PARTICIPATION_ID`) REFERENCES `user_participation` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

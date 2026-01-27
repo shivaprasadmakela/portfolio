@@ -1,27 +1,26 @@
 package com.portfolio_backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.portfolio_backend.entity.base.BaseEntity;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 @Data
-public class User {
-
-    @Id
-    private UUID id;
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Accessors(chain = true)
+public class User extends BaseEntity<User> {
 
     private String email;
 
     private String name;
 
     private String passwordHash;
-
-    private LocalDateTime createdAt;
 
     private LocalDateTime lastLoginAt;
 }

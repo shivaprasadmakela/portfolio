@@ -1,21 +1,22 @@
 package com.portfolio_backend.entity.challenges;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.portfolio_backend.entity.base.BaseEntity;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Table(name = "daily_check_ins")
 @Data
-public class DailyCheckIn {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Accessors(chain = true)
+public class DailyCheckIn extends BaseEntity<DailyCheckIn> {
 
-    @Id
-    private UUID id;
-
-    private UUID participationId;
+    private Long participationId;
 
     private LocalDate checkInDate;
 

@@ -1,18 +1,19 @@
 package com.portfolio_backend.entity.challenges;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.portfolio_backend.entity.base.BaseEntity;
+import jakarta.persistence.*;
 import lombok.Data;
-import java.util.UUID;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 
 @Entity
 @Table(name = "verification_questions")
 @Data
-public class VerificationQuestion {
-
-    @Id
-    private UUID id;
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Accessors(chain = true)
+public class VerificationQuestion extends BaseEntity<VerificationQuestion> {
 
     private String question;
 
@@ -21,6 +22,4 @@ public class VerificationQuestion {
     private String placeholder;
 
     private int difficulty;
-
-    private Boolean isActive;
 }

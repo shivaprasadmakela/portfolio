@@ -1,31 +1,28 @@
 package com.portfolio_backend.entity.challenges;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.portfolio_backend.entity.base.BaseEntity;
+import jakarta.persistence.*;
 import lombok.Data;
-import java.time.LocalDate;
-import java.util.UUID;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(
-        name = "user_challenge_participation"
-)
+@Table(name = "user_participation")
 @Data
-public class Participation {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Accessors(chain = true)
+public class Participation extends BaseEntity<Participation> {
 
-    @Id
-    private UUID id;
-
-    private UUID userId;
-
-    private UUID challengeId;
+    private Long userId;
 
     private int currentStreak;
 
     private int longestStreak;
 
-    private LocalDate lastCheckIn;
+    private LocalDateTime lastCheckIn;
 
     private int totalCheckIns;
 
