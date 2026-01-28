@@ -33,10 +33,14 @@ export const CheckInCard: React.FC<{ onSuccess: (newData?: LeaderboardEntry[]) =
             setWindowStatus(isSubmissionWindowActive());
         }, 1000);
 
-        fetchQuestion();
-
         return () => clearInterval(timer);
     }, []);
+
+    useEffect(() => {
+        if (windowStatus.active && !question && !isLoading) {
+            fetchQuestion();
+        }
+    }, [windowStatus.active, question, isLoading]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
