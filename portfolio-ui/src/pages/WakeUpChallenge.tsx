@@ -1,5 +1,5 @@
 /* src/pages/WakeUpChallenge.tsx */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/home/Header';
 import { ChallengeHero } from '../components/challenge/ChallengeHero';
 import { CheckInCard } from '../components/challenge/CheckInCard';
@@ -7,11 +7,36 @@ import { Leaderboard } from '../components/challenge/Leaderboard';
 import styles from '../styles/Challenge.module.css';
 import FadeInSection from '../components/FadeInSection';
 
-const WakeUpChallenge: React.FC = () => {
-    const [refreshKey, setRefreshKey] = useState(0);
+import { challengeApi, type LeaderboardEntry } from '../api/challengeApi';
 
-    const handleSuccessfulCheckIn = () => {
-        setRefreshKey(prev => prev + 1);
+const WakeUpChallenge: React.FC = () => {
+    const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState('');
+
+    const fetchLeaderboard = async () => {
+        setIsLoading(true);
+        try {
+            const data = await challengeApi.getLeaderboard();
+            setLeaderboardData(data);
+            setError('');
+        } catch (err: any) {
+            setError('Failed to load leaderboard.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchLeaderboard();
+    }, []);
+
+    const handleSuccessfulCheckIn = (newData?: LeaderboardEntry[]) => {
+        if (newData) {
+            setLeaderboardData(newData);
+        } else {
+            fetchLeaderboard();
+        }
     };
 
     const scrollToJoin = () => {
@@ -35,7 +60,7 @@ const WakeUpChallenge: React.FC = () => {
                 </FadeInSection>
 
                 <FadeInSection>
-                    <Leaderboard key={refreshKey} />
+                    <Leaderboard users={leaderboardData} isLoading={isLoading} error={error} />
                 </FadeInSection>
             </main>
 

@@ -67,7 +67,11 @@ public class CheckInService {
         updateStreaks(p, today);
         recordDailyCheckIn(p.getId(), today);
 
-        return new CheckInResponse(p.getCurrentStreak(), p.getLongestStreak());
+        String message = p.getCurrentStreak() > 1 
+            ? String.format("Streak continued! Day %d locked in. 🔥", p.getCurrentStreak())
+            : "Welcome to the challenge! Day 1 locked in. 🔥";
+
+        return new CheckInResponse(true, message, p.getCurrentStreak(), p.getLongestStreak());
     }
 
     private com.portfolio_backend.entity.User getOrCreateUser(String email, String name) {

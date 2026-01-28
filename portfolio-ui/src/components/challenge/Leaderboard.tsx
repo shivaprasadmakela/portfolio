@@ -1,10 +1,15 @@
 import React from 'react';
 import styles from '../../styles/Challenge.module.css';
-import { getLeaderboard } from '../../utils/streakUtils';
+import type { LeaderboardEntry } from '../../api/challengeApi';
+import { formatDateTime } from '../../utils/timeUtils';
 
-export const Leaderboard: React.FC = () => {
-    const users = getLeaderboard();
+interface LeaderboardProps {
+    users: LeaderboardEntry[];
+    isLoading: boolean;
+    error: string;
+}
 
+export const Leaderboard: React.FC<LeaderboardProps> = ({ users, isLoading, error }) => {
     return (
         <div className={styles.card}>
             <header className={styles.leaderboardHeader}>
@@ -24,7 +29,19 @@ export const Leaderboard: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.length === 0 ? (
+                        {isLoading ? (
+                            <tr>
+                                <td colSpan={5} className={styles.td} style={{ textAlign: 'center', color: 'var(--color-text-secondary)' }}>
+                                    Loading leaderboard...
+                                </td>
+                            </tr>
+                        ) : error ? (
+                            <tr>
+                                <td colSpan={5} className={styles.td} style={{ textAlign: 'center', color: 'red' }}>
+                                    {error}
+                                </td>
+                            </tr>
+                        ) : users.length === 0 ? (
                             <tr>
                                 <td colSpan={5} className={styles.td} style={{ textAlign: 'center', color: 'var(--color-text-secondary)' }}>
                                     No submissions yet. Be the first!
@@ -42,7 +59,7 @@ export const Leaderboard: React.FC = () => {
                                     <td className={styles.td}>{user.name}</td>
                                     <td className={styles.td}><span className={styles.streak}>{user.currentStreak} days</span></td>
                                     <td className={styles.td}>{user.longestStreak} days</td>
-                                    <td className={styles.td}>{user.lastCheckIn}</td>
+                                    <td className={styles.td}>{formatDateTime(user.lastCheckIn)}</td>
                                 </tr>
                             ))
                         )}

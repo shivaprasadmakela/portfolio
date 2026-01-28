@@ -18,6 +18,11 @@ export const getISTDateString = (date: Date = getCurrentIST()): string => {
 };
 
 export const isSubmissionWindowActive = (): { active: boolean; reason?: string } => {
+ 
+  if (import.meta.env.VITE_TEST_MODE === 'true') {
+    return { active: true };
+  }
+
   const ist = getCurrentIST();
   const hours = ist.getHours();
   // window is 5:00:00 to 5:59:59
@@ -39,4 +44,25 @@ export const getISTTimeDisplay = (): string => {
     second: '2-digit',
     hour12: true
   }) + " IST";
+};
+export const formatDateTime = (dateStr: string): string => {
+  if (!dateStr) return 'N/A';
+  const date = new Date(dateStr);
+  
+ 
+  const datePart = date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  });
+
+  
+  const timePart = date.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true
+  });
+  
+  return `${datePart} ${timePart}`;
 };
