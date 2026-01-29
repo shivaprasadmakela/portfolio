@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Table(name = "user_participation")
@@ -22,7 +22,7 @@ public class Participation extends BaseEntity<Participation> {
 
     private int longestStreak;
 
-    private LocalDateTime lastCheckIn;
+    private Instant lastCheckIn;
 
     private int totalCheckIns;
 

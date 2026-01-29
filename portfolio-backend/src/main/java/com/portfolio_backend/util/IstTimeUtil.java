@@ -12,6 +12,11 @@ public class IstTimeUtil {
         return LocalDate.now(IST);
     }
 
+    public static LocalDate toLocalDate(java.time.Instant instant) {
+        if (instant == null) return null;
+        return instant.atZone(IST).toLocalDate();
+    }
+
     public static LocalTime timeNow() {
         return LocalTime.now(IST);
     }

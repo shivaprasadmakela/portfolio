@@ -21,8 +21,8 @@ import com.portfolio_backend.entity.challenges.VerificationQuestion;
 import com.portfolio_backend.repository.challenges.VerificationQuestionRepository;
 import java.util.List;
 import com.portfolio_backend.dto.challenges.LeaderboardEntry;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -99,11 +99,11 @@ public class CheckInService {
 
     private void updateStreaks(Participation p, LocalDate today) {
         LocalDate yesterday = today.minusDays(1);
-        LocalDate lastCheckInDate = p.getLastCheckIn() != null ? p.getLastCheckIn().toLocalDate() : null;
+        LocalDate lastCheckInDate = IstTimeUtil.toLocalDate(p.getLastCheckIn());
 
         p.setCurrentStreak(yesterday.equals(lastCheckInDate) ? p.getCurrentStreak() + 1 : 1);
         p.setLongestStreak(Math.max(p.getLongestStreak(), p.getCurrentStreak()));
-        p.setLastCheckIn(LocalDateTime.now());
+        p.setLastCheckIn(Instant.now());
         p.setTotalCheckIns(p.getTotalCheckIns() + 1);
 
         participationRepo.save(p);
