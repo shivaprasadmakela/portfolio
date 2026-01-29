@@ -45,6 +45,38 @@ export const getISTTimeDisplay = (): string => {
     hour12: true
   }) + " IST";
 };
+
+export const getCountdown = (): { label: string; time: string } => {
+  const now = getCurrentIST();
+  const hours = now.getHours();
+  
+  const target = new Date(now);
+  target.setMinutes(0);
+  target.setSeconds(0);
+  target.setMilliseconds(0);
+
+  let label = "";
+  if (hours < 5) {
+    label = "Opens in";
+    target.setHours(5);
+  } else if (hours === 5) {
+    label = "Closes in";
+    target.setHours(6);
+  } else {
+    label = "Opens in";
+    target.setDate(target.getDate() + 1);
+    target.setHours(5);
+  }
+
+  const diff = target.getTime() - now.getTime();
+  const h = Math.floor(diff / (1000 * 60 * 60));
+  const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+  const time = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  
+  return { label, time };
+};
 export const formatDateTime = (dateStr: string): string => {
   if (!dateStr) return 'N/A';
   const date = new Date(dateStr);

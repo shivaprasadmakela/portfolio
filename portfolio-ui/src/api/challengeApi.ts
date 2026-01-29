@@ -22,7 +22,6 @@ export interface CheckInResponse {
 
 export interface LeaderboardEntry {
     name: string;
-    email: string;
     currentStreak: number;
     longestStreak: number;
     lastCheckIn: string;

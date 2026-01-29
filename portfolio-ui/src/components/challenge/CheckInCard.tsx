@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../../styles/Challenge.module.css';
-import { getISTTimeDisplay, isSubmissionWindowActive } from '../../utils/timeUtils';
+import { getISTTimeDisplay, isSubmissionWindowActive, getCountdown } from '../../utils/timeUtils';
 import { challengeApi } from '../../api/challengeApi';
 import type { VerificationQuestion, LeaderboardEntry } from '../../api/challengeApi';
 import { Input, Button } from '../ui';
 
 export const CheckInCard: React.FC<{ onSuccess: (newData?: LeaderboardEntry[]) => void }> = ({ onSuccess }) => {
     const [currentTime, setCurrentTime] = useState(getISTTimeDisplay());
+    const [countdown, setCountdown] = useState(getCountdown());
     const [windowStatus, setWindowStatus] = useState(isSubmissionWindowActive());
     const [formData, setFormData] = useState({ name: '', email: '', answer: '' });
     const [question, setQuestion] = useState<VerificationQuestion | null>(null);
@@ -30,6 +31,7 @@ export const CheckInCard: React.FC<{ onSuccess: (newData?: LeaderboardEntry[]) =
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentTime(getISTTimeDisplay());
+            setCountdown(getCountdown());
             setWindowStatus(isSubmissionWindowActive());
         }, 1000);
 
@@ -87,7 +89,13 @@ export const CheckInCard: React.FC<{ onSuccess: (newData?: LeaderboardEntry[]) =
         <div className={styles.card} id="check-in-section">
             <div className={styles.cardHeader}>
                 <h2 className={styles.cardTitle}>Daily Wake-Up Check-In</h2>
-                <div className={styles.liveClock}>{currentTime}</div>
+                <div className={styles.timeInfo}>
+                    <div className={styles.countdown}>
+                        <span className={styles.countdownLabel}>{countdown.label}:</span>
+                        <span className={styles.countdownValue}>{countdown.time}</span>
+                    </div>
+                    <div className={styles.liveClock}>{currentTime}</div>
+                </div>
             </div>
 
             {!windowStatus.active ? (

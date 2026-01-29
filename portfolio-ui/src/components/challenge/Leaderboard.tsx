@@ -49,7 +49,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ users, isLoading, erro
                             </tr>
                         ) : (
                             users.map((user, index) => (
-                                <tr key={user.email} className={index < 3 ? styles.topRow : ''}>
+                                <tr key={index} className={index < 3 ? styles.topRow : ''}>
                                     <td className={styles.td}>
                                         <span className={styles.rank}>#{index + 1}</span>
                                         {index === 0 && <span className={styles.trophy}>🥇</span>}
