@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiMail, FiLock, FiEye, FiEyeOff, FiAlertCircle } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 import styles from '../../styles/admin/Admin.module.css';
 
@@ -12,6 +14,8 @@ const LoginPage: React.FC = () => {
     const location = useLocation();
 
     const from = location.state?.from?.pathname || '/admin/dashboard';
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,42 +31,115 @@ const LoginPage: React.FC = () => {
 
     return (
         <div className={styles.loginContainer}>
-            <div className={styles.loginCard}>
+            <div className={styles.loginBackgroundDecoration}>
+                <div
+                    className={styles.decorationCircle}
+                    style={{ top: '10%', right: '15%', width: '400px', height: '400px', background: 'var(--color-text-primary-green)' }}
+                />
+                <div
+                    className={styles.decorationCircle}
+                    style={{ bottom: '10%', left: '10%', width: '350px', height: '350px', background: 'rgba(60, 207, 145, 0.4)' }}
+                />
+            </div>
+
+            <motion.div
+                className={styles.loginCard}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+            >
                 <div className={styles.loginHeader}>
-                    <h1>Admin Portal</h1>
-                    <p>Login to manage question sets</p>
+                    <motion.h1
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2, duration: 0.5 }}
+                    >
+                        Admin Portal
+                    </motion.h1>
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.3, duration: 0.5 }}
+                    >
+                        Login to manage question sets
+                    </motion.p>
                 </div>
 
-                {error && <div className={styles.errorMsg}>{error}</div>}
+                <AnimatePresence mode="wait">
+                    {error && (
+                        <motion.div
+                            className={styles.errorMsg}
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                        >
+                            <FiAlertCircle /> {error}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
                 <form onSubmit={handleSubmit}>
-                    <div className={styles.formGroup}>
-                        <label htmlFor="email">Email</label>
-                        <input
-                            id="email"
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Enter email"
-                            required
-                        />
-                    </div>
-                    <div className={styles.formGroup}>
+                    <motion.div
+                        className={styles.formGroup}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.4, duration: 0.5 }}
+                    >
+                        <label htmlFor="email">Email Address</label>
+                        <div className={styles.inputWrapper}>
+                            <FiMail className={styles.inputIcon} />
+                            <input
+                                id="email"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="name@example.com"
+                                required
+                            />
+                        </div>
+                    </motion.div>
+
+                    <motion.div
+                        className={styles.formGroup}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.5, duration: 0.5 }}
+                    >
                         <label htmlFor="password">Password</label>
-                        <input
-                            id="password"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Enter password"
-                            required
-                        />
-                    </div>
-                    <button type="submit" className={styles.loginButton}>
+                        <div className={styles.inputWrapper}>
+                            <FiLock className={styles.inputIcon} />
+                            <input
+                                id="password"
+                                type={showPassword ? "text" : "password"}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="••••••••"
+                                required
+                            />
+                            <button
+                                type="button"
+                                className={styles.passwordToggle}
+                                onClick={() => setShowPassword(!showPassword)}
+                                tabIndex={-1}
+                            >
+                                {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+                            </button>
+                        </div>
+                    </motion.div>
+
+                    <motion.button
+                        type="submit"
+                        className={styles.loginButton}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.6, duration: 0.5 }}
+                    >
                         Sign In
-                    </button>
+                    </motion.button>
                 </form>
-            </div>
+            </motion.div>
         </div>
     );
 };
