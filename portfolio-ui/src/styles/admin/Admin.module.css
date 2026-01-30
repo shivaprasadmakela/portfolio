@@ -2,10 +2,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
     background: radial-gradient(circle at top right, rgba(60, 207, 145, 0.1), transparent 40%),
-                radial-gradient(circle at bottom left, rgba(60, 207, 145, 0.05), transparent 40%),
-                var(--color-background);
+        radial-gradient(circle at bottom left, rgba(60, 207, 145, 0.05), transparent 40%),
+        var(--color-background);
     color: var(--color-text-primary);
     padding: 20px;
     position: relative;
@@ -51,6 +52,7 @@
     margin-bottom: 12px;
     background: linear-gradient(135deg, #fff 0%, var(--color-text-primary-green) 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.025em;
 }

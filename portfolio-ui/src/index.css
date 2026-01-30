@@ -35,6 +35,7 @@ pre {
 
 /* index.css or global.css */
 * {
+  box-sizing: border-box;
   scrollbar-width: thin;
   scrollbar-color: var(--color-background) var(--color-surface);
   /* thumb, track for Firefox */
