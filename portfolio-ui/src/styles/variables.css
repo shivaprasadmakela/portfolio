@@ -9,6 +9,12 @@
 
   --primary-margin: 0 150px 0 150px;
 
+  --bg-gradient-main: radial-gradient(circle at top right, rgba(60, 207, 145, 0.1), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(60, 207, 145, 0.05), transparent 40%),
+    #000000;
+  --bg-decoration-opacity: 0.15;
+  --bg-decoration-color-1: var(--color-text-primary-green);
+  --bg-decoration-color-2: rgba(60, 207, 145, 0.4);
 
   --font-size-base: 1rem;
   --font-size-display: 3rem;
@@ -28,4 +34,11 @@
   --color-surface: #f5f5f5;
   --color-border: #dddddd;
   --color-accent: #0066ff;
+
+  --bg-gradient-main: radial-gradient(circle at top right, rgba(0, 102, 68, 0.05), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(0, 102, 68, 0.03), transparent 40%),
+    #ffffff;
+  --bg-decoration-opacity: 0.1;
+  --bg-decoration-color-1: rgba(0, 102, 68, 0.2);
+  --bg-decoration-color-2: rgba(0, 102, 68, 0.1);
 }

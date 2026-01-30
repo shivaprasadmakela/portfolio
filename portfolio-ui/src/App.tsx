@@ -22,6 +22,7 @@ import ProtectedRoute from './components/admin/ProtectedRoute';
 // Error Pages
 import NotFound from './pages/error/NotFound';
 import Forbidden from './pages/error/Forbidden';
+import BackgroundDecoration from './components/BackgroundDecoration';
 
 function App() {
   useEffect(() => {
@@ -32,6 +33,7 @@ function App() {
 
   return (
     <Router>
+      <BackgroundDecoration />
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />

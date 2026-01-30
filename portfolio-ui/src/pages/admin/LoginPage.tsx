@@ -31,17 +31,6 @@ const LoginPage: React.FC = () => {
 
     return (
         <div className={styles.loginContainer}>
-            <div className={styles.loginBackgroundDecoration}>
-                <div
-                    className={styles.decorationCircle}
-                    style={{ top: '10%', right: '15%', width: '400px', height: '400px', background: 'var(--color-text-primary-green)' }}
-                />
-                <div
-                    className={styles.decorationCircle}
-                    style={{ bottom: '10%', left: '10%', width: '350px', height: '350px', background: 'rgba(60, 207, 145, 0.4)' }}
-                />
-            </div>
-
             <motion.div
                 className={styles.loginCard}
                 initial={{ opacity: 0, y: 20 }}
