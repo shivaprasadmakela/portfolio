@@ -1,13 +1,14 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 import {
-    MdDashboard,
-    MdLibraryBooks,
-    MdSettings,
-    MdPerson,
-    MdLogout
-} from 'react-icons/md';
+    FiGrid,
+    FiLayers,
+    FiSettings,
+    FiUser,
+    FiLogOut
+} from 'react-icons/fi';
 import styles from '../../styles/admin/Admin.module.css';
 
 const AdminSidebar: React.FC = () => {
@@ -20,21 +21,32 @@ const AdminSidebar: React.FC = () => {
     };
 
     const navItems = [
-        { name: 'Dashboard', path: '/admin/dashboard', icon: <MdDashboard size={20} /> },
-        { name: 'Question Sets', path: '/admin/question-sets', icon: <MdLibraryBooks size={20} /> },
-        { name: 'Configuration', path: '/admin/configuration', icon: <MdSettings size={20} /> },
-        { name: 'Profile', path: '/admin/profile', icon: <MdPerson size={20} /> },
+        { name: 'Dashboard', path: '/admin/dashboard', icon: <FiGrid size={20} /> },
+        { name: 'Question Sets', path: '/admin/question-sets', icon: <FiLayers size={20} /> },
+        { name: 'Configuration', path: '/admin/configuration', icon: <FiSettings size={20} /> },
+        { name: 'Profile', path: '/admin/profile', icon: <FiUser size={20} /> },
     ];
 
     return (
-        <div className={styles.sidebar}>
+        <motion.div
+            className={styles.sidebar}
+            initial={{ x: -280 }}
+            animate={{ x: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+        >
             <div className={styles.sidebarHeader}>
                 <h2>Portfolio Admin</h2>
             </div>
 
             <ul className={styles.navMenu}>
-                {navItems.map((item) => (
-                    <li key={item.path} className={styles.navItem}>
+                {navItems.map((item, index) => (
+                    <motion.li
+                        key={item.path}
+                        className={styles.navItem}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 + index * 0.05 }}
+                    >
                         <NavLink
                             to={item.path}
                             className={({ isActive }) =>
@@ -44,17 +56,17 @@ const AdminSidebar: React.FC = () => {
                             {item.icon}
                             {item.name}
                         </NavLink>
-                    </li>
+                    </motion.li>
                 ))}
             </ul>
 
             <div className={styles.sidebarFooter}>
                 <button onClick={handleLogout} className={styles.logoutBtn}>
-                    <MdLogout size={20} />
+                    <FiLogOut size={20} />
                     Logout
                 </button>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

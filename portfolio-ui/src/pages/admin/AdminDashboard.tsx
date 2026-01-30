@@ -1,40 +1,53 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { FiLayers, FiFileText, FiVideo, FiTag } from 'react-icons/fi';
 import styles from '../../styles/admin/Admin.module.css';
 
 const AdminDashboard: React.FC = () => {
+    const stats = [
+        { title: 'Total Question Sets', value: '42', icon: <FiLayers />, delay: 0.1 },
+        { title: 'Total Questions', value: '156', icon: <FiFileText />, delay: 0.2 },
+        { title: 'Video Sets', value: '12', icon: <FiVideo />, delay: 0.3 },
+        { title: 'Category Sets', value: '30', icon: <FiTag />, delay: 0.4 },
+    ];
+
     return (
         <div className={styles.dashboard}>
-            <div className={styles.pageHeader}>
+            <header className={styles.pageHeader}>
                 <h1>Dashboard</h1>
-            </div>
+            </header>
 
             <div className={styles.statsGrid}>
-                <div className={styles.statCard}>
-                    <h3>Total Question Sets</h3>
-                    <p>42</p>
-                </div>
-                <div className={styles.statCard}>
-                    <h3>Total Questions</h3>
-                    <p>156</p>
-                </div>
-                <div className={styles.statCard}>
-                    <h3>Video Sets</h3>
-                    <p>12</p>
-                </div>
-                <div className={styles.statCard}>
-                    <h3>Category Sets</h3>
-                    <p>30</p>
-                </div>
+                {stats.map((stat, index) => (
+                    <motion.div
+                        key={index}
+                        className={styles.statCard}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: stat.delay, duration: 0.5 }}
+                    >
+                        <div className={styles.statCardIcon}>
+                            {stat.icon}
+                        </div>
+                        <h3>{stat.title}</h3>
+                        <p>{stat.value}</p>
+                    </motion.div>
+                ))}
             </div>
 
-            <div style={{ marginTop: '40px', padding: '24px', backgroundColor: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)' }}>
-                <h2 style={{ marginBottom: '16px' }}>Welcome, Admin</h2>
-                <p style={{ color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>
+            <motion.div
+                className={styles.welcomeCard}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+            >
+                <h2>Welcome, Admin</h2>
+                <p>
                     This is your personal dashboard for managing interview question sets.
                     Use the sidebar to navigate between different configuration options.
                     You can add, edit, or remove question sets and individual questions.
                 </p>
-            </div>
+            </motion.div>
         </div>
     );
 };
