@@ -62,6 +62,7 @@ export default function About() {
         isOpen={isExperienceOpen}
         onClose={() => setIsExperienceOpen(false)}
         title="Experience"
+        className={styles.popup}
       >
         <Experience />
       </Modal>
@@ -70,6 +71,7 @@ export default function About() {
         isOpen={isEducationOpen}
         onClose={() => setIsEducationOpen(false)}
         title="Academic Journey"
+        className={styles.popup}
       >
         <Education isPopup />
       </Modal>

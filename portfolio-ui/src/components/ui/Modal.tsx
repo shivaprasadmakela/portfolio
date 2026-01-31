@@ -8,9 +8,10 @@ interface ModalProps {
     onClose: () => void;
     title: string;
     children: React.ReactNode;
+    className?: string;
 }
 
-export default function Modal({ isOpen, onClose, title, children }: ModalProps) {
+export default function Modal({ isOpen, onClose, title, children, className }: ModalProps) {
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -34,7 +35,7 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
                         onClick={onClose}
                     />
                     <motion.div
-                        className={styles.modalContent}
+                        className={`${styles.modalContent} ${className || ''}`}
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}

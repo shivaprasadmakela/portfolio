@@ -59,9 +59,9 @@ export default function Header() {
               )}
             </div> */}
 
-            <Link to="/youtube-sets" className={getLinkClass('/youtube-sets')} onClick={closeMenu}>YouTube Sets</Link>
+            {/* <Link to="/youtube-sets" className={getLinkClass('/youtube-sets')} onClick={closeMenu}>YouTube Sets</Link> */}
             <Link to="/challenge" className={getLinkClass('/challenge')} onClick={closeMenu}>Challenge</Link>
-            <Link to="/blogs" className={getLinkClass('/blogs')} onClick={closeMenu}>Blog</Link>
+            {/* <Link to="/blogs" className={getLinkClass('/blogs')} onClick={closeMenu}>Blog</Link> */}
           </nav>
           <ThemeToggle />
           <button className={styles.menuButton} onClick={toggleMenu} aria-label="Toggle navigation">

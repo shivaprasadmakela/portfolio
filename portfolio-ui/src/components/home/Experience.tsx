@@ -24,10 +24,6 @@ export default function Experience() {
     return (
         <section className={styles.experienceSection}>
             <div className={styles.card}>
-                <div className={styles.header}>
-                    <h2 className={styles.title}>Experience</h2>
-
-                </div>
 
                 <div className={styles.experienceList}>
                     <div className={styles.experienceItem}>
