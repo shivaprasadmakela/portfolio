@@ -15,7 +15,7 @@ export default function Projects() {
           <div className={styles.card} key={project.title}>
             <div className={styles.imageWrapper}>
               <div className={styles.imagePlaceholder}>
-                <img src={project.image} alt={project.title} className={styles.image} />
+                <img src={project.image} alt={project.title} className={styles.image} loading="lazy" />
               </div>
 
               <div className={styles.linksOverlay}>

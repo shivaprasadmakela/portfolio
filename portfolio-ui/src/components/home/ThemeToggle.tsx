@@ -25,6 +25,7 @@ export const ThemeToggle = () => {
             <img
                 src={theme === 'dark' ? sunIcon : moonIcon}
                 alt={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                loading="lazy"
                 style={{
                     width: '30px',
                     height: '30px',

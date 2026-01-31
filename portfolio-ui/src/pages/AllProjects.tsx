@@ -39,7 +39,7 @@ export default function Projects() {
         <div className={styles.grid}>
           {filteredProjects.map((project) => (
             <div key={project.title} className={styles.card}>
-              <img src={project.image} alt={project.title} className={styles.image} />
+              <img src={project.image} alt={project.title} className={styles.image} loading="lazy" />
 
               <div className={styles.cardContent}>
                 <div className={styles.cardHeader}>

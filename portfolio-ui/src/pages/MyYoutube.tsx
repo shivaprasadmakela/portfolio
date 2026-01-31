@@ -45,6 +45,7 @@ export default function MyYoutube() {
                         src={profileImage}
                         alt="Channel profile"
                         className={styles.profilePic}
+                        loading="lazy"
                     />
 
                     <div className={styles.channelDetails}>
@@ -78,7 +79,7 @@ export default function MyYoutube() {
                 <div className={styles.allVideos}>
                     {currentVideos.map((video) => (
                         <div key={video.id} className={styles.videoCards} onClick={() => setSelectedVideoId(video.id)}>
-                            <img src={video.thumbnailUrl} alt={video.title} />
+                            <img src={video.thumbnailUrl} alt={video.title} loading="lazy" />
                             <div className={styles.videoInfo}>
                                 <h4 className={styles.videoTitle}>{video.title}</h4>
                             </div>

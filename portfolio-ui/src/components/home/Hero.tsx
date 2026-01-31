@@ -59,7 +59,7 @@ export default function Hero() {
       style={{ cursor: 'pointer', display: 'inline-block', position: 'relative' }}
     >
       <section className={styles.hero}>
-        <img src={DotPattern} className={styles.pattern} alt="" />
+        <img src={DotPattern} className={styles.pattern} alt="" loading="lazy" />
         <p className={styles.greeting}>Hey there!, I'm–</p>
 
         <div

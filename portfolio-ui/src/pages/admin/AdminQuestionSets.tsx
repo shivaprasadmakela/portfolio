@@ -32,7 +32,7 @@ const AdminQuestionSets: React.FC = () => {
                         {sets.map((set) => (
                             <tr key={set.id}>
                                 <td>
-                                    <img src={set.thumbnailUrl} alt={set.title} className={styles.thumbnailSm} />
+                                    <img src={set.thumbnailUrl} alt={set.title} className={styles.thumbnailSm} loading="lazy" />
                                 </td>
                                 <td>
                                     <div style={{ fontWeight: 600 }}>{set.title}</div>
