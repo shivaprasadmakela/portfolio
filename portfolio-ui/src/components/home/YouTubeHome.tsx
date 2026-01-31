@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 export default function YouTubeHome() {
 
-    const previewVideos = youtubeVideos.slice(0, 2);
+    const previewVideos = youtubeVideos.slice(0, 3);
 
     const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 
