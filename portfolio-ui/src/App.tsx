@@ -4,10 +4,9 @@ import BlogList from './pages/BlogList';
 import Home from './pages/Home';
 import AllProjects from './pages/AllProjects';
 import MyYoutube from './pages/MyYoutube';
-import CategoryGrid from './pages/interview/CategoryGrid';
-import QuestionListView from './pages/interview/QuestionListView';
-import YoutubeSetsHub from './pages/interview/YoutubeSetsHub';
-import VideoQuestionList from './pages/interview/VideoQuestionList';
+import InterviewHub from './pages/interview/InterviewHub';
+import SetsHub from './pages/interview/SetsHub';
+import CollectionDetail from './pages/interview/CollectionDetail';
 import WakeUpChallenge from './pages/WakeUpChallenge';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -40,10 +39,13 @@ function App() {
         <Route path="/blogs" element={<BlogList />} />
         <Route path="/projects" element={<AllProjects />} />
         <Route path="/myYoutube" element={<MyYoutube />} />
-        <Route path="/interview-prep" element={<CategoryGrid />} />
-        <Route path="/interview-prep/:categoryId" element={<QuestionListView />} />
-        <Route path="/youtube-sets" element={<YoutubeSetsHub />} />
-        <Route path="/youtube-sets/:videoId" element={<VideoQuestionList />} />
+
+
+        {/* V3 Interview Routes */}
+        <Route path="/interview" element={<InterviewHub />} />
+        <Route path="/interview/sets" element={<SetsHub />} />
+        <Route path="/interview/collection/:id" element={<CollectionDetail />} />
+
         <Route path="/challenge" element={<WakeUpChallenge />} />
 
         {/* Admin Routes */}

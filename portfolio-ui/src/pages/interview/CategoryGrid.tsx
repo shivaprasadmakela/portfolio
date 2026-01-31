@@ -22,10 +22,11 @@ export default function CategoryGrid() {
                 <div className={styles.categoryGrid}>
                     <CategoryCard
                         category={{
-                            id: 'youtube-sets',
+                            id: 0,
                             name: 'YouTube Sets',
                             description: 'Structured interview questions explained in my videos',
-                            questionCount: youtubeQuestionData.length, // Showing set count instead
+                            questionCount: youtubeQuestionData.length,
+                            type: 'YOUTUBE_SET',
                             questions: []
                         }}
                     />

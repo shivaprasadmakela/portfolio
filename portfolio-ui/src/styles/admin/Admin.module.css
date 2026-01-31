@@ -387,3 +387,434 @@
     font-size: 2rem;
     margin: 0;
 }
+
+/* Admin Configuration Specifics */
+.adminConfig {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.tabs {
+    display: flex;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 2px;
+}
+
+.tab {
+    padding: 12px 24px;
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s;
+    border-radius: 12px 12px 0 0;
+}
+
+.tab:hover {
+    color: var(--color-text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.activeTab {
+    color: var(--color-text-primary-green);
+}
+
+.activeTab::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--color-text-primary-green);
+    box-shadow: 0 0 10px rgba(60, 207, 145, 0.5);
+}
+
+.contentHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 24px;
+}
+
+.searchBar {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-secondary);
+    pointer-events: none;
+}
+
+.searchBar input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    background: rgba(31, 31, 31, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    color: var(--color-text-primary);
+    outline: none;
+    transition: all 0.3s;
+}
+
+.searchBar input:focus {
+    border-color: var(--color-text-primary-green);
+    background: rgba(31, 31, 31, 0.8);
+}
+
+.tagGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.miniTag {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+}
+
+.statusPublished {
+    color: #3ccf91;
+    background: rgba(60, 207, 145, 0.1);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.statusDraft {
+    color: var(--color-text-secondary);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px;
+    color: var(--color-text-secondary);
+    font-size: 1.2rem;
+}
+
+.checkboxWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.checkboxWrapper input {
+    width: 18px !important;
+    height: 18px !important;
+    cursor: pointer;
+}
+
+.thumbnailSm {
+    width: 60px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+/* Modals & Overlays - Refining existing */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 24px;
+}
+
+.modal {
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 900px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modalHeader {
+    padding: 24px 32px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalHeader h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.modalBody {
+    padding: 32px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modalFooter {
+    padding: 20px 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.field input,
+.field select,
+.field textarea {
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    color: var(--color-text-primary);
+    outline: none;
+    transition: all 0.3s;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color: var(--color-text-primary-green);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btnPrimary {
+    background: var(--color-text-primary-green);
+    color: #000;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.btnPrimary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(60, 207, 145, 0.3);
+}
+
+.btnSecondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.btnSecondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btnSecondary.active {
+    background: rgba(60, 207, 145, 0.1);
+    border-color: var(--color-text-primary-green);
+    color: var(--color-text-primary-green);
+}
+
+.btnIcon {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.btnIcon:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-primary);
+}
+
+.tableContainer {
+    background: rgba(31, 31, 31, 0.4);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+}
+
+.adminTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.adminTable th {
+    text-align: left;
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.adminTable td {
+    padding: 16px 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.95rem;
+}
+
+.adminTable tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.previewContainer {
+    background: var(--color-bg-alt);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+}
+
+.modalActions {
+    display: flex;
+    gap: 12px;
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    background: rgba(31, 31, 31, 0.2);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.emptyStateIcon {
+    font-size: 4rem;
+    color: var(--color-text-secondary);
+    opacity: 0.2;
+    margin-bottom: 24px;
+}
+
+.emptyStateTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 8px;
+}
+
+.emptyStateText {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    max-width: 400px;
+    line-height: 1.6;
+}
+
+.collectionGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.collectionSection {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.collectionSectionTitle {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-text-primary-green);
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.checkboxLabel:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.checkboxLabel input {
+    cursor: pointer;
+}
+
+.checkboxLabel span {
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
+}
