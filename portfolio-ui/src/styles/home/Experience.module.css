@@ -1,0 +1,179 @@
+.experienceSection {
+    padding: 80px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.headerActions {
+    display: flex;
+    gap: 12px;
+}
+
+.iconBtn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.iconBtn:hover {
+    background: var(--hover-bg);
+    color: var(--text-primary);
+}
+
+.experienceList {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.experienceItem {
+    display: flex;
+    gap: 16px;
+}
+
+.companyLogo {
+    width: 56px;
+    height: 56px;
+    background: #f3c14b;
+    /* Matching the image's logo color */
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.logoImage {
+    width: 70%;
+    height: 70%;
+    color: #004182;
+    /* Matching the logo's blue */
+}
+
+.itemContent {
+    flex: 1;
+}
+
+.companyName {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+.totalDuration {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.location {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.roles {
+    position: relative;
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.roles::before {
+    content: '';
+    position: absolute;
+    left: 4.5px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: var(--border-color);
+}
+
+.roleItem {
+    position: relative;
+}
+
+.roleDot {
+    position: absolute;
+    left: -24.5px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    border: 2px solid var(--bg-secondary);
+    z-index: 1;
+}
+
+.roleTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+.employmentType {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.roleDuration {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.viewEducationBtn {
+    margin-top: 32px;
+    width: 100%;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
+    transition: all 0.3s ease;
+}
+
+.viewEducationBtn:hover {
+    background: var(--accent-primary);
+    color: white;
+}
+
+@media (max-width: 640px) {
+    .experienceItem {
+        flex-direction: column;
+    }
+}

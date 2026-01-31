@@ -1,6 +1,6 @@
 import About from '../components/home/About';
 import Contact from '../components/home/Contact';
-import Education from '../components/home/Education';
+import Experience from '../components/home/Experience';
 import Header from '../components/home/Header';
 import Hero from '../components/home/Hero';
 import Projects from '../components/home/Projects';
@@ -16,7 +16,7 @@ export default function Home() {
       <Hero />
       <FadeInSection><About /></FadeInSection>
       <FadeInSection><Projects /></FadeInSection>
-      <FadeInSection><Education /></FadeInSection>
+      <FadeInSection><Experience /></FadeInSection>
       <FadeInSection><YouTubeHome /></FadeInSection>
       <FadeInSection><Contact /></FadeInSection>
       <Footer />
