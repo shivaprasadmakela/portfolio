@@ -1,7 +1,4 @@
-import { useState } from 'react';
-import { FiPlus, FiEdit2 } from 'react-icons/fi';
-import { Button, Modal } from '../ui';
-import Education from './Education';
+
 import styles from '../../styles/home/Experience.module.css';
 
 const experienceData = {
@@ -23,7 +20,6 @@ const experienceData = {
 };
 
 export default function Experience() {
-    const [isEduModalOpen, setIsEduModalOpen] = useState(false);
 
     return (
         <section className={styles.experienceSection}>
@@ -58,22 +54,8 @@ export default function Experience() {
                         </div>
                     </div>
                 </div>
-
-                <Button
-                    className={styles.viewEducationBtn}
-                    onClick={() => setIsEduModalOpen(true)}
-                >
-                    View Academic Journey
-                </Button>
             </div>
 
-            <Modal
-                isOpen={isEduModalOpen}
-                onClose={() => setIsEduModalOpen(false)}
-                title="Academic Journey"
-            >
-                <Education isPopup />
-            </Modal>
         </section>
     );
 }

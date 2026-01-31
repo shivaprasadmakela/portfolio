@@ -1,5 +1,5 @@
 .contactSection {
-  padding: 100px 20px;
+  padding: 20px 20px 100px 20px;
   display: flex;
   justify-content: center;
   background-color: transparent;
@@ -13,7 +13,7 @@
 .contactCard {
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 4rem;
 }
 
 .cardHeader {
@@ -51,6 +51,10 @@
   font-weight: 700;
 }
 
+.green {
+  color: var(--color-text-primary-green);
+}
+
 .actionSection {
   display: flex;
   align-items: center;
@@ -69,7 +73,7 @@
 
 .iconWrapper {
   font-size: 2rem;
-  color: var(--text-primary);
+  color: var(--color-text-primary-green);
   padding-top: 0.5rem;
 }
 
@@ -135,18 +139,54 @@
   color: var(--color-text-primary-green);
 }
 
-@media (max-width: 800px) {
-  .actionSection {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 3rem;
+@media (max-width: 768px) {
+  .contactSection {
+    padding: 60px 1.5rem;
   }
 
   .title {
-    font-size: 3rem;
+    font-size: 2.5rem;
+  }
+
+  .description {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .actionSection {
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .mailGroup {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .mailInfo {
+    text-align: center;
+  }
+
+  .cardTitle {
+    font-size: 1.75rem;
   }
 
   .actionButtons {
     width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
+  .sendButton,
+  .copyButton {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .iconWrapper {
+    padding-top: 0;
   }
 }

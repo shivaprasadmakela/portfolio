@@ -1,8 +1,16 @@
+import { useState } from 'react';
 import styles from '../../styles/home/About.module.css';
 import profileImage from '../../assets/profile.png';
 import pattern from '../../assets/dot-pattern.svg';
+import { Modal } from '../ui';
+import Experience from './Experience';
+import Education from './Education';
+import { FaBriefcase, FaGraduationCap } from 'react-icons/fa';
 
 export default function About() {
+  const [isExperienceOpen, setIsExperienceOpen] = useState(false);
+  const [isEducationOpen, setIsEducationOpen] = useState(false);
+
   return (
     <section className={styles.about}>
       <div className={styles.text}>
@@ -33,9 +41,38 @@ export default function About() {
       </div>
 
       <div className={styles.imageContainer}>
-        <img src={profileImage} alt="Profile" className={styles.profile} loading="lazy" />
-        <img src={pattern} className={styles.pattern} alt="" loading="lazy" />
+        <div className={styles.profileWrapper}>
+          <img src={profileImage} alt="Profile" className={styles.profile} loading="lazy" />
+          <img src={pattern} className={styles.pattern} alt="" loading="lazy" />
+        </div>
+
+        <div className={styles.buttonGroup}>
+          <button className={styles.infoButton} onClick={() => setIsExperienceOpen(true)}>
+            <FaBriefcase className={styles.btnIcon} />
+            Experience
+          </button>
+          <button className={styles.infoButton} onClick={() => setIsEducationOpen(true)}>
+            <FaGraduationCap className={styles.btnIcon} />
+            Education
+          </button>
+        </div>
       </div>
+
+      <Modal
+        isOpen={isExperienceOpen}
+        onClose={() => setIsExperienceOpen(false)}
+        title="Experience"
+      >
+        <Experience />
+      </Modal>
+
+      <Modal
+        isOpen={isEducationOpen}
+        onClose={() => setIsEducationOpen(false)}
+        title="Academic Journey"
+      >
+        <Education isPopup />
+      </Modal>
     </section>
   );
 }

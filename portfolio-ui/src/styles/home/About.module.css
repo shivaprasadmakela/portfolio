@@ -1,5 +1,7 @@
-/* src/components/About/About.module.css */
 .about {
+  margin-top: 100px;
+  padding: 24px;
+  background-color: var(--bg-card);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -8,90 +10,167 @@
   max-width: 1200px;
   margin: var(--primary-margin);
   align-items: center;
+  gap: 48px;
+  flex-wrap: wrap;
 }
 
 .text {
-  flex: 1 1 55%;
-  line-height: 1.7;
+  flex: 1;
+
+  color: var(--text-secondary);
   font-size: 1rem;
+  line-height: 1.6;
 }
 
-.text p {
-  color: var(--color-text-secondary);
-  font-weight: 500;
+.aboutText {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+}
+
+.aboutText span {
+  border-bottom: 4px solid var(--accent-primary);
 }
 
 .highlight {
-  color: var(--color-text-primary-green);
-  font-weight: 500;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .green {
   color: var(--color-text-primary-green);
-  font-weight: 500;
+  font-weight: 600;
+}
+
+.selfDescription p {
+  margin-bottom: 16px;
 }
 
 .imageContainer {
-  flex: 1 1 35%;
   position: relative;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  gap: 24px;
+}
+
+.profileWrapper {
+  position: relative;
 }
 
 .profile {
-  border-radius: 50%;
   width: 300px;
   height: 300px;
+  border-radius: 16px;
   object-fit: cover;
   z-index: 2;
+  position: relative;
+  box-shadow: 20px 20px 0 var(--accent-primary);
+  transition: transform 0.3s ease;
+}
+
+.profile:hover {
+  transform: translate(-5px, -5px);
+  box-shadow: 25px 25px 0 var(--accent-primary);
 }
 
 .pattern {
   position: absolute;
-  top: 10%;
-  right: 0;
-  width: 130px;
-  opacity: 0.1;
+  bottom: -40px;
+  right: -40px;
+  width: 150px;
   z-index: 1;
+  opacity: 0.5;
 }
 
-.selfDescription {
-  padding: 15px 0px 15px 0px;
+.buttonGroup {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
 }
 
-.aboutText {
-  margin-bottom: 1.2rem;
+.infoButton {
+  background-color: var(--color-surface);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  border: none;
+
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.3s ease;
+  font-size: 1rem;
+  min-width: 140px;
+  justify-content: center;
+}
+
+.infoButton:hover {
+  background-color: var(--color-border);
+  transform: none;
+  color: var(--color-text-primary);
+}
+
+.btnIcon {
+  font-size: 1.2rem;
+  color: var(--color-text-primary-green);
 }
 
 @media (max-width: 768px) {
   .about {
     flex-direction: column-reverse;
-    /* Image on top, text below? Or Text top? usually Image top is nice but let's stick to flow */
-    /* Actually, DOM order is Text then Image. column-reverse makes Image top. */
-    padding: 2rem 1rem;
-    margin: 0;
+    padding: 2rem 1.5rem;
+    margin-top: 40px;
     gap: 3rem;
+    width: 100%;
+    margin: 0px;
+
   }
 
   .text {
-    flex: 1 1 100%;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  .aboutText {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
     text-align: center;
   }
 
-  .imageContainer {
-    flex: 1 1 100%;
-    width: 100%;
+  .selfDescription p {
+    text-align: center;
   }
 
   .profile {
-    width: 200px;
-    height: 200px;
+    width: 280px;
+    height: 280px;
+    max-width: 100%;
+    box-shadow: 12px 12px 0 var(--accent-primary);
+  }
+
+  .profile:hover {
+    transform: none;
+    box-shadow: 12px 12px 0 var(--accent-primary);
   }
 
   .pattern {
-    width: 100px;
-    top: 0;
-    right: 10%;
+    display: none;
+  }
+
+  .buttonGroup {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .infoButton {
+    min-width: 120px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
   }
 }

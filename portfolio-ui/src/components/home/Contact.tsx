@@ -22,7 +22,7 @@ export default function Contact() {
         <div className={styles.contactCard}>
           <div className={styles.cardHeader}>
             <span className={styles.tag}>GET IN TOUCH</span>
-            <h1 className={styles.title}>Let's Connect</h1>
+            <h1 className={styles.title}>Let's <span className={styles.green}>Connect</span></h1>
             <p className={styles.description}>
               I'm always open to discussing new projects, creative ideas, or being part of
               your visions. Join my <span className={styles.highlight}>journey</span> of consistency.
