@@ -1,9 +1,8 @@
 .contactSection {
-  background-color: transparent;
-  padding: 3rem 1rem;
-  color: var(--color-text-primary);
+  padding: 100px 20px;
   display: flex;
   justify-content: center;
+  background-color: transparent;
 }
 
 .container {
@@ -11,203 +10,143 @@
   width: 100%;
 }
 
-.header {
-  padding: 20px;
-  margin-bottom: 1rem;
+.contactCard {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+.cardHeader {
+  text-align: center;
 }
 
 .tag {
-  color: var(--color-text-primary-green);
-  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.1rem;
-  display: block;
-  margin-bottom: 1rem;
+  letter-spacing: 0.3rem;
+  display: inline-block;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
 }
 
 .title {
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: 800;
-  margin-bottom: 1rem;
-  color: var(--color-text-primary);
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+  line-height: 1;
 }
 
 .description {
   font-size: 1.1rem;
-  color: var(--color-text-secondary);
+  color: var(--text-secondary);
   max-width: 600px;
+  margin: 0 auto;
   line-height: 1.6;
 }
 
 .highlight {
-  color: var(--color-text-primary);
-  font-weight: 600;
+  color: var(--text-primary);
+  font-weight: 700;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 350px;
-  gap: 2rem;
-  align-items: start;
-}
-
-.messageCard {
-  background-color: var(--color-surface);
-  padding: 3rem;
-  border-radius: 2rem;
-  border: 1px solid var(--color-border);
+.actionSection {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.mailGroup {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
 }
 
 .iconWrapper {
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.75rem;
-  color: var(--color-text-primary-green);
-  font-size: 1.2rem;
-  border: 1px solid var(--color-border);
+  font-size: 2rem;
+  color: var(--text-primary);
+  padding-top: 0.5rem;
+}
+
+.mailInfo {
+  text-align: left;
 }
 
 .cardTitle {
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
-  color: var(--color-text-primary);
+  margin: 0 0 1rem 0;
+  color: var(--text-primary);
 }
 
 .cardSubtitle {
-  color: var(--color-text-secondary);
-  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
 }
 
 .actionButtons {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 180px;
 }
 
 .sendButton {
-  background-color: var(--color-text-primary);
-  color: var(--color-background);
-  padding: 0.8rem 1.5rem;
-  border-radius: 0.75rem;
+  background-color: var(--color-surface);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  color: var(--color-text-primary);
   text-decoration: none;
   font-weight: 600;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: opacity 0.2s;
-}
-
-.sendButton:hover {
-  opacity: 0.9;
+  transition: background 0.3s ease;
+  font-size: 1rem;
 }
 
 .copyButton {
-  background-color: transparent;
+  background-color: var(--color-surface);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
   color: var(--color-text-primary);
   border: 1px solid var(--color-border);
-  padding: 0.8rem 1.5rem;
-  border-radius: 0.75rem;
   font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: background-color 0.2s;
-}
-
-.copyButton:hover {
-  background-color: var(--color-background);
-}
-
-.btnIcon {
+  transition: background 0.3s ease;
   font-size: 1rem;
 }
 
-.socialList {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.sendButton:hover,
+.copyButton:hover {
+  background-color: var(--color-border);
 }
 
-.socialCard {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  padding: 1.25rem 1.5rem;
-  border-radius: 1.5rem;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: border-color 0.2s, background-color 0.2s;
+.btnIcon {
+  font-size: 1.25rem;
+  color: var(--color-text-primary-green);
 }
 
-.socialCard:hover {
-  border-color: var(--color-text-primary-green);
-  background-color: var(--color-background);
-}
-
-.socialInfo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.socialIcon {
-  font-size: 1.2rem;
-  color: var(--color-text-primary);
-}
-
-.socialText {
-  display: flex;
-  flex-direction: column;
-}
-
-.socialName {
-  font-weight: 600;
-  color: var(--color-text-primary);
-}
-
-.socialHandle {
-  font-size: 0.8rem;
-  color: var(--color-text-secondary);
-}
-
-.externalLinkIcon {
-  color: var(--color-text-secondary);
-  font-size: 1.2rem;
-}
-
-.socialCard:hover .externalLinkIcon {
-  color: var(--color-text-primary);
-}
-
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
+@media (max-width: 800px) {
+  .actionSection {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3rem;
   }
 
-  .messageCard {
-    padding: 2rem;
-  }
-}
-
-@media (max-width: 480px) {
   .title {
-    font-size: 2.2rem;
+    font-size: 3rem;
   }
 
   .actionButtons {
-    flex-direction: column;
-  }
-
-  .sendButton,
-  .copyButton {
-    justify-content: center;
+    width: 100%;
   }
 }
