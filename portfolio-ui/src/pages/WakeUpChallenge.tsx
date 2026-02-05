@@ -36,7 +36,7 @@ const WakeUpChallenge: React.FC = () => {
     };
 
     return (
-        <div style={{ backgroundColor: 'var(--color-background)', minHeight: '100vh' }}>
+        <div style={{ background: 'transparent', minHeight: '100vh' }}>
             <Header />
 
             <main className={styles.container}>
