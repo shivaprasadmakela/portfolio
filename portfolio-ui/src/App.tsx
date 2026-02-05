@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import BackgroundDecoration from './components/BackgroundDecoration';
+import PageLoader from './components/PageLoader';
 
 // Lazy-loaded pages for code-splitting
 const Home = lazy(() => import('./pages/Home'));
@@ -21,6 +22,7 @@ const AdminLayout = lazy(() => import('./components/admin/AdminLayout'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const AdminProfile = lazy(() => import('./pages/admin/AdminProfile'));
 const AdminQuestionSets = lazy(() => import('./pages/admin/AdminQuestionSets'));
+const AdminConfiguration = lazy(() => import('./pages/admin/AdminConfiguration'));
 
 // Error Pages (lazy-loaded)
 const NotFound = lazy(() => import('./pages/error/NotFound'));
@@ -37,12 +39,12 @@ function App() {
     <Router>
       <BackgroundDecoration />
       <ScrollToTop />
-      <Suspense fallback={<div style={{ minHeight: '100vh' }} />}>
+      <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/blogs" element={<BlogList />} />
           <Route path="/projects" element={<AllProjects />} />
-          <Route path="/myYoutube" element={<MyYoutube />} />
+          <Route path="/my-youtube" element={<MyYoutube />} />
           <Route path="/interview-prep" element={<CategoryGrid />} />
           <Route path="/interview-prep/:categoryId" element={<QuestionListView />} />
           <Route path="/youtube-sets" element={<YoutubeSetsHub />} />
@@ -61,7 +63,7 @@ function App() {
           >
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="question-sets" element={<AdminQuestionSets />} />
-            <Route path="configuration" element={<AdminQuestionSets />} />
+            <Route path="configuration" element={<AdminConfiguration />} />
             <Route path="profile" element={<AdminProfile />} />
           </Route>
 
