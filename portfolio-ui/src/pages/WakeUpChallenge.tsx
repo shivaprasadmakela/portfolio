@@ -15,7 +15,6 @@ const WakeUpChallenge: React.FC = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        console.log("Leaderboard requested", performance.now());
         challengeApi.getLeaderboard()
             .then(setLeaderboardData)
             .catch(() => setError("Failed to load leaderboard."))
