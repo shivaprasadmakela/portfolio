@@ -4,9 +4,16 @@ export async function apiClient<T>(
     endpoint: string,
     options: RequestInit = {}
 ): Promise<T> {
+    // Determine if this is a mutation (POST, PUT, DELETE, PATCH)
+    const method = options.method?.toUpperCase() || 'GET';
+    const isMutation = ['POST', 'PUT', 'DELETE', 'PATCH'].includes(method);
+    
     const config: RequestInit = {
         ...options,
-        cache: 'no-store',
+        // GET requests: allow HTTP caching if backend sends Cache-Control headers
+        // Mutations: always bypass cache
+        cache: isMutation ? 'no-store' : (options.cache || 'default'),
+        credentials: 'include', // Include credentials for CORS
         headers: {
             'Content-Type': 'application/json',
             ...options.headers,

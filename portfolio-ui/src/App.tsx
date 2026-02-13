@@ -29,6 +29,19 @@ const NotFound = lazy(() => import('./pages/error/NotFound'));
 const Forbidden = lazy(() => import('./pages/error/Forbidden'));
 
 function App() {
+  // Wake up Cloud Run container as early as possible
+  useEffect(() => {
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://www.shivaprasadm.in';
+
+    // Trigger cold start before user interactions
+    fetch(`${API_BASE_URL}/health`, {
+      method: 'GET',
+      cache: 'no-store',
+    }).catch(() => {
+      // Ignore errors - this is just to warm the connection
+    });
+  }, []);
+
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
