@@ -30,10 +30,9 @@ const Forbidden = lazy(() => import('./pages/error/Forbidden'));
 
 function App() {
   useEffect(() => {
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://www.shivaprasadm.in';
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-    // Trigger cold start before user interactions
-    fetch(`${API_BASE_URL}/health`, {
+    fetch(`${API_BASE_URL}/api/health`, {
       method: 'GET',
       cache: 'no-store',
     }).catch(() => { });
