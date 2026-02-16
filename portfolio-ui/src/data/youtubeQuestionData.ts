@@ -26,9 +26,10 @@ export const youtubeQuestionData: YoutubeVideoSet[] = [
       {
         id: 'yt1-q1',
         title: 'Self Introduction',
+        slug: 'self-introduction',
         summary: 'Introduce yourself clearly in an interview.',
-        content: '<p>Give a structured self-introduction suitable for any candidate.</p>',
-        solution: `### 👋 How to Give a Strong Self-Introduction
+        contentHtml: '<p>Give a structured self-introduction suitable for any candidate.</p>',
+        solutionMd: `### 👋 How to Give a Strong Self-Introduction
 
 A **good intro is short, structured and real.**
 
@@ -68,6 +69,7 @@ I’m looking for a role where I can contribute, learn from a strong team, and g
 ❌ Reading like a script  
 ❌ Only theory — mention projects`,
         difficulty: 'Easy',
+        status: 'PUBLISHED',
         tags: ['interview', 'communication'],
         views: 1200
       }

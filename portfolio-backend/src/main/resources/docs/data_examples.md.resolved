@@ -1,0 +1,555 @@
+# EdTech Platform - Data Flow Examples
+
+## Visual Overview
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     Collection Types                             │
+│  1: CATEGORY   2: YOUTUBE_SET   3: LEARNING_PATH                │
+└─────────────────────────────────────────────────────────────────┘
+                    │                    │
+        ┌───────────┴──────┐   ┌────────┴─────────┐
+        │                  │   │                   │
+┌───────▼────────┐  ┌──────▼──────┐  ┌────────────▼──────┐
+│   JavaScript   │  │   React     │  │  Top 10 JS Qs     │
+│   (Category)   │  │ (Category)  │  │  (YouTube Set)    │
+│   slug: js     │  │             │  │  video_id: abc123 │
+└───────┬────────┘  └──────┬──────┘  └────────┬──────────┘
+        │                  │                   │
+        └──────────────────┴───────────────────┘
+                           │
+            ┌──────────────┼──────────────┐
+            │              │              │
+     ┌──────▼─────┐ ┌──────▼─────┐ ┌─────▼──────┐
+     │ Closure Q  │ │ Async Q    │ │ Promise Q  │
+     │ slug: ...  │ │ slug: ...  │ │ slug: ...  │
+     │ status:PUB │ │ status:PUB │ │ status:PUB │
+     └──────┬─────┘ └──────┬─────┘ └─────┬──────┘
+            │              │              │
+        ┌───┴──────┬───────┴────┬─────────┴───┐
+        │          │            │             │
+   ┌────▼───┐ ┌───▼────┐ ┌─────▼───┐ ┌──────▼────┐
+   │closure │ │ scope  │ │  async  │ │  promise  │
+   │  tag   │ │  tag   │ │   tag   │ │    tag    │
+   └────────┘ └────────┘ └─────────┘ └───────────┘
+```
+
+---
+
+## Step-by-Step Data Creation
+
+### Step 1: Collection Types (Auto-created by V3 migration)
+
+```sql
+-- Already created by migration
+SELECT * FROM collection_types;
+```
+
+**Result:**
+```
++----+---------------+
+| ID | NAME          |
++----+---------------+
+|  1 | CATEGORY      |
+|  2 | YOUTUBE_SET   |
+|  3 | LEARNING_PATH |
++----+---------------+
+```
+
+---
+
+### Step 2: Create a Admin User
+
+```sql
+-- First, create an admin user to own questions
+INSERT INTO users (ID, EMAIL, NAME, PASSWORD_HASH, ROLE, IS_ACTIVE)
+VALUES (1, 'admin@example.com', 'Admin User', '$2a$10$...hashed...', 'ADMIN', 1);
+```
+
+**Result:**
+```
++----+-------------------+------------+-----------------+-------+-----------+
+| ID | EMAIL             | NAME       | PASSWORD_HASH   | ROLE  | IS_ACTIVE |
++----+-------------------+------------+-----------------+-------+-----------+
+|  1 | admin@example.com | Admin User | $2a$10$...hash | ADMIN |         1 |
++----+-------------------+------------+-----------------+-------+-----------+
+```
+
+---
+
+### Step 3: Create "JavaScript" Category
+
+```sql
+INSERT INTO collections (
+    ID, NAME, SLUG, DESCRIPTION, THUMBNAIL_URL, ICON, 
+    TYPE_ID, STATUS, CREATED_AT
+)
+VALUES (
+    1, 
+    'JavaScript', 
+    'javascript',
+    'Master JavaScript fundamentals and advanced concepts',
+    'https://cdn.example.com/javascript-thumb.jpg',
+    'js-icon',
+    1,  -- CATEGORY type
+    'PUBLISHED',
+    NOW()
+);
+```
+
+**What it looks like in DB:**
+```
++----+------------+------------+---------------------------------+-------------------------+---------+---------+----------+
+| ID | NAME       | SLUG       | DESCRIPTION                     | THUMBNAIL_URL           | ICON    | TYPE_ID | STATUS   |
++----+------------+------------+---------------------------------+-------------------------+---------+---------+----------+
+|  1 | JavaScript | javascript | Master JavaScript fundamentals  | https://cdn...thumb.jpg | js-icon |       1 | PUBLISHED|
++----+------------+------------+---------------------------------+-------------------------+---------+---------+----------+
+```
+
+---
+
+### Step 4: Create "Top 10 JS Interview Questions" YouTube Set
+
+```sql
+INSERT INTO collections (
+    ID, NAME, SLUG, DESCRIPTION, THUMBNAIL_URL, VIDEO_ID, 
+    PUBLISH_DATE, TYPE_ID, STATUS, CREATED_AT
+)
+VALUES (
+    2, 
+    'Top 10 JS Interview Questions', 
+    'top-10-js-interview-questions',
+    'Watch this video and solve the 10 most asked JavaScript questions',
+    'https://cdn.example.com/video-thumb.jpg',
+    'dQw4w9WgXcQ',  -- YouTube video ID
+    '2026-02-15',
+    2,  -- YOUTUBE_SET type
+    'PUBLISHED',
+    NOW()
+);
+```
+
+**What it looks like in DB:**
+```
++----+------------------------------+--------------------------------+----------------------------------------+---------+-------------+------------+---------+----------+
+| ID | NAME                         | SLUG                           | DESCRIPTION                            | VIDEO_ID| PUBLISH_DATE| TYPE_ID    | STATUS  |
++----+------------------------------+--------------------------------+----------------------------------------+---------+-------------+------------+---------+----------+
+|  2 | Top 10 JS Interview Questions| top-10-js-interview-questions  | Watch this video and solve...          |dQw4w9WgX| 2026-02-15  |      2     |PUBLISHED|
++----+------------------------------+--------------------------------+----------------------------------------+---------+-------------+------------+---------+----------+
+```
+
+---
+
+### Step 5: Create Tags
+
+```sql
+INSERT INTO tags (ID, NAME, SLUG, CREATED_AT) VALUES
+(1, 'Closure', 'closure', NOW()),
+(2, 'Scope', 'scope', NOW()),
+(3, 'Async', 'async', NOW()),
+(4, 'Promise', 'promise', NOW()),
+(5, 'Event Loop', 'event-loop', NOW());
+```
+
+**What it looks like in DB:**
+```
++----+------------+------------+---------------------+
+| ID | NAME       | SLUG       | CREATED_AT          |
++----+------------+------------+---------------------+
+|  1 | Closure    | closure    | 2026-02-16 16:08:00 |
+|  2 | Scope      | scope      | 2026-02-16 16:08:00 |
+|  3 | Async      | async      | 2026-02-16 16:08:00 |
+|  4 | Promise    | promise    | 2026-02-16 16:08:00 |
+|  5 | Event Loop | event-loop | 2026-02-16 16:08:00 |
++----+------------+------------+---------------------+
+```
+
+---
+
+### Step 6: Create Questions
+
+#### Question 1: Explain Closure
+
+```sql
+INSERT INTO questions (
+    ID, TITLE, SLUG, SUMMARY, CONTENT_HTML, SOLUTION_MD, 
+    DIFFICULTY, STATUS, VIEWS, CREATED_BY, CREATED_AT
+)
+VALUES (
+    1,
+    'Explain Closure in JavaScript',
+    'explain-closure-in-javascript',
+    'What is a closure and how does it work?',
+    '<h2>What is a Closure?</h2><p>A closure is a function that has access to variables in its outer scope...</p>',
+    '# Solution\n\nA closure is created when:\n1. A function is defined inside another function\n2. The inner function accesses variables from the outer function\n\n```javascript\nfunction outer() {\n  let count = 0;\n  return function inner() {\n    count++;\n    return count;\n  }\n}\n```',
+    'MEDIUM',
+    'PUBLISHED',
+    127,  -- 127 views
+    1,    -- Created by admin user
+    NOW()
+);
+```
+
+#### Question 2: Async/Await
+
+```sql
+INSERT INTO questions (
+    ID, TITLE, SLUG, SUMMARY, CONTENT_HTML, SOLUTION_MD, 
+    DIFFICULTY, STATUS, VIEWS, CREATED_BY, CREATED_AT
+)
+VALUES (
+    2,
+    'What is async/await in JavaScript?',
+    'what-is-async-await-in-javascript',
+    'Explain how async/await works and when to use it',
+    '<h2>Async/Await</h2><p>Async/await is syntactic sugar over Promises...</p>',
+    '# Solution\n\n`async/await` makes asynchronous code look synchronous...\n\n```javascript\nasync function fetchData() {\n  const data = await fetch("/api/data");\n  return data.json();\n}\n```',
+    'EASY',
+    'PUBLISHED',
+    89,
+    1,
+    NOW()
+);
+```
+
+#### Question 3: Promises (Draft)
+
+```sql
+INSERT INTO questions (
+    ID, TITLE, SLUG, SUMMARY, CONTENT_HTML, SOLUTION_MD, 
+    DIFFICULTY, STATUS, VIEWS, CREATED_BY, CREATED_AT
+)
+VALUES (
+    3,
+    'How do Promises work?',
+    'how-do-promises-work',
+    'Understanding the Promise API',
+    '<h2>Promises</h2><p>A Promise represents a future value...</p>',
+    '# Solution\n\nPromises have three states: pending, fulfilled, rejected...',
+    'HARD',
+    'DRAFT',  -- Not published yet!
+    0,
+    1,
+    NOW()
+);
+```
+
+**Questions table result:**
+```
++----+----------------------------------+------------------------------------+----------+----------+-------+------------+
+| ID | TITLE                            | SLUG                               | DIFFICULTY| STATUS   | VIEWS | CREATED_BY |
++----+----------------------------------+------------------------------------+----------+----------+-------+------------+
+|  1 | Explain Closure in JavaScript    | explain-closure-in-javascript      | MEDIUM   | PUBLISHED|   127 |          1 |
+|  2 | What is async/await in JavaScript| what-is-async-await-in-javascript  | EASY     | PUBLISHED|    89 |          1 |
+|  3 | How do Promises work?            | how-do-promises-work               | HARD     | DRAFT    |     0 |          1 |
++----+----------------------------------+------------------------------------+----------+----------+-------+------------+
+```
+
+---
+
+### Step 7: Link Questions to Collections
+
+```sql
+-- Add Question 1 (Closure) to JavaScript category
+INSERT INTO question_collections (QUESTION_ID, COLLECTION_ID, ORDER_INDEX)
+VALUES (1, 1, 1);
+
+-- Add Question 2 (Async) to JavaScript category
+INSERT INTO question_collections (QUESTION_ID, COLLECTION_ID, ORDER_INDEX)
+VALUES (2, 1, 2);
+
+-- Add Question 1 to YouTube set "Top 10 JS"
+INSERT INTO question_collections (QUESTION_ID, COLLECTION_ID, ORDER_INDEX)
+VALUES (1, 2, 1);
+
+-- Add Question 2 to YouTube set "Top 10 JS"
+INSERT INTO question_collections (QUESTION_ID, COLLECTION_ID, ORDER_INDEX)
+VALUES (2, 2, 2);
+```
+
+**question_collections table:**
+```
++-------------+---------------+-------------+
+| QUESTION_ID | COLLECTION_ID | ORDER_INDEX |
++-------------+---------------+-------------+
+|           1 |             1 |           1 |  ← Closure in JavaScript category
+|           2 |             1 |           2 |  ← Async in JavaScript category
+|           1 |             2 |           1 |  ← Closure in YouTube set
+|           2 |             2 |           2 |  ← Async in YouTube set
++-------------+---------------+-------------+
+```
+
+**Visual:**
+```
+JavaScript Category (ID: 1)
+  ├─ [1] Closure
+  └─ [2] Async/Await
+
+Top 10 JS Video (ID: 2)
+  ├─ [1] Closure
+  └─ [2] Async/Await
+```
+
+---
+
+### Step 8: Tag Questions
+
+```sql
+-- Tag Question 1 (Closure) with "closure" and "scope"
+INSERT INTO question_tags (QUESTION_ID, TAG_ID) VALUES
+(1, 1),  -- closure tag
+(1, 2);  -- scope tag
+
+-- Tag Question 2 (Async) with "async", "promise", "event-loop"
+INSERT INTO question_tags (QUESTION_ID, TAG_ID) VALUES
+(2, 3),  -- async tag
+(2, 4),  -- promise tag
+(2, 5);  -- event-loop tag
+```
+
+**question_tags table:**
+```
++-------------+--------+
+| QUESTION_ID | TAG_ID |
++-------------+--------+
+|           1 |      1 |  ← Closure has "closure" tag
+|           1 |      2 |  ← Closure has "scope" tag
+|           2 |      3 |  ← Async has "async" tag
+|           2 |      4 |  ← Async has "promise" tag
+|           2 |      5 |  ← Async has "event-loop" tag
++-------------+--------+
+```
+
+---
+
+## API Response Examples
+
+### Example 1: GET /api/interview/categories
+
+**Request:**
+```bash
+curl http://localhost:8080/api/interview/categories
+```
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "name": "JavaScript",
+    "slug": "javascript",
+    "description": "Master JavaScript fundamentals and advanced concepts",
+    "icon": "js-icon",
+    "thumbnailUrl": "https://cdn.example.com/javascript-thumb.jpg",
+    "type": "CATEGORY",
+    "status": "PUBLISHED",
+    "questionCount": 2
+  }
+]
+```
+
+---
+
+### Example 2: GET /api/interview/sets
+
+**Request:**
+```bash
+curl http://localhost:8080/api/interview/sets
+```
+
+**Response:**
+```json
+[
+  {
+    "id": 2,
+    "name": "Top 10 JS Interview Questions",
+    "slug": "top-10-js-interview-questions",
+    "description": "Watch this video and solve the 10 most asked JavaScript questions",
+    "videoId": "dQw4w9WgXcQ",
+    "publishDate": "2026-02-15",
+    "type": "YOUTUBE_SET",
+    "status": "PUBLISHED",
+    "questionCount": 2
+  }
+]
+```
+
+---
+
+### Example 3: GET /api/interview/collections/javascript
+
+**Request:**
+```bash
+curl http://localhost:8080/api/interview/collections/javascript
+```
+
+**Response (Full Collection with Questions):**
+```json
+{
+  "id": 1,
+  "name": "JavaScript",
+  "slug": "javascript",
+  "description": "Master JavaScript fundamentals and advanced concepts",
+  "icon": "js-icon",
+  "thumbnailUrl": "https://cdn.example.com/javascript-thumb.jpg",
+  "type": "CATEGORY",
+  "status": "PUBLISHED",
+  "questionCount": 2,
+  "questions": [
+    {
+      "id": 1,
+      "title": "Explain Closure in JavaScript",
+      "slug": "explain-closure-in-javascript",
+      "summary": "What is a closure and how does it work?",
+      "difficulty": "MEDIUM",
+      "status": "PUBLISHED",
+      "views": 127,
+      "tags": ["Closure", "Scope"],
+      "createdBy": 1
+    },
+    {
+      "id": 2,
+      "title": "What is async/await in JavaScript?",
+      "slug": "what-is-async-await-in-javascript",
+      "summary": "Explain how async/await works and when to use it",
+      "difficulty": "EASY",
+      "status": "PUBLISHED",
+      "views": 89,
+      "tags": ["Async", "Promise", "Event Loop"],
+      "createdBy": 1
+    }
+  ]
+}
+```
+
+---
+
+### Example 4: GET /api/interview/questions/explain-closure-in-javascript
+
+**Request:**
+```bash
+curl http://localhost:8080/api/interview/questions/explain-closure-in-javascript
+```
+
+**Response (Full Question Details):**
+```json
+{
+  "id": 1,
+  "title": "Explain Closure in JavaScript",
+  "slug": "explain-closure-in-javascript",
+  "summary": "What is a closure and how does it work?",
+  "contentHtml": "<h2>What is a Closure?</h2><p>A closure is a function that has access to variables in its outer scope...</p>",
+  "solutionMd": "# Solution\n\nA closure is created when:\n1. A function is defined inside another function\n2. The inner function accesses variables from the outer function\n\n```javascript\nfunction outer() {\n  let count = 0;\n  return function inner() {\n    count++;\n    return count;\n  }\n}\n```",
+  "difficulty": "MEDIUM",
+  "status": "PUBLISHED",
+  "views": 128,  ← Incremented from 127!
+  "tags": ["Closure", "Scope"],
+  "collectionIds": [1, 2],
+  "createdBy": 1
+}
+```
+
+**Note:** Views increased from 127 → 128 because accessing by slug auto-increments!
+
+---
+
+### Example 5: GET /api/interview/questions/search?q=closure
+
+**Request:**
+```bash
+curl "http://localhost:8080/api/interview/questions/search?q=closure"
+```
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "title": "Explain Closure in JavaScript",
+    "slug": "explain-closure-in-javascript",
+    "summary": "What is a closure and how does it work?",
+    "difficulty": "MEDIUM",
+    "status": "PUBLISHED",
+    "views": 128,
+    "tags": ["Closure", "Scope"],
+    "createdBy": 1
+  }
+]
+```
+
+**Note:** Question 3 (Promises - DRAFT) won't appear in search because it's not published!
+
+---
+
+## How to Create New Question (Admin)
+
+### POST /api/interview/admin/questions
+
+**Request:**
+```bash
+curl -X POST http://localhost:8080/api/interview/admin/questions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "What is Event Bubbling?",
+    "summary": "Explain event bubbling in the DOM",
+    "contentHtml": "<p>Content here...</p>",
+    "solutionMd": "# Solution\n...",
+    "difficulty": "EASY",
+    "status": "DRAFT",
+    "collectionIds": [1],
+    "tagIds": [5]
+  }'
+```
+
+**What happens:**
+1. ✅ Service receives request
+2. ✅ **Auto-generates slug**: "what-is-event-bubbling"
+3. ✅ Creates question in DB
+4. ✅ Links to JavaScript collection (ID: 1)
+5. ✅ Tags with "Event Loop" tag (ID: 5)
+
+**Response:**
+```json
+{
+  "id": 4,
+  "title": "What is Event Bubbling?",
+  "slug": "what-is-event-bubbling",  ← Auto-generated!
+  "summary": "Explain event bubbling in the DOM",
+  "difficulty": "EASY",
+  "status": "DRAFT",
+  "views": 0,
+  "tags": ["Event Loop"],
+  "collectionIds": [1],
+  "createdBy": 1
+}
+```
+
+---
+
+## Complete Data Snapshot
+
+After all operations, here's what the database looks like:
+
+```
+collection_types          collections                questions                tags
+┌────┬──────────┐        ┌────┬────────────┐        ┌────┬─────────┐       ┌────┬────────┐
+│ 1  │ CATEGORY │───┬───→│ 1  │ JavaScript │←───┬──→│ 1  │ Closure │←─┬──→│ 1  │Closure │
+│ 2  │YOUTUBE_SET│   │    │ 2  │ Top 10 JS  │    │   │ 2  │ Async   │  │   │ 2  │ Scope  │
+│ 3  │LEARNING..│   │    └────┴────────────┘    │   │ 3  │ Promise │  │   │ 3  │ Async  │
+└────┴──────────┘   │                            │   │ 4  │EventBub │  │   │ 4  │Promise │
+                    └────────────────────────────┘   └────┴─────────┘  │   │ 5  │EvtLoop │
+                                                                        │   └────┴────────┘
+question_collections                                question_tags       │
+┌─────────┬────────┬─────┐                        ┌─────────┬──────┐  │
+│ Q_ID    │ C_ID   │ ORD │                        │ Q_ID    │T_ID  │  │
+├─────────┼────────┼─────┤                        ├─────────┼──────┤  │
+│ 1       │ 1      │ 1   │                        │ 1       │ 1    │←─┘
+│ 2       │ 1      │ 2   │                        │ 1       │ 2    │
+│ 1       │ 2      │ 1   │                        │ 2       │ 3    │
+│ 2       │ 2      │ 2   │                        │ 2       │ 4    │
+│ 4       │ 1      │ 3   │                        │ 2       │ 5    │
+└─────────┴────────┴─────┘                        │ 4       │ 5    │
+                                                   └─────────┴──────┘
+```
+
+This is your complete EdTech platform data architecture in action! 🎉

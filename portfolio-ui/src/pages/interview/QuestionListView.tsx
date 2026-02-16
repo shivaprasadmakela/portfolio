@@ -16,7 +16,7 @@ const QuestionListView: React.FC = () => {
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
 
     // Find the category data
-    const category = interviewData.find(cat => cat.id === categoryId);
+    const category = interviewData.find(cat => cat.id === parseInt(categoryId || '0', 10));
 
     const filteredQuestions = useMemo(() => {
         if (!category) return [];
