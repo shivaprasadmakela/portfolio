@@ -152,7 +152,7 @@ const InterviewAdmin: React.FC = () => {
 
                     <button className={styles.btnPrimary} onClick={() => {
                         if (activeTab === 'questions') {
-                            setCurrentQuestion({ difficulty: 'MEDIUM', isPublished: false, tags: [], collectionIds: [] } as any);
+                            setCurrentQuestion({ difficulty: 'MEDIUM', status: 'DRAFT', tags: [], collectionIds: [] } as any);
                             setIsEditingQuestion(true);
                         } else {
                             setCurrentCollection({
@@ -197,8 +197,8 @@ const InterviewAdmin: React.FC = () => {
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <span className={q.isPublished ? styles.statusPublished : styles.statusDraft}>
-                                                            {q.isPublished ? 'Published' : 'Draft'}
+                                                        <span className={q.status === 'PUBLISHED' ? styles.statusPublished : styles.statusDraft}>
+                                                            {q.status === 'PUBLISHED' ? 'Published' : q.status === 'DRAFT' ? 'Draft' : 'Archived'}
                                                         </span>
                                                     </td>
                                                     <td>
@@ -366,15 +366,15 @@ const InterviewAdmin: React.FC = () => {
                                             />
                                         </div>
                                         <div className={styles.field}>
-                                            <label>Published Status</label>
-                                            <div className={styles.checkboxWrapper}>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={currentQuestion.isPublished || false}
-                                                    onChange={e => setCurrentQuestion({ ...currentQuestion, isPublished: e.target.checked })}
-                                                />
-                                                <span>Visible to users</span>
-                                            </div>
+                                            <label>Status</label>
+                                            <select
+                                                value={currentQuestion.status || 'DRAFT'}
+                                                onChange={e => setCurrentQuestion({ ...currentQuestion, status: e.target.value as any })}
+                                            >
+                                                <option value="DRAFT">Draft</option>
+                                                <option value="PUBLISHED">Published</option>
+                                                <option value="ARCHIVED">Archived</option>
+                                            </select>
                                         </div>
                                         <div className={styles.field} style={{ gridColumn: 'span 2' }}>
                                             <label>Summary</label>

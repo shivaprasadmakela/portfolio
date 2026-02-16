@@ -83,7 +83,7 @@ export default function QuestionDrawer({
                         </div>
 
                         <div className={styles.contentSection}>
-                            <div dangerouslySetInnerHTML={{ __html: question.content }} />
+                            <div dangerouslySetInnerHTML={{ __html: question.contentHtml }} />
                         </div>
 
                         <Button
@@ -103,7 +103,7 @@ export default function QuestionDrawer({
                                     exit={{ opacity: 0, y: 10 }}
                                 >
                                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                        {question.solution}
+                                        {question.solutionMd}
                                     </ReactMarkdown>
                                 </motion.div>
                             )}

@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import Header from '../../components/home/Header';
 import Footer from '../../components/home/Footer';
 import CategoryCard from '../../components/interview/CategoryCard';
 import { interviewApi } from '../../api/interviewApi';
 import type { CollectionDto } from '../../types/interview';
 import styles from '../../styles/interview/Interview.module.css';
-import { FiVideo } from 'react-icons/fi';
+
 
 export default function InterviewHub() {
     const [categories, setCategories] = useState<CollectionDto[]>([]);

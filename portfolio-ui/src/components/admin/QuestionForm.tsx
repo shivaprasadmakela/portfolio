@@ -16,8 +16,8 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ initialData, onClose, onSav
         initialData || {
             title: '',
             summary: '',
-            content: '',
-            solution: '',
+            contentHtml: '',
+            solutionMd: '',
             difficulty: 'Easy',
             tags: [],
             views: 0
@@ -119,7 +119,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ initialData, onClose, onSav
                             <label>Description Content (HTML supported)</label>
                             <textarea
                                 name="content"
-                                value={formData.content}
+                                value={formData.contentHtml}
                                 onChange={handleChange}
                                 className={styles.formInput}
                                 style={{ minHeight: '80px' }}
@@ -153,13 +153,13 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ initialData, onClose, onSav
                                     color: 'var(--color-text-primary)'
                                 }} className="markdown-body">
                                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                        {formData.solution || '*No solution content provided*'}
+                                        {formData.solutionMd || '*No solution content provided*'}
                                     </ReactMarkdown>
                                 </div>
                             ) : (
                                 <textarea
                                     name="solution"
-                                    value={formData.solution}
+                                    value={formData.solutionMd}
                                     onChange={handleChange}
                                     className={styles.formInput}
                                     style={{ minHeight: '200px', fontFamily: 'monospace' }}

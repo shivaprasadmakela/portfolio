@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import styles from '../../styles/interview/Interview.module.css';
 import type { CollectionDto } from '../../types/interview';
+import type { Category } from '../../data/interviewData';
 import { FiCode, FiLayers, FiDatabase, FiServer } from 'react-icons/fi';
 
 interface CategoryCardProps {
-    category: CollectionDto;
+    category: CollectionDto | Category;
 }
 
 const iconMap: Record<string, React.ReactNode> = {

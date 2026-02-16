@@ -9,7 +9,7 @@ import { interviewApi } from '../../api/interviewApi';
 import type { CollectionDto } from '../../types/interview';
 import { motion } from 'framer-motion';
 import { Input, Button } from '../../components/ui';
-import { FiSearch, FiChevronLeft, FiCalendar, FiBookOpen } from 'react-icons/fi';
+import { FiSearch, FiChevronLeft, FiCalendar } from 'react-icons/fi';
 
 const CollectionDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
