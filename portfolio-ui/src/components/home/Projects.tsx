@@ -11,7 +11,7 @@ export default function Projects() {
         <a href="/projects" className={styles.exploreMore}>Explore more →</a>
       </p>
       <div className={styles.grid}>
-        {projects.map((project) => (
+        {projects.slice(0, 3).map((project) => (
           <div className={styles.card} key={project.title}>
             <div className={styles.imageWrapper}>
               <div className={styles.imagePlaceholder}>

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import styles from '../../styles/Challenge.module.css';
 import { getISTTimeDisplay, isSubmissionWindowActive, getCountdown } from '../../utils/timeUtils';
 import { challengeApi } from '../../api/challengeApi';
-import type { VerificationQuestion, LeaderboardEntry } from '../../api/challengeApi';
+import type { VerificationQuestion } from '../../api/challengeApi';
 import { Input, Button } from '../ui';
 
-export const CheckInCard: React.FC<{ onSuccess: (newData?: LeaderboardEntry[]) => void }> = ({ onSuccess }) => {
+export const CheckInCard: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
     const [currentTime, setCurrentTime] = useState(getISTTimeDisplay());
     const [countdown, setCountdown] = useState(getCountdown());
     const [windowStatus, setWindowStatus] = useState(isSubmissionWindowActive());
@@ -71,8 +71,7 @@ export const CheckInCard: React.FC<{ onSuccess: (newData?: LeaderboardEntry[]) =
             if (response.success) {
                 setStatusMessage(response.message);
                 setFormData({ name: '', email: '', answer: '' });
-                const updatedLeaderboard = await challengeApi.getLeaderboard();
-                onSuccess(updatedLeaderboard);
+                onSuccess();
 
             } else {
                 setError(response.message);

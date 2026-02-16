@@ -8,6 +8,15 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+
+  {
+    title: 'Wake Up With Me',
+    image: '/assets/wakeUpwithMe.png',
+    description: 'A discipline-focused platform helping users build consistency through daily check-ins and a real-time leaderboard. Designed to foster community and accountability in maintaining morning routines.',
+    tags: ['React', 'Spring Boot', 'MySQL', 'Framer Motion'],
+    link: 'https://www.shivaprasadm.in/challenge',
+    github: 'https://github.com/shivaprasadmakela/portfolio/tree/main/portfolio-ui/src/components/challenge',
+  },
   {
     title: 'Chat App! #TalkNow',
     image: '/assets/chatApp.png',

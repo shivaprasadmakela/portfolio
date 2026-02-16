@@ -18,11 +18,11 @@ const educationData = [
   },
 ];
 
-export default function Education() {
-  return (
-    <section className={styles.educationSection}>
-      <h2 className={styles.heading}>All Things Education.</h2>
-      <div className={styles.journeyLabel}>ACADEMIC JOURNEY</div>
+export default function Education({ isPopup = false }: { isPopup?: boolean }) {
+  const content = (
+    <>
+      {!isPopup && <h2 className={styles.heading}>All Things Education.</h2>}
+      {!isPopup && <div className={styles.journeyLabel}>ACADEMIC JOURNEY</div>}
       <div className={styles.timelineYears}>{educationData[0].years}</div>
       <div className={styles.timeline}>
         {educationData.map((edu, idx) => (
@@ -42,7 +42,17 @@ export default function Education() {
           </div>
         ))}
       </div>
-      <div className={styles.bgText}>EDUCATION</div>
+      {!isPopup && <div className={styles.bgText}>EDUCATION</div>}
+    </>
+  );
+
+  if (isPopup) {
+    return <div className={styles.popupContent}>{content}</div>;
+  }
+
+  return (
+    <section className={styles.educationSection}>
+      {content}
     </section>
   );
 }

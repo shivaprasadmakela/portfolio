@@ -1,29 +1,43 @@
-import { useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import BlogList from './pages/BlogList';
-import Home from './pages/Home';
-import AllProjects from './pages/AllProjects';
-import MyYoutube from './pages/MyYoutube';
-import InterviewHub from './pages/interview/InterviewHub';
-import SetsHub from './pages/interview/SetsHub';
-import CollectionDetail from './pages/interview/CollectionDetail';
-import WakeUpChallenge from './pages/WakeUpChallenge';
 import ScrollToTop from './components/ScrollToTop';
-
-// Admin Pages
-import LoginPage from './pages/admin/LoginPage';
-import AdminLayout from './components/admin/AdminLayout';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import AdminProfile from './pages/admin/AdminProfile';
-import AdminQuestionSets from './pages/admin/AdminQuestionSets';
 import ProtectedRoute from './components/admin/ProtectedRoute';
-
-// Error Pages
-import NotFound from './pages/error/NotFound';
-import Forbidden from './pages/error/Forbidden';
 import BackgroundDecoration from './components/BackgroundDecoration';
+import PageLoader from './components/PageLoader';
+
+// Lazy-loaded pages for code-splitting
+const Home = lazy(() => import('./pages/Home'));
+const BlogList = lazy(() => import('./pages/BlogList'));
+const AllProjects = lazy(() => import('./pages/AllProjects'));
+const MyYoutube = lazy(() => import('./pages/MyYoutube'));
+const CategoryGrid = lazy(() => import('./pages/interview/CategoryGrid'));
+const QuestionListView = lazy(() => import('./pages/interview/QuestionListView'));
+const YoutubeSetsHub = lazy(() => import('./pages/interview/YoutubeSetsHub'));
+const VideoQuestionList = lazy(() => import('./pages/interview/VideoQuestionList'));
+const WakeUpChallenge = lazy(() => import('./pages/WakeUpChallenge'));
+
+// Admin Pages (lazy-loaded)
+const LoginPage = lazy(() => import('./pages/admin/LoginPage'));
+const AdminLayout = lazy(() => import('./components/admin/AdminLayout'));
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
+const AdminProfile = lazy(() => import('./pages/admin/AdminProfile'));
+const AdminQuestionSets = lazy(() => import('./pages/admin/AdminQuestionSets'));
+const AdminConfiguration = lazy(() => import('./pages/admin/AdminConfiguration'));
+
+// Error Pages (lazy-loaded)
+const NotFound = lazy(() => import('./pages/error/NotFound'));
+const Forbidden = lazy(() => import('./pages/error/Forbidden'));
 
 function App() {
+  useEffect(() => {
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+    fetch(`${API_BASE_URL}/api/health`, {
+      method: 'GET',
+      cache: 'no-store',
+    }).catch(() => { });
+  }, []);
+
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
@@ -34,40 +48,39 @@ function App() {
     <Router>
       <BackgroundDecoration />
       <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/blogs" element={<BlogList />} />
-        <Route path="/projects" element={<AllProjects />} />
-        <Route path="/myYoutube" element={<MyYoutube />} />
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/blogs" element={<BlogList />} />
+          <Route path="/projects" element={<AllProjects />} />
+          <Route path="/my-youtube" element={<MyYoutube />} />
+          <Route path="/interview-prep" element={<CategoryGrid />} />
+          <Route path="/interview-prep/:categoryId" element={<QuestionListView />} />
+          <Route path="/youtube-sets" element={<YoutubeSetsHub />} />
+          <Route path="/youtube-sets/:videoId" element={<VideoQuestionList />} />
+          <Route path="/challenge" element={<WakeUpChallenge />} />
 
+          {/* Admin Routes */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="question-sets" element={<AdminQuestionSets />} />
+            <Route path="configuration" element={<AdminConfiguration />} />
+            <Route path="profile" element={<AdminProfile />} />
+          </Route>
 
-        {/* V3 Interview Routes */}
-        <Route path="/interview" element={<InterviewHub />} />
-        <Route path="/interview/sets" element={<SetsHub />} />
-        <Route path="/interview/collection/:id" element={<CollectionDetail />} />
-
-        <Route path="/challenge" element={<WakeUpChallenge />} />
-
-        {/* Admin Routes */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <AdminLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="dashboard" element={<AdminDashboard />} />
-          <Route path="question-sets" element={<AdminQuestionSets />} />
-          <Route path="configuration" element={<AdminQuestionSets />} />
-          <Route path="profile" element={<AdminProfile />} />
-        </Route>
-
-        {/* Error Routes */}
-        <Route path="/forbidden" element={<Forbidden />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          {/* Error Routes */}
+          <Route path="/forbidden" element={<Forbidden />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </Router>
   );
 }

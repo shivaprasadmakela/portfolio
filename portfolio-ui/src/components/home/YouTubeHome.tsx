@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 export default function YouTubeHome() {
 
-    const previewVideos = youtubeVideos.slice(0, 2);
+    const previewVideos = youtubeVideos.slice(0, 3);
 
     const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 
@@ -19,7 +19,7 @@ export default function YouTubeHome() {
                 <h2 className={styles.heading}>All My YouTube Videos.</h2>
                 <p className={styles.subheading}>
                     Here's a collection of videos I've created on tech, learning, and career growth.<br />
-                    <a href="/myYoutube" className={styles.exploreMore}>Explore more →</a>
+                    <a href="/my-youtube" className={styles.exploreMore}>Explore more →</a>
                 </p>
                 <div className={styles.allVideos}>
                     {previewVideos.map((video) => (

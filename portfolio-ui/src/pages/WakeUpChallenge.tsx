@@ -14,29 +14,17 @@ const WakeUpChallenge: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
-    const fetchLeaderboard = async () => {
-        setIsLoading(true);
-        try {
-            const data = await challengeApi.getLeaderboard();
-            setLeaderboardData(data);
-            setError('');
-        } catch (err: any) {
-            setError('Failed to load leaderboard.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     useEffect(() => {
-        fetchLeaderboard();
+        challengeApi.getLeaderboard()
+            .then(setLeaderboardData)
+            .catch(() => setError("Failed to load leaderboard."))
+            .finally(() => setIsLoading(false));
     }, []);
 
-    const handleSuccessfulCheckIn = (newData?: LeaderboardEntry[]) => {
-        if (newData) {
-            setLeaderboardData(newData);
-        } else {
-            fetchLeaderboard();
-        }
+    const handleSuccessfulCheckIn = () => {
+        challengeApi.getLeaderboard()
+            .then(setLeaderboardData)
+            .catch(() => setError("Failed to load leaderboard."));
     };
 
     const scrollToJoin = () => {
@@ -47,7 +35,7 @@ const WakeUpChallenge: React.FC = () => {
     };
 
     return (
-        <div style={{ backgroundColor: 'var(--color-background)', minHeight: '100vh' }}>
+        <div style={{ background: 'transparent', minHeight: '100vh' }}>
             <Header />
 
             <main className={styles.container}>
@@ -59,9 +47,7 @@ const WakeUpChallenge: React.FC = () => {
                     <CheckInCard onSuccess={handleSuccessfulCheckIn} />
                 </FadeInSection>
 
-                <FadeInSection>
-                    <Leaderboard users={leaderboardData} isLoading={isLoading} error={error} />
-                </FadeInSection>
+                <Leaderboard users={leaderboardData} isLoading={isLoading} error={error} />
             </main>
 
             <footer style={{
