@@ -8,12 +8,14 @@ import java.time.LocalDate;
 public class CollectionDto {
     private Long id;
     private String name;
+    private String slug;
     private String description;
     private String thumbnailUrl;
     private String icon;
     private String videoId;
     private LocalDate publishDate;
     private String type; // CATEGORY, YOUTUBE_SET
+    private String status; // DRAFT, PUBLISHED, ARCHIVED
     private List<QuestionDto> questions;
     private int questionCount;
 }

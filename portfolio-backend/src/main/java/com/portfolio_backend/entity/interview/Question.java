@@ -1,5 +1,6 @@
 package com.portfolio_backend.entity.interview;
 
+import com.portfolio_backend.entity.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -17,6 +18,9 @@ public class Question {
     private Long id;
 
     private String title;
+
+    @Column(unique = true)
+    private String slug;
     
     @Column(columnDefinition = "TEXT")
     private String summary;
@@ -30,8 +34,14 @@ public class Question {
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty = Difficulty.MEDIUM;
 
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.DRAFT;
+
     private Long views = 0L;
-    private Boolean isPublished = false;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by")
+    private User createdBy;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -48,12 +58,16 @@ public class Question {
         EASY, MEDIUM, HARD
     }
 
+    public enum Status {
+        DRAFT, PUBLISHED, ARCHIVED
+    }
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         if (this.views == null) this.views = 0L;
-        if (this.isPublished == null) this.isPublished = false;
+        if (this.status == null) this.status = Status.DRAFT;
         if (this.difficulty == null) this.difficulty = Difficulty.MEDIUM;
     }
 

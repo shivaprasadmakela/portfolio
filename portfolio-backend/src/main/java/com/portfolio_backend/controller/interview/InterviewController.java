@@ -24,9 +24,25 @@ public class InterviewController {
         return interviewService.getAllSets();
     }
 
-    @GetMapping("/collections/{id}")
-    public CollectionDto getCollection(@PathVariable Long id) {
-        return interviewService.getCollection(id);
+    @GetMapping("/collections/{identifier}")
+    public CollectionDto getCollection(@PathVariable String identifier) {
+        // Try to parse as Long (ID), else treat as slug
+        try {
+            Long id = Long.parseLong(identifier);
+            return interviewService.getCollection(id);
+        } catch (NumberFormatException e) {
+            return interviewService.getCollectionBySlug(identifier);
+        }
+    }
+
+    @GetMapping("/questions/{slug}")
+    public QuestionDto getQuestion(@PathVariable String slug) {
+        return interviewService.getQuestionBySlug(slug);
+    }
+
+    @GetMapping("/questions/search")
+    public List<QuestionDto> searchQuestions(@RequestParam String q) {
+        return interviewService.searchQuestions(q);
     }
 
     @GetMapping("/admin/questions")
@@ -42,6 +58,16 @@ public class InterviewController {
     @DeleteMapping("/admin/questions/{id}")
     public void deleteQuestion(@PathVariable Long id) {
         interviewService.deleteQuestion(id);
+    }
+
+    @PatchMapping("/admin/questions/{id}/publish")
+    public QuestionDto publishQuestion(@PathVariable Long id) {
+        QuestionDto dto = interviewService.getAllQuestions().stream()
+                .filter(q -> q.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Question not found"));
+        dto.setStatus("PUBLISHED");
+        return interviewService.upsertQuestion(dto);
     }
 
     @PostMapping("/admin/collections")

@@ -22,5 +22,12 @@ public class User extends BaseEntity<User> {
 
     private String passwordHash;
 
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
+
     private LocalDateTime lastLoginAt;
+
+    public enum Role {
+        ADMIN, USER
+    }
 }

@@ -18,6 +18,9 @@ public class Collection {
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
+    private String slug;
     
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -31,6 +34,9 @@ public class Collection {
     @JoinColumn(name = "type_id")
     private CollectionType type;
 
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.PUBLISHED;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -42,6 +48,10 @@ public class Collection {
     )
     @OrderColumn(name = "order_index")
     private List<Question> questions = new ArrayList<>();
+
+    public enum Status {
+        DRAFT, PUBLISHED, ARCHIVED
+    }
 
     @PrePersist
     protected void onCreate() {

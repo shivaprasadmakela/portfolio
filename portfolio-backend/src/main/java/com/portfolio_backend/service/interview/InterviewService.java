@@ -9,6 +9,7 @@ import com.portfolio_backend.repository.interview.CollectionRepository;
 import com.portfolio_backend.repository.interview.QuestionRepository;
 import com.portfolio_backend.repository.interview.TagRepository;
 import com.portfolio_backend.repository.interview.CollectionTypeRepository;
+import com.portfolio_backend.util.SlugGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,12 +27,12 @@ public class InterviewService {
     private final CollectionTypeRepository collectionTypeRepository;
 
     public List<CollectionDto> getAllCategories() {
-        return collectionRepository.findAllByTypeName("CATEGORY")
+        return collectionRepository.findAllByTypeNameAndStatus("CATEGORY", Collection.Status.PUBLISHED)
                 .stream().map(this::convertToMiniDto).collect(Collectors.toList());
     }
 
     public List<CollectionDto> getAllSets() {
-        return collectionRepository.findAllByTypeName("YOUTUBE_SET")
+        return collectionRepository.findAllByTypeNameAndStatus("YOUTUBE_SET", Collection.Status.PUBLISHED)
                 .stream().map(this::convertToMiniDto).collect(Collectors.toList());
     }
 
@@ -39,6 +40,34 @@ public class InterviewService {
         return collectionRepository.findById(id)
                 .map(this::convertToFullDto)
                 .orElseThrow(() -> new RuntimeException("Collection not found"));
+    }
+
+    public CollectionDto getCollectionBySlug(String slug) {
+        return collectionRepository.findBySlug(slug)
+                .map(this::convertToFullDto)
+                .orElseThrow(() -> new RuntimeException("Collection not found with slug: " + slug));
+    }
+
+    public QuestionDto getQuestionBySlug(String slug) {
+        Question question = questionRepository.findBySlug(slug)
+                .orElseThrow(() ->new RuntimeException("Question not found with slug: " + slug));
+        
+        // Increment view count atomically
+        question.setViews(question.getViews() + 1);
+        questionRepository.save(question);
+        
+        return convertToQuestionDto(question);
+    }
+
+    public List<QuestionDto> searchQuestions(String query) {
+        return questionRepository
+                .findByTitleContainingIgnoreCaseOrSummaryContainingIgnoreCaseOrContentHtmlContainingIgnoreCase(
+                        query, query, query
+                )
+                .stream()
+                .filter(q -> q.getStatus() == Question.Status.PUBLISHED)
+                .map(this::convertToQuestionDto)
+                .collect(Collectors.toList());
     }
 
     public List<QuestionDto> getAllQuestions() {
@@ -52,11 +81,22 @@ public class InterviewService {
             ? questionRepository.findById(dto.getId()).orElse(new Question())
             : new Question();
 
+        // Auto-generate slug if not provided
+        if (dto.getSlug() == null || dto.getSlug().trim().isEmpty()) {
+            String baseSlug = SlugGenerator.generateSlug(dto.getTitle());
+            String uniqueSlug = SlugGenerator.generateUniqueSlug(
+                baseSlug,
+                slug -> questionRepository.findBySlug(slug).isPresent()
+            );
+            dto.setSlug(uniqueSlug);
+        }
+
         question.setTitle(dto.getTitle())
                 .setSummary(dto.getSummary())
                 .setContentHtml(dto.getContentHtml())
                 .setSolutionMd(dto.getSolutionMd())
-                .setIsPublished(dto.getIsPublished())
+                .setSlug(dto.getSlug())
+                .setStatus(dto.getStatus() != null ? Question.Status.valueOf(dto.getStatus().toUpperCase()) : Question.Status.DRAFT)
                 .setDifficulty(Question.Difficulty.valueOf(dto.getDifficulty().toUpperCase()));
 
         if (dto.getTags() != null) {
@@ -105,12 +145,24 @@ public class InterviewService {
             ? collectionRepository.findById(dto.getId()).orElse(new Collection())
             : new Collection();
 
+        // Auto-generate slug if not provided
+        if (dto.getSlug() == null || dto.getSlug().trim().isEmpty()) {
+            String baseSlug = SlugGenerator.generateSlug(dto.getName());
+            String uniqueSlug = SlugGenerator.generateUniqueSlug(
+                baseSlug,
+                slug -> collectionRepository.findBySlug(slug).isPresent()
+            );
+            dto.setSlug(uniqueSlug);
+        }
+
         collection.setName(dto.getName())
+                  .setSlug(dto.getSlug())
                   .setDescription(dto.getDescription())
                   .setIcon(dto.getIcon())
                   .setThumbnailUrl(dto.getThumbnailUrl())
                   .setVideoId(dto.getVideoId())
-                  .setPublishDate(dto.getPublishDate());
+                  .setPublishDate(dto.getPublishDate())
+                  .setStatus(dto.getStatus() != null ? Collection.Status.valueOf(dto.getStatus().toUpperCase()) : Collection.Status.PUBLISHED);
 
         if (collection.getType() == null && dto.getType() != null) {
             collection.setType(collectionTypeRepository.findByName(dto.getType())
@@ -130,10 +182,12 @@ public class InterviewService {
         CollectionDto dto = new CollectionDto();
         dto.setId(collection.getId());
         dto.setName(collection.getName());
+        dto.setSlug(collection.getSlug());
         dto.setDescription(collection.getDescription());
         dto.setIcon(collection.getIcon());
         dto.setThumbnailUrl(collection.getThumbnailUrl());
         dto.setType(collection.getType().getName());
+        dto.setStatus(collection.getStatus().name());
         dto.setQuestionCount(collection.getQuestions().size());
         return dto;
     }
@@ -152,13 +206,15 @@ public class InterviewService {
         QuestionDto dto = new QuestionDto();
         dto.setId(q.getId());
         dto.setTitle(q.getTitle());
+        dto.setSlug(q.getSlug());
         dto.setSummary(q.getSummary());
         dto.setContentHtml(q.getContentHtml());
         dto.setSolutionMd(q.getSolutionMd());
         dto.setDifficulty(q.getDifficulty().name());
+        dto.setStatus(q.getStatus().name());
         dto.setViews(q.getViews());
-        dto.setIsPublished(q.getIsPublished());
         dto.setTags(q.getTags().stream().map(Tag::getName).collect(Collectors.toList()));
+        dto.setCreatedBy(q.getCreatedBy() != null ? q.getCreatedBy().getId() : null);
         
         // Find collections this question belongs to
         List<Collection> collections = collectionRepository.findAllByQuestionsId(q.getId());
