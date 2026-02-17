@@ -52,8 +52,7 @@ public class InterviewService {
         Question question = questionRepository.findBySlug(slug)
                 .orElseThrow(() ->new RuntimeException("Question not found with slug: " + slug));
         
-        // Increment view count atomically
-        question.setViews(question.getViews() + 1);
+        
         questionRepository.save(question);
         
         return convertToQuestionDto(question);
@@ -81,7 +80,7 @@ public class InterviewService {
             ? questionRepository.findById(dto.getId()).orElse(new Question())
             : new Question();
 
-        // Auto-generate slug if not provided
+       
         if (dto.getSlug() == null || dto.getSlug().trim().isEmpty()) {
             String baseSlug = SlugGenerator.generateSlug(dto.getTitle());
             String uniqueSlug = SlugGenerator.generateUniqueSlug(
