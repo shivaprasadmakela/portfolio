@@ -108,9 +108,8 @@ public class InterviewService {
 
         Question saved = questionRepository.save(question);
 
-        // Update Collection Mapping
         if (dto.getCollectionIds() != null) {
-            // Remove from old collections
+           
             List<Collection> currentCollections = collectionRepository.findAllByQuestionsId(saved.getId());
             for (Collection coll : currentCollections) {
                 if (!dto.getCollectionIds().contains(coll.getId())) {
@@ -119,7 +118,6 @@ public class InterviewService {
                 }
             }
 
-            // Add to new collections
             for (Long collId : dto.getCollectionIds()) {
                 Collection coll = collectionRepository.findById(collId)
                         .orElseThrow(() -> new RuntimeException("Collection not found: " + collId));
@@ -144,7 +142,6 @@ public class InterviewService {
             ? collectionRepository.findById(dto.getId()).orElse(new Collection())
             : new Collection();
 
-        // Auto-generate slug if not provided
         if (dto.getSlug() == null || dto.getSlug().trim().isEmpty()) {
             String baseSlug = SlugGenerator.generateSlug(dto.getName());
             String uniqueSlug = SlugGenerator.generateUniqueSlug(
