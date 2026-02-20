@@ -1,28 +1,51 @@
 import React, { useState } from 'react';
-import type { CollectionDto } from '../../types/interview';
+import type { YoutubeVideoSet } from '../../data/youtubeQuestionData';
 import styles from '../../styles/admin/Admin.module.css';
 import { MdClose } from 'react-icons/md';
 
 interface QuestionSetFormProps {
-    initialData?: CollectionDto;
+    initialData?: YoutubeVideoSet;
     onClose: () => void;
-    onSave: (data: Partial<CollectionDto>) => void;
+    onSave: (data: Partial<YoutubeVideoSet>) => void;
 }
 
 const QuestionSetForm: React.FC<QuestionSetFormProps> = ({ initialData, onClose, onSave }) => {
-    const [formData, setFormData] = useState<Partial<CollectionDto>>(
+    const [formData, setFormData] = useState<Partial<YoutubeVideoSet>>(
         initialData || {
-            name: '',
+            title: '',
             description: '',
             thumbnailUrl: '',
             publishDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-            type: 'YOUTUBE_SET',
+            tags: [],
+            questions: []
         }
     );
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const [tagInput, setTagInput] = useState('');
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleAddTag = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' && tagInput.trim()) {
+            e.preventDefault();
+            if (!formData.tags?.includes(tagInput.trim())) {
+                setFormData(prev => ({
+                    ...prev,
+                    tags: [...(prev.tags || []), tagInput.trim()]
+                }));
+            }
+            setTagInput('');
+        }
+    };
+
+    const removeTag = (tagToRemove: string) => {
+        setFormData(prev => ({
+            ...prev,
+            tags: prev.tags?.filter(tag => tag !== tagToRemove)
+        }));
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -43,8 +66,8 @@ const QuestionSetForm: React.FC<QuestionSetFormProps> = ({ initialData, onClose,
                         <div className={styles.formGroup + ' ' + styles.fullWidth}>
                             <label>Title</label>
                             <input
-                                name="name"
-                                value={formData.name}
+                                name="title"
+                                value={formData.title}
                                 onChange={handleChange}
                                 className={styles.formInput}
                                 required
@@ -74,17 +97,6 @@ const QuestionSetForm: React.FC<QuestionSetFormProps> = ({ initialData, onClose,
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label>Video ID (YouTube)</label>
-                            <input
-                                name="videoId"
-                                value={formData.videoId || ''}
-                                onChange={handleChange}
-                                className={styles.formInput}
-                                placeholder="e.g. dQw4w9WgXcQ"
-                            />
-                        </div>
-
-                        <div className={styles.formGroup}>
                             <label>Publish Date</label>
                             <input
                                 name="publishDate"
@@ -95,17 +107,22 @@ const QuestionSetForm: React.FC<QuestionSetFormProps> = ({ initialData, onClose,
                             />
                         </div>
 
-                        <div className={styles.formGroup}>
-                            <label>Type</label>
-                            <select
-                                name="type"
-                                value={formData.type}
-                                onChange={handleChange}
+                        <div className={styles.formGroup + ' ' + styles.fullWidth}>
+                            <label>Tags (Press Enter to add)</label>
+                            <input
+                                value={tagInput}
+                                onChange={(e) => setTagInput(e.target.value)}
+                                onKeyDown={handleAddTag}
                                 className={styles.formInput}
-                            >
-                                <option value="YOUTUBE_SET">YouTube Set</option>
-                                <option value="CATEGORY">Category</option>
-                            </select>
+                                placeholder="e.g. react, javascript"
+                            />
+                            <div style={{ marginTop: '10px' }}>
+                                {formData.tags?.map(tag => (
+                                    <span key={tag} className={styles.tag} style={{ cursor: 'pointer' }} onClick={() => removeTag(tag)}>
+                                        {tag} ×
+                                    </span>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </form>
