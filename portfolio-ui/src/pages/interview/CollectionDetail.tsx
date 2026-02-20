@@ -12,28 +12,31 @@ import { Input, Button } from '../../components/ui';
 import { FiSearch, FiChevronLeft, FiCalendar } from 'react-icons/fi';
 
 const CollectionDetail: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
+    const { slug } = useParams<{ slug: string }>();
     const [collection, setCollection] = useState<CollectionDto | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [filter, setFilter] = useState<'All' | 'EASY' | 'MEDIUM' | 'HARD'>('All');
-    const [selectedQuestionId, setSelectedQuestionId] = useState<number | null>(null);
+    const [selectedQuestionSlug, setSelectedQuestionSlug] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchCollection = async () => {
-            if (!id) return;
+            if (!slug) return;
             setIsLoading(true);
+            setError(null);
             try {
-                const data = await interviewApi.getCollection(parseInt(id));
+                const data = await interviewApi.getCollectionBySlug(slug);
                 setCollection(data);
-            } catch (error) {
-                console.error('Failed to fetch collection:', error);
+            } catch (err) {
+                console.error('Failed to fetch collection:', err);
+                setError('Collection not found.');
             } finally {
                 setIsLoading(false);
             }
         };
         fetchCollection();
-    }, [id]);
+    }, [slug]);
 
     const filteredQuestions = useMemo(() => {
         if (!collection?.questions) return [];
@@ -46,22 +49,22 @@ const CollectionDetail: React.FC = () => {
     }, [collection, searchQuery, filter]);
 
     const selectedQuestion = useMemo(() =>
-        collection?.questions?.find(q => q.id === selectedQuestionId) || null
-        , [collection, selectedQuestionId]);
+        collection?.questions?.find(q => q.slug === selectedQuestionSlug) || null
+        , [collection, selectedQuestionSlug]);
 
     const currentIndex = useMemo(() =>
-        collection?.questions?.findIndex(q => q.id === selectedQuestionId) ?? -1
-        , [collection, selectedQuestionId]);
+        filteredQuestions.findIndex(q => q.slug === selectedQuestionSlug)
+        , [filteredQuestions, selectedQuestionSlug]);
 
     const handlePrev = () => {
-        if (currentIndex > 0 && collection?.questions) {
-            setSelectedQuestionId(collection.questions[currentIndex - 1].id);
+        if (currentIndex > 0) {
+            setSelectedQuestionSlug(filteredQuestions[currentIndex - 1].slug);
         }
     };
 
     const handleNext = () => {
-        if (collection?.questions && currentIndex < collection.questions.length - 1) {
-            setSelectedQuestionId(collection.questions[currentIndex + 1].id);
+        if (currentIndex < filteredQuestions.length - 1) {
+            setSelectedQuestionSlug(filteredQuestions[currentIndex + 1].slug);
         }
     };
 
@@ -74,11 +77,11 @@ const CollectionDetail: React.FC = () => {
         );
     }
 
-    if (!collection) {
+    if (error || !collection) {
         return (
             <div className={styles.pageWrapper}>
                 <Header />
-                <div className={styles.error}>Collection not found</div>
+                <div className={styles.error}>{error || 'Collection not found'}</div>
             </div>
         );
     }
@@ -97,7 +100,7 @@ const CollectionDetail: React.FC = () => {
                 <div className={styles.listHeader}>
                     <div className={styles.breadcrumb}>
                         <Link to={isVideo ? "/interview/sets" : "/interview"} className={styles.backLink}>
-                            <FiChevronLeft /> Back to {isVideo ? 'Videos' : 'Hub'}
+                            <FiChevronLeft /> Back to {isVideo ? 'Video Sets' : 'Interview Hub'}
                         </Link>
                         <span>/</span>
                         <span>{collection.name}</span>
@@ -126,10 +129,6 @@ const CollectionDetail: React.FC = () => {
                                     <span>{collection.publishDate}</span>
                                 </div>
                             )}
-                            {/* <div className={styles.metaItem}>
-                                <FiBookOpen />
-                                <span>{collection.questionCount} Questions</span>
-                            </div> */}
                         </div>
                     </div>
                 </div>
@@ -152,7 +151,7 @@ const CollectionDetail: React.FC = () => {
                                 className={`${styles.filterBtn} ${filter === d ? styles.filterBtnActive : ''}`}
                                 onClick={() => setFilter(d)}
                             >
-                                {d.charAt(0) + d.slice(1).toLowerCase()}
+                                {d === 'All' ? 'All' : d.charAt(0) + d.slice(1).toLowerCase()}
                             </Button>
                         ))}
                     </div>
@@ -162,8 +161,8 @@ const CollectionDetail: React.FC = () => {
                     {filteredQuestions.map(q => (
                         <QuestionCard
                             key={q.id}
-                            question={q as any}
-                            onClick={() => setSelectedQuestionId(q.id)}
+                            question={q}
+                            onClick={() => setSelectedQuestionSlug(q.slug)}
                         />
                     ))}
                     {filteredQuestions.length === 0 && (
@@ -177,12 +176,12 @@ const CollectionDetail: React.FC = () => {
 
             <QuestionDrawer
                 question={selectedQuestion as any}
-                isOpen={!!selectedQuestionId}
-                onClose={() => setSelectedQuestionId(null)}
+                isOpen={!!selectedQuestionSlug}
+                onClose={() => setSelectedQuestionSlug(null)}
                 onPrev={handlePrev}
                 onNext={handleNext}
                 hasPrev={currentIndex > 0}
-                hasNext={collection.questions ? currentIndex < collection.questions.length - 1 : false}
+                hasNext={currentIndex < filteredQuestions.length - 1}
             />
         </div>
     );

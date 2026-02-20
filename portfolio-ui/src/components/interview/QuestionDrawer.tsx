@@ -2,13 +2,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { FiX, FiBookmark, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import styles from '../../styles/interview/Interview.module.css';
-import type { Question } from '../../data/interviewData';
+import type { QuestionDto } from '../../types/interview';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Button } from '../ui';
 
 interface QuestionDrawerProps {
-    question: Question | null;
+    question: QuestionDto | null;
     isOpen: boolean;
     onClose: () => void;
     onPrev?: () => void;
@@ -40,6 +40,8 @@ export default function QuestionDrawer({
 
     if (!question) return null;
 
+    const difficultyLabel = question.difficulty.charAt(0) + question.difficulty.slice(1).toLowerCase();
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -62,10 +64,10 @@ export default function QuestionDrawer({
                             <div>
                                 <div className={styles.drawerMeta}>
                                     <span className={`${styles.badge} ${styles[`badge${question.difficulty}`]}`}>
-                                        {question.difficulty}
+                                        {difficultyLabel}
                                     </span>
                                     <div className={styles.tags}>
-                                        {question.tags.map(tag => (
+                                        {(question.tags || []).map(tag => (
                                             <span key={tag} className={styles.tag}>#{tag}</span>
                                         ))}
                                     </div>

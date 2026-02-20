@@ -1,5 +1,5 @@
 import { useEffect, Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import BackgroundDecoration from './components/BackgroundDecoration';
@@ -10,11 +10,12 @@ const Home = lazy(() => import('./pages/Home'));
 const BlogList = lazy(() => import('./pages/BlogList'));
 const AllProjects = lazy(() => import('./pages/AllProjects'));
 const MyYoutube = lazy(() => import('./pages/MyYoutube'));
-const CategoryGrid = lazy(() => import('./pages/interview/CategoryGrid'));
-const QuestionListView = lazy(() => import('./pages/interview/QuestionListView'));
-const YoutubeSetsHub = lazy(() => import('./pages/interview/YoutubeSetsHub'));
-const VideoQuestionList = lazy(() => import('./pages/interview/VideoQuestionList'));
 const WakeUpChallenge = lazy(() => import('./pages/WakeUpChallenge'));
+
+// Interview Pages (all API-driven, slug-based)
+const InterviewHub = lazy(() => import('./pages/interview/InterviewHub'));
+const SetsHub = lazy(() => import('./pages/interview/SetsHub'));
+const CollectionDetail = lazy(() => import('./pages/interview/CollectionDetail'));
 
 // Admin Pages (lazy-loaded)
 const LoginPage = lazy(() => import('./pages/admin/LoginPage'));
@@ -54,11 +55,18 @@ function App() {
           <Route path="/blogs" element={<BlogList />} />
           <Route path="/projects" element={<AllProjects />} />
           <Route path="/my-youtube" element={<MyYoutube />} />
-          <Route path="/interview-prep" element={<CategoryGrid />} />
-          <Route path="/interview-prep/:categoryId" element={<QuestionListView />} />
-          <Route path="/youtube-sets" element={<YoutubeSetsHub />} />
-          <Route path="/youtube-sets/:videoId" element={<VideoQuestionList />} />
           <Route path="/challenge" element={<WakeUpChallenge />} />
+
+          {/* Interview Routes (slug-based) */}
+          <Route path="/interview" element={<InterviewHub />} />
+          <Route path="/interview/sets" element={<SetsHub />} />
+          <Route path="/interview/collection/:slug" element={<CollectionDetail />} />
+
+          {/* Legacy redirects for old routes */}
+          <Route path="/interview-prep" element={<Navigate to="/interview" replace />} />
+          <Route path="/interview-prep/:categoryId" element={<Navigate to="/interview" replace />} />
+          <Route path="/youtube-sets" element={<Navigate to="/interview/sets" replace />} />
+          <Route path="/youtube-sets/:videoId" element={<Navigate to="/interview/sets" replace />} />
 
           {/* Admin Routes */}
           <Route path="/login" element={<LoginPage />} />

@@ -48,7 +48,7 @@ export default function SetsHub() {
                 ) : (
                     <div className={styles.categoryGrid}>
                         {sets.map((set) => (
-                            <Link to={`/interview/collection/${set.id}`} key={set.id} className={styles.categoryCard} style={{ padding: 0, overflow: 'hidden' }}>
+                            <Link to={`/interview/collection/${set.slug}`} key={set.id} className={styles.categoryCard} style={{ padding: 0, overflow: 'hidden' }}>
                                 <div className={styles.cardThumbnail}>
                                     <img src={set.thumbnailUrl} alt={set.name} loading="lazy" />
                                     <div className={styles.thumbnailOverlay}>

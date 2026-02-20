@@ -1,9 +1,9 @@
 import styles from '../../styles/interview/Interview.module.css';
-import type { Question } from '../../data/interviewData';
+import type { QuestionDto } from '../../types/interview';
 import { FiChevronRight } from 'react-icons/fi';
 
 interface QuestionCardProps {
-    question: Question;
+    question: QuestionDto;
     onClick: () => void;
 }
 
@@ -15,14 +15,14 @@ export default function QuestionCard({ question, onClick }: QuestionCardProps) {
                 <p className={styles.questionSummary}>{question.summary}</p>
                 <div className={styles.meta}>
                     <span className={`${styles.badge} ${styles[`badge${question.difficulty}`]}`}>
-                        {question.difficulty}
+                        {question.difficulty.charAt(0) + question.difficulty.slice(1).toLowerCase()}
                     </span>
                     <div className={styles.tags}>
-                        {question.tags.map(tag => (
+                        {(question.tags || []).map(tag => (
                             <span key={tag} className={styles.tag}>#{tag}</span>
                         ))}
                     </div>
-                    <span className={styles.views}>{question.views.toLocaleString()} views</span>
+                    <span className={styles.views}>{(question.views || 0).toLocaleString()} views</span>
                 </div>
             </div>
             <div className={styles.openHint}>

@@ -14,6 +14,9 @@ export const interviewApi = {
     getCollection: (id: number): Promise<CollectionDto> => 
         apiClient<CollectionDto>(`${BASE_PATH}/collections/${id}`),
 
+    getCollectionBySlug: (slug: string): Promise<CollectionDto> =>
+        apiClient<CollectionDto>(`${BASE_PATH}/collections/${slug}`),
+
     // Admin Endpoints
     getAllQuestionsAdmin: (): Promise<QuestionDto[]> => 
         apiClient<QuestionDto[]>(`${BASE_PATH}/admin/questions`),
