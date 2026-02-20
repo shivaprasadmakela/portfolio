@@ -16,7 +16,7 @@ This document explains how requests flow through the Interview API, from the HTT
                      │
                      ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  LAYER 1: CONTROLLER (InterviewController.java)             │
+│  LAYER 1: CONTROLLER (ContentController.java)               │
 │  • Parse HTTP request                                        │
 │  • Validate path parameters                                  │
 │  • Call service layer                                        │
@@ -25,7 +25,7 @@ This document explains how requests flow through the Interview API, from the HTT
                      │
                      ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  LAYER 2: SERVICE (InterviewService.java)                   │
+│  LAYER 2: SERVICE (ContentService.java)                     │
 │  • Business logic                                            │
 │  • Data transformation                                       │
 │  • Call repository layer                                     │
@@ -60,35 +60,35 @@ GET /api/interview/questions/explain-closure-in-javascript
 
 ### Step-by-Step Execution
 
-#### 1️⃣ **Controller Layer** (`InterviewController.java`)
+#### 1️⃣ **Controller Layer** (`ContentController.java`)
 
 ```java
 @RestController
 @RequestMapping("/api/interview")
-public class InterviewController {
+public class ContentController {
     
     @GetMapping("/questions/{slug}")
     public QuestionDto getQuestion(@PathVariable String slug) {
         // ✅ Extract slug from URL path
         // ✅ Delegate to service layer
-        return interviewService.getQuestionBySlug(slug);
+        return contentService.getQuestionBySlug(slug);
     }
 }
 ```
 
 **What happens:**
 - Spring extracts `slug` = `"explain-closure-in-javascript"` from URL
-- Controller calls `interviewService.getQuestionBySlug(slug)`
+- Controller calls `contentService.getQuestionBySlug(slug)`
 - Returns the DTO as JSON response
 
 ---
 
-#### 2️⃣ **Service Layer** (`InterviewService.java`)
+#### 2️⃣ **Service Layer** (`ContentService.java`)
 
 ```java
 @Service
 @RequiredArgsConstructor
-public class InterviewService {
+public class ContentService {
     
     private final QuestionRepository questionRepository;
     
@@ -249,7 +249,7 @@ GET /api/interview/categories
 ```java
 @GetMapping("/categories")
 public List<CollectionDto> getAllCategories() {
-    return interviewService.getAllCategories();
+    return contentService.getAllCategories();
 }
 ```
 
@@ -354,7 +354,7 @@ GET /api/interview/questions/search?q=closure
 ```java
 @GetMapping("/questions/search")
 public List<QuestionDto> searchQuestions(@RequestParam String q) {
-    return interviewService.searchQuestions(q);
+    return contentService.searchQuestions(q);
 }
 ```
 
@@ -429,7 +429,7 @@ Content-Type: application/json
 ```java
 @PostMapping("/admin/questions")
 public QuestionDto upsertQuestion(@RequestBody QuestionDto dto) {
-    return interviewService.upsertQuestion(dto);
+    return contentService.upsertQuestion(dto);
 }
 ```
 

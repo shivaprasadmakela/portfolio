@@ -1,4 +1,4 @@
-package com.portfolio_backend.service.interview;
+package com.portfolio_backend.service.content;
 
 import com.portfolio_backend.dto.interview.CollectionDto;
 import com.portfolio_backend.dto.interview.QuestionDto;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class InterviewService {
+public class ContentService {
 
     private final CollectionRepository collectionRepository;
     private final QuestionRepository questionRepository;
@@ -52,7 +52,7 @@ public class InterviewService {
         Question question = questionRepository.findBySlug(slug)
                 .orElseThrow(() ->new RuntimeException("Question not found with slug: " + slug));
         
-        
+        // Count view
         questionRepository.save(question);
         
         return convertToQuestionDto(question);
@@ -80,7 +80,7 @@ public class InterviewService {
             ? questionRepository.findById(dto.getId()).orElse(new Question())
             : new Question();
 
-       
+        // Generate slug if empty
         if (dto.getSlug() == null || dto.getSlug().trim().isEmpty()) {
             String baseSlug = SlugGenerator.generateSlug(dto.getTitle());
             String uniqueSlug = SlugGenerator.generateUniqueSlug(
@@ -109,7 +109,7 @@ public class InterviewService {
         Question saved = questionRepository.save(question);
 
         if (dto.getCollectionIds() != null) {
-           
+            // Update relationships
             List<Collection> currentCollections = collectionRepository.findAllByQuestionsId(saved.getId());
             for (Collection coll : currentCollections) {
                 if (!dto.getCollectionIds().contains(coll.getId())) {

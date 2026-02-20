@@ -35,9 +35,9 @@ portfolio-backend/
 │
 ├── src/main/java/.../
 │   ├── controller/    ← HTTP endpoints
-│   │   └── interview/InterviewController.java
+│   │   └── content/ContentController.java
 │   ├── service/       ← Business logic
-│   │   └── interview/InterviewService.java
+│   │   └── content/ContentService.java
 │   ├── repository/    ← Database queries
 │   │   ├── interview/QuestionRepository.java
 │   │   ├── interview/CollectionRepository.java
