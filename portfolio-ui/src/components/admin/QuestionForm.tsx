@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
-import type { Question } from '../../data/interviewData';
+import type { QuestionDto } from '../../types/interview';
 import styles from '../../styles/admin/Admin.module.css';
 import { MdClose, MdVisibility, MdCode } from 'react-icons/md';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 interface QuestionFormProps {
-    initialData?: Question;
+    initialData?: QuestionDto;
     onClose: () => void;
-    onSave: (data: Partial<Question>) => void;
+    onSave: (data: Partial<QuestionDto>) => void;
 }
 
 const QuestionForm: React.FC<QuestionFormProps> = ({ initialData, onClose, onSave }) => {
-    const [formData, setFormData] = useState<Partial<Question>>(
+    const [formData, setFormData] = useState<Partial<QuestionDto>>(
         initialData || {
             title: '',
             summary: '',
             contentHtml: '',
             solutionMd: '',
-            difficulty: 'Easy',
+            difficulty: 'EASY',
             tags: [],
             views: 0
         }
@@ -97,9 +97,9 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ initialData, onClose, onSav
                                 onChange={handleChange}
                                 className={styles.formInput}
                             >
-                                <option value="Easy">Easy</option>
-                                <option value="Medium">Medium</option>
-                                <option value="Hard">Hard</option>
+                                <option value="EASY">Easy</option>
+                                <option value="MEDIUM">Medium</option>
+                                <option value="HARD">Hard</option>
                             </select>
                         </div>
 
