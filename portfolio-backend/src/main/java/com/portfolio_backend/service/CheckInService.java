@@ -78,7 +78,8 @@ public class CheckInService {
         return userRepo.findByEmail(email)
                 .orElseGet(() -> userRepo.save(new com.portfolio_backend.entity.User()
                         .setEmail(email)
-                        .setName(name)));
+                        .setName(name)
+                        .setRole(com.portfolio_backend.entity.User.Role.USER)));
     }
 
     private void validateAnswer(Long questionId, String answer) {
