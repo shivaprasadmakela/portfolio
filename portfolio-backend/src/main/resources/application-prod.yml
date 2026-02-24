@@ -1,8 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql:///portfolio?cloudSqlInstance=${INSTANCE_CONNECTION_NAME}&socketFactory=com.google.cloud.sql.postgres.SocketFactory
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: ${DATABASE_URL}
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 5

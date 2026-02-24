@@ -8,6 +8,8 @@ CREATE TABLE users (
     password_hash   TEXT            NULL,
     last_login_at   TIMESTAMP       NULL,
     is_active       BOOLEAN         NOT NULL DEFAULT TRUE,
+    role            VARCHAR(10)     NOT NULL DEFAULT 'USER'
+                        CHECK (role IN ('ADMIN', 'USER')),
     created_at      TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at      TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
