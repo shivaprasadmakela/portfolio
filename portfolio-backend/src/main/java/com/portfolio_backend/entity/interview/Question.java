@@ -21,14 +21,14 @@ public class Question {
 
     @Column(unique = true)
     private String slug;
-    
+
     @Column(columnDefinition = "TEXT")
     private String summary;
-    
-    @Column(name = "content_html", columnDefinition = "LONGTEXT")
+
+    @Column(name = "content_html", columnDefinition = "TEXT")
     private String contentHtml;
-    
-    @Column(name = "solution_md", columnDefinition = "LONGTEXT")
+
+    @Column(name = "solution_md", columnDefinition = "TEXT")
     private String solutionMd;
 
     @Enumerated(EnumType.STRING)
