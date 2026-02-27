@@ -3,88 +3,109 @@ import type { DSARoadmapLevel } from '../types/dsa';
 export const dsaRoadmap: DSARoadmapLevel[] = [
   // ─── Level 1: Foundation ───────────────────────────────────────────────────
   {
-    id: 'level-1',
-    level: 'Foundation',
-    levelNumber: 1,
-    topics: [
-      {
-        id: 'foundation',
-        name: 'Foundation',
-        problems: [
-          {
-            id: 'two-sum',
-            name: 'Two Sum',
-            difficulty: 'Easy',
-            tags: ['Array', 'Hash Map'],
-            leetcodeUrl: 'https://leetcode.com/problems/two-sum/',
-          },
-          {
-            id: 'running-sum',
-            name: 'Running Sum of 1D Array',
-            difficulty: 'Easy',
-            tags: ['Array', 'Prefix Sum'],
-            leetcodeUrl: 'https://leetcode.com/problems/running-sum-of-1d-array/',
-          },
-          {
-            id: 'third-max',
-            name: 'Third Maximum Number',
-            difficulty: 'Easy',
-            tags: ['Array', 'Sorting'],
-            leetcodeUrl: 'https://leetcode.com/problems/third-maximum-number/',
-          },
-          {
-            id: 'even-digits',
-            name: 'Find Numbers with Even Number of Digits',
-            difficulty: 'Easy',
-            tags: ['Array', 'Math'],
-            leetcodeUrl: 'https://leetcode.com/problems/find-numbers-with-even-number-of-digits/',
-          },
-          {
-            id: 'largest-twice',
-            name: 'Largest Number At Least Twice of Others',
-            difficulty: 'Easy',
-            tags: ['Array', 'Sorting'],
-            leetcodeUrl: 'https://leetcode.com/problems/largest-number-at-least-twice-of-others/',
-          },
-          {
-            id: 'reverse-integer',
-            name: 'Reverse Integer',
-            difficulty: 'Medium',
-            tags: ['Math', 'Overflow'],
-            leetcodeUrl: 'https://leetcode.com/problems/reverse-integer/',
-          },
-          {
-            id: 'palindrome-number',
-            name: 'Palindrome Number',
-            difficulty: 'Easy',
-            tags: ['Math', 'Modulo'],
-            leetcodeUrl: 'https://leetcode.com/problems/palindrome-number/',
-          },
-          {
-            id: 'sqrt',
-            name: 'Sqrt(x)',
-            difficulty: 'Easy',
-            tags: ['Math', 'Binary Search'],
-            leetcodeUrl: 'https://leetcode.com/problems/sqrtx/',
-          },
-          {
-            id: 'binary-search',
-            name: 'Binary Search',
-            difficulty: 'Easy',
-            tags: ['Binary Search', 'Array'],
-            leetcodeUrl: 'https://leetcode.com/problems/binary-search/',
-          },
-          {
-            id: 'find-min-rotated',
-            name: 'Find Minimum in Rotated Sorted Array',
-            difficulty: 'Medium',
-            tags: ['Binary Search', 'Array'],
-            leetcodeUrl: 'https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/',
-          },
-        ],
-      },
-    ],
-  },
+  id: 'level-1',
+  level: 'Foundation',
+  levelNumber: 1,
+  topics: [
+    {
+      id: 'foundation',
+      name: 'Foundation',
+      problems: [
+        // ✅ Phase 1 — Pure Basics (Loops & Arrays)
+
+        {
+          id: 'running-sum',
+          name: 'Running Sum of 1D Array',
+          difficulty: 'Easy',
+          tags: ['Array', 'Prefix Sum'],
+          leetcodeUrl: 'https://leetcode.com/problems/running-sum-of-1d-array/',
+        },
+
+        {
+          id: 'even-digits',
+          name: 'Find Numbers with Even Number of Digits',
+          difficulty: 'Easy',
+          tags: ['Array', 'Math'],
+          leetcodeUrl: 'https://leetcode.com/problems/find-numbers-with-even-number-of-digits/',
+        },
+
+        // ✅ Phase 2 — Comparison & Edge Case Thinking
+
+        {
+          id: 'largest-twice',
+          name: 'Largest Number At Least Twice of Others',
+          difficulty: 'Easy',
+          tags: ['Array', 'Sorting'],
+          leetcodeUrl: 'https://leetcode.com/problems/largest-number-at-least-twice-of-others/',
+        },
+
+        {
+          id: 'third-max',
+          name: 'Third Maximum Number',
+          difficulty: 'Easy',
+          tags: ['Array', 'Sorting'],
+          leetcodeUrl: 'https://leetcode.com/problems/third-maximum-number/',
+        },
+
+        // ✅ Phase 3 — Number Manipulation
+
+        {
+          id: 'palindrome-number',
+          name: 'Palindrome Number',
+          difficulty: 'Easy',
+          tags: ['Math', 'Modulo'],
+          leetcodeUrl: 'https://leetcode.com/problems/palindrome-number/',
+        },
+
+        {
+          id: 'reverse-integer',
+          name: 'Reverse Integer',
+          difficulty: 'Medium',
+          tags: ['Math', 'Overflow'],
+          leetcodeUrl: 'https://leetcode.com/problems/reverse-integer/',
+        },
+
+        // ✅ Phase 4 — Binary Search Foundation
+
+        {
+          id: 'binary-search',
+          name: 'Binary Search',
+          difficulty: 'Easy',
+          tags: ['Binary Search', 'Array'],
+          leetcodeUrl: 'https://leetcode.com/problems/binary-search/',
+        },
+
+        {
+          id: 'sqrt',
+          name: 'Sqrt(x)',
+          difficulty: 'Easy',
+          tags: ['Math', 'Binary Search'],
+          leetcodeUrl: 'https://leetcode.com/problems/sqrtx/',
+        },
+
+        // ✅ Phase 5 — Advanced Binary Search Twist
+
+        {
+          id: 'find-min-rotated',
+          name: 'Find Minimum in Rotated Sorted Array',
+          difficulty: 'Medium',
+          tags: ['Binary Search', 'Array'],
+          leetcodeUrl: 'https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/',
+        },
+
+        // ✅ Phase 6 — Hashing Pattern
+
+        {
+          id: 'two-sum',
+          name: 'Two Sum',
+          difficulty: 'Easy',
+          tags: ['Array', 'Hash Map'],
+          leetcodeUrl: 'https://leetcode.com/problems/two-sum/',
+        },
+      ],
+    },
+  ],
+},
 
   // ─── Level 2: Arrays ──────────────────────────────────────────────────────
   {
