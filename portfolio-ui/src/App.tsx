@@ -11,7 +11,7 @@ const BlogList = lazy(() => import('./pages/BlogList'));
 const AllProjects = lazy(() => import('./pages/AllProjects'));
 const MyYoutube = lazy(() => import('./pages/MyYoutube'));
 const WakeUpChallenge = lazy(() => import('./pages/WakeUpChallenge'));
-const DSARoadmap = lazy(() => import('./pages/dsa/DSARoadmap'));
+const DSARoadmap = lazy(() => import('./pages/DSARoadmap'));
 
 // Interview Pages (all API-driven, slug-based)
 const InterviewHub = lazy(() => import('./pages/interview/InterviewHub'));
