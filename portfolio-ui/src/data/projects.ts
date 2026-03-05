@@ -22,7 +22,7 @@ export const projects: Project[] = [
     image: '/assets/chatApp.png',
     description: 'It’s a simple web app where you can: Create or join private chat rooms instantly Chat in real-time with others (no sign-up needed) Share room links with friends See messages with timestamps',
     tags: ['React', 'Node.js + Express', 'Socket.io'],
-    link: 'https://talknow-link.vercel.app/',
+    link: 'https://talknow.shivaprasadm.in/',
     github: 'https://github.com/shivaprasadmakela/chat-app.git',
   },
   {
