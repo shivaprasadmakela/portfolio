@@ -1,0 +1,413 @@
+.roadmapPage {
+  min-height: 100vh;
+  background: var(--bg-gradient-main);
+  color: var(--color-text-primary);
+
+  /* Space for fixed header */
+}
+
+.container {
+  margin: var(--primary-margin);
+  padding: 2rem 1rem 5rem 1rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 0;
+    padding: 2rem 1.5rem;
+  }
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.heroTitle {
+  font-size: var(--font-size-display);
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.heroSubtitle {
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.roadmapGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.roadmapCard {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 30px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.roadmapCard:hover {
+  transform: translateY(-8px);
+  border-color: var(--color-text-primary-green);
+  box-shadow: 0 10px 30px rgba(60, 207, 145, 0.1);
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.cardDescription {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.difficultyTag {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  background: rgba(60, 207, 145, 0.1);
+  color: var(--color-text-primary-green);
+}
+
+/* Roadmap Detail Styles */
+.detailPage {
+  height: 100vh;
+  display: flex;
+  background: #000;
+  overflow: hidden;
+}
+
+.checkpointIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.nodeCompleted .checkpointIcon {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Side Panel */
+.sidePanel {
+  width: 400px;
+  background: #0a0a0a;
+  border-left: 1px solid var(--color-border);
+  overflow-y: auto;
+  padding: 30px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.panelTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #111;
+}
+
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  color: var(--color-text-primary-green);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.subTopicsSection {
+  margin: 10px 0;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checklistItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 14px;
+}
+
+.checklistItem:hover {
+  background: rgba(60, 207, 145, 0.05);
+  border-color: rgba(60, 207, 145, 0.3);
+}
+
+.checklistItemDone {
+  color: var(--color-text-secondary);
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+
+.resourceLink {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: 0.2s;
+}
+
+.resourceLink:hover {
+  background: rgba(60, 207, 145, 0.1);
+  color: var(--color-text-primary-green);
+}
+
+.statusControls {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.statusBtn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: 500;
+}
+
+.statusBtnActive {
+  background: var(--color-text-primary-green);
+  color: #000;
+  border-color: var(--color-text-primary-green);
+}
+
+@media (max-width: 768px) {
+  .detailPage {
+    flex-direction: column;
+  }
+
+  .sidePanel {
+    width: 100%;
+    height: 50%;
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+/* Roadmap Tree Layout */
+.treeContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 60px 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.backboneLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  background: var(--color-border);
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.treeRows {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  z-index: 1;
+}
+
+.treeRow {
+  width: 100%;
+  margin-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.checkpointWrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.treeNode {
+  padding: 14px 28px;
+  border-radius: 12px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-weight: 700;
+  min-width: 200px;
+  max-width: 280px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.treeNode:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: var(--color-text-primary-green);
+  box-shadow: 0 6px 20px rgba(60, 207, 145, 0.2);
+}
+
+.nodeLabels {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.nodeTitle {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.nodeTypeBadge {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.5;
+  margin-top: 2px;
+}
+
+/* Branch Logic */
+.branchesContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  align-items: center;
+}
+
+.branchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.branchConnector {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px; /* Length of the horizontal connector */
+  height: 2px;
+  background: var(--color-border);
+  z-index: -1;
+  /* Adjust based on whether we branch left or right in the future */
+}
+
+/* For now we center everything, but let's add some branching logic */
+.branchWrapper:nth-child(odd) {
+  flex-direction: row;
+  padding-left: 300px;
+}
+.branchWrapper:nth-child(even) {
+  flex-direction: row-reverse;
+  padding-right: 300px;
+}
+
+.branchWrapper:nth-child(odd) .branchConnector {
+  right: 50%;
+  left: auto;
+  transform: translateX(0);
+  border-top: 2px dashed var(--color-border);
+  background: transparent;
+}
+
+.branchWrapper:nth-child(even) .branchConnector {
+  left: 50%;
+  transform: translateX(0);
+  border-top: 2px dashed var(--color-border);
+  background: transparent;
+}
+
+.branchBox {
+  min-width: 140px !important;
+  max-width: 200px !important;
+  padding: 10px 16px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+@media (max-width: 1000px) {
+    .branchWrapper:nth-child(n) {
+        flex-direction: column;
+        padding: 0;
+    }
+    .branchConnector {
+        display: none;
+    }
+}
