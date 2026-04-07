@@ -12,6 +12,8 @@ const AllProjects = lazy(() => import('./pages/AllProjects'));
 const MyYoutube = lazy(() => import('./pages/MyYoutube'));
 const WakeUpChallenge = lazy(() => import('./pages/WakeUpChallenge'));
 const DSARoadmap = lazy(() => import('./pages/DSARoadmap'));
+const RoadmapDashboard = lazy(() => import('./pages/roadmaps/RoadmapDashboard'));
+const RoadmapDetail = lazy(() => import('./pages/roadmaps/RoadmapDetail'));
 
 // Interview Pages (all API-driven, slug-based)
 const InterviewHub = lazy(() => import('./pages/interview/InterviewHub'));
@@ -58,6 +60,8 @@ function App() {
           <Route path="/my-youtube" element={<MyYoutube />} />
           <Route path="/challenge" element={<WakeUpChallenge />} />
           <Route path="/dsa" element={<DSARoadmap />} />
+          <Route path="/roadmaps" element={<RoadmapDashboard />} />
+          <Route path="/roadmaps/:id" element={<RoadmapDetail />} />
 
           {/* Interview Routes (slug-based) */}
           <Route path="/interview" element={<InterviewHub />} />
