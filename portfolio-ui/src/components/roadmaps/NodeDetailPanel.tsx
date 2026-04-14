@@ -8,12 +8,23 @@ interface NodeDetailPanelProps {
   node: RoadmapNode;
 }
 
+import { useShallow } from 'zustand/react/shallow';
+
+const EMPTY_OBJ = {};
+
 export default function NodeDetailPanel({ roadmapId, node }: NodeDetailPanelProps) {
   const setSelectedNodeId = useRoadmapStore((state) => state.setSelectedNodeId);
-  const { nodeStatuses, setNodeStatus, subTopicStatuses, setSubTopicStatus } = useRoadmapStore();
+  const { nodeStatuses, setNodeStatus, subTopicStatuses, setSubTopicStatus } = useRoadmapStore(
+    useShallow((state) => ({
+      nodeStatuses: state.nodeStatuses,
+      setNodeStatus: state.setNodeStatus,
+      subTopicStatuses: state.subTopicStatuses,
+      setSubTopicStatus: state.setSubTopicStatus,
+    }))
+  );
   
   const status = nodeStatuses[roadmapId]?.[node.id] || 'NOT_STARTED';
-  const nodeSubTopicStatus = subTopicStatuses[roadmapId]?.[node.id] || {};
+  const nodeSubTopicStatus = subTopicStatuses[roadmapId]?.[node.id] || EMPTY_OBJ;
 
   const onSetStatus = (newStatus: RoadmapStatus) => {
     setNodeStatus(roadmapId, node.id, status === newStatus ? 'NOT_STARTED' : newStatus);
