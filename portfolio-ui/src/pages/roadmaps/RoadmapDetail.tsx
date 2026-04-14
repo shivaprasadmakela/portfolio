@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { reactRoadmap } from '../../data/roadmaps/react-roadmap';
+import { frontendRoadmap } from '../../data/roadmaps/frontend-roadmap';
 import RoadmapTree from '../../components/roadmaps/RoadmapTree';
 import NodeDetailPanel from '../../components/roadmaps/NodeDetailPanel';
 import { useRoadmapStore } from '../../store/useRoadmapStore';
@@ -9,6 +10,7 @@ import { ArrowLeft, Share2, MoreHorizontal } from 'lucide-react';
 
 const roadmaps = {
   [reactRoadmap.id]: reactRoadmap,
+  [frontendRoadmap.id]: frontendRoadmap,
 };
 
 export default function RoadmapDetail() {
@@ -20,9 +22,11 @@ export default function RoadmapDetail() {
   const roadmap = id ? roadmaps[id] : null;
 
   useEffect(() => {
-    // Reset selection when entering a new roadmap
-    setSelectedNodeId(null);
-  }, [id, setSelectedNodeId]);
+    // Reset selection when entering a new roadmap, but only if not already null
+    if (selectedNodeId !== null) {
+      setSelectedNodeId(null);
+    }
+  }, [id, setSelectedNodeId, selectedNodeId]);
 
   const selectedNode = useMemo(() => {
     if (!roadmap || !selectedNodeId) return null;
@@ -72,10 +76,12 @@ export default function RoadmapDetail() {
       )}
       
       {!selectedNode && (
-        <div className={styles.sidePanel} style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center', opacity: 0.5 }}>
-            <div style={{ padding: '40px' }}>
-                <h3 style={{ marginBottom: '10px' }}>Select a node to learn</h3>
-                <p>Click on any topic in the roadmap to see detailed explanations, videos, and real-world usage examples.</p>
+        <div className={styles.sidePanel} style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+            <div style={{ padding: '40px', opacity: 0.7 }}>
+                <h3 style={{ marginBottom: '15px', color: 'var(--color-text-primary)' }}>Select a topic to start</h3>
+                <p style={{ color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>
+                  Click on any topic in the roadmap to see detailed explanations, videos, and real-world usage examples.
+                </p>
             </div>
         </div>
       )}
