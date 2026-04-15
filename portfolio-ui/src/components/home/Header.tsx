@@ -62,7 +62,6 @@ export default function Header() {
             {/* <Link to="/youtube-sets" className={getLinkClass('/youtube-sets')} onClick={closeMenu}>YouTube Sets</Link> */}
             <Link to="/challenge" className={getLinkClass('/challenge')} onClick={closeMenu}>Challenge</Link>
             <Link to="/dsa" className={getLinkClass('/dsa')} onClick={closeMenu}>DSA</Link>
-            {/* <Link to="/roadmaps" className={getLinkClass('/roadmaps')} onClick={closeMenu}>Roadmaps</Link> */}
             {/* <Link to="/blogs" className={getLinkClass('/blogs')} onClick={closeMenu}>Blog</Link> */}
           </nav>
           <ThemeToggle />
