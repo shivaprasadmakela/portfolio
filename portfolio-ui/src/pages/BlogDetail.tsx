@@ -39,60 +39,62 @@ export default function BlogDetail() {
     });
 
     return (
-        <div className={styles.page}>
+        <>
             <Header />
-            <main className={styles.container}>
-                <FadeInSection>
-                    <Link to="/blogs" className={styles.backBtn}>
-                        <FiChevronLeft /> Back to all articles
-                    </Link>
-                </FadeInSection>
-
-                <article className={styles.article}>
-                    <header className={styles.header}>
-                        <FadeInSection delay={0.1}>
-                            <div className={styles.meta}>
-                                <span className={styles.metaItem}>
-                                    <FiCalendar className={styles.icon} />
-                                    {formattedDate}
-                                </span>
-                                <span className={styles.metaItem}>
-                                    <FiClock className={styles.icon} />
-                                    {blog.readTime}
-                                </span>
-                            </div>
-                            <h1 className={styles.title}>{blog.title}</h1>
-                            <p className={styles.excerpt}>{blog.excerpt}</p>
-                        </FadeInSection>
-                    </header>
-
-                    <FadeInSection delay={0.2}>
-                        <div className={`${styles.content} ${blog.isPremium ? styles.blurred : ''}`}>
-                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                {blog.content}
-                            </ReactMarkdown>
-                        </div>
+            <main className={styles.blogDetailMain}>
+                <div className={styles.container}>
+                    <FadeInSection>
+                        <Link to="/blogs" className={styles.backBtn}>
+                            <FiChevronLeft /> Back to all articles
+                        </Link>
                     </FadeInSection>
 
-                    {blog.isPremium && (
-                        <FadeInSection delay={0.3} className={styles.premiumOverlay}>
-                            <div className={styles.premiumCard}>
-                                <div className={styles.lockIcon}>
-                                    <FiLock />
+                    <article className={styles.article}>
+                        <header className={styles.header}>
+                            <FadeInSection delay={0.1}>
+                                <div className={styles.meta}>
+                                    <span className={styles.metaItem}>
+                                        <FiCalendar className={styles.icon} />
+                                        {formattedDate}
+                                    </span>
+                                    <span className={styles.metaItem}>
+                                        <FiClock className={styles.icon} />
+                                        {blog.readTime}
+                                    </span>
                                 </div>
-                                <h2 className={styles.premiumTitle}>Premium Article</h2>
-                                <p className={styles.premiumDesc}>
-                                    This content is reserved for premium members. Unlock full access to gain deep insights and advanced tutorials.
-                                </p>
-                                <Button>
-                                    Unlock Access
-                                </Button>
+                                <h1 className={styles.title}>{blog.title}</h1>
+                                <p className={styles.excerpt}>{blog.excerpt}</p>
+                            </FadeInSection>
+                        </header>
+
+                        <FadeInSection delay={0.2}>
+                            <div className={`${styles.content} ${blog.isPremium ? styles.blurred : ''}`}>
+                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                    {blog.content}
+                                </ReactMarkdown>
                             </div>
                         </FadeInSection>
-                    )}
-                </article>
+
+                        {blog.isPremium && (
+                            <FadeInSection delay={0.3} className={styles.premiumOverlay}>
+                                <div className={styles.premiumCard}>
+                                    <div className={styles.lockIcon}>
+                                        <FiLock />
+                                    </div>
+                                    <h2 className={styles.premiumTitle}>Premium Article</h2>
+                                    <p className={styles.premiumDesc}>
+                                        This content is reserved for premium members. Unlock full access to gain deep insights and advanced tutorials.
+                                    </p>
+                                    <Button>
+                                        Unlock Access
+                                    </Button>
+                                </div>
+                            </FadeInSection>
+                        )}
+                    </article>
+                </div>
             </main>
             <Footer />
-        </div>
+        </>
     );
 }
