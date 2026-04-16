@@ -8,10 +8,11 @@ interface ModalProps {
     onClose: () => void;
     title: string;
     children: React.ReactNode;
+    footer?: React.ReactNode;
     className?: string;
 }
 
-export default function Modal({ isOpen, onClose, title, children, className }: ModalProps) {
+export default function Modal({ isOpen, onClose, title, children, footer, className }: ModalProps) {
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -50,6 +51,11 @@ export default function Modal({ isOpen, onClose, title, children, className }: M
                         <div className={styles.modalBody}>
                             {children}
                         </div>
+                        {footer && (
+                            <div className={styles.modalFooter}>
+                                {footer}
+                            </div>
+                        )}
                     </motion.div>
                 </div>
             )}

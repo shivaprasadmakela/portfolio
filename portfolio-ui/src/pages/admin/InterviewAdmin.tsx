@@ -8,7 +8,12 @@ import { MdAdd, MdEdit, MdDelete, MdSave, MdClose, MdVisibility, MdSearch, MdInb
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
+import { useToast } from '../../components/ui/Toast';
+import { useConfirmStore } from '../../store/useConfirmStore';
+
 const InterviewAdmin: React.FC = () => {
+    const { showToast } = useToast();
+    const { confirm } = useConfirmStore();
     const [activeTab, setActiveTab] = useState<'questions' | 'categories' | 'sets'>('questions');
     const [questions, setQuestions] = useState<QuestionDto[]>([]);
     const [categories, setCategories] = useState<CollectionDto[]>([]);
@@ -54,18 +59,21 @@ const InterviewAdmin: React.FC = () => {
             await interviewApi.upsertQuestion(currentQuestion);
             setIsEditingQuestion(false);
             fetchData();
+            showToast('Question saved successfully', 'success');
         } catch (error) {
-            alert('Failed to save question');
+            showToast('Failed to save question', 'error');
         }
     };
 
     const handleDeleteQuestion = async (id: number) => {
-        if (!window.confirm('Are you sure you want to delete this question?')) return;
+        const confirmed = await confirm('Delete Question', 'Are you sure you want to delete this question?');
+        if (!confirmed) return;
         try {
             await interviewApi.deleteQuestion(id);
             fetchData();
+            showToast('Question deleted successfully', 'success');
         } catch (error) {
-            alert('Failed to delete question');
+            showToast('Failed to delete question', 'error');
         }
     };
 
@@ -79,18 +87,21 @@ const InterviewAdmin: React.FC = () => {
             await interviewApi.upsertCollection(collectionToSave);
             setIsEditingCollection(false);
             fetchData();
+            showToast('Collection saved successfully', 'success');
         } catch (error) {
-            alert('Failed to save collection');
+            showToast('Failed to save collection', 'error');
         }
     };
 
     const handleDeleteCollection = async (id: number) => {
-        if (!window.confirm('Are you sure you want to delete this collection?')) return;
+        const confirmed = await confirm('Delete Collection', 'Are you sure you want to delete this collection?');
+        if (!confirmed) return;
         try {
             await interviewApi.deleteCollection(id);
             fetchData();
+            showToast('Collection deleted successfully', 'success');
         } catch (error) {
-            alert('Failed to delete collection');
+            showToast('Failed to delete collection', 'error');
         }
     };
 

@@ -37,6 +37,12 @@
   display: flex;
   flex-direction: column;
   width: 360px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--color-text-primary-green);
+  transform: translateY(-5px);
 }
 
 .image {
