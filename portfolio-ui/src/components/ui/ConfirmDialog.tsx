@@ -1,8 +1,8 @@
 import { Modal, Button } from './';
-import { useConfirmStore } from '../../store/useConfirmStore';
+import { useConfirm } from '../../hooks/useConfirm';
 
 export default function ConfirmDialog() {
-    const { isOpen, title, message, onConfirm, onCancel } = useConfirmStore();
+    const { isOpen, title, message, onConfirm, onCancel } = useConfirm();
 
     return (
         <Modal 

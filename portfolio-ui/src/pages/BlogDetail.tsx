@@ -4,12 +4,13 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Header from '../components/home/Header';
 import Footer from '../components/home/Footer';
-import { blogService } from '../services/blogService';
 import { type Blog } from '../types/blog';
 import { FiChevronLeft, FiLock, FiClock, FiCalendar } from 'react-icons/fi';
 import FadeInSection from '../components/FadeInSection';
 import { Button } from '../components/ui';
 import styles from '../styles/BlogDetail.module.css';
+
+const STORAGE_KEY = 'portfolio_blogs';
 
 export default function BlogDetail() {
     const { id } = useParams<{ id: string }>();
@@ -19,9 +20,19 @@ export default function BlogDetail() {
 
     useEffect(() => {
         if (id) {
-            const data = blogService.getById(id);
-            if (data) {
-                setBlog(data);
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const blogs: Blog[] = JSON.parse(stored);
+                    const found = blogs.find(b => b.id === id);
+                    if (found) {
+                        setBlog(found);
+                    } else {
+                        navigate('/blogs');
+                    }
+                } catch (e) {
+                    navigate('/blogs');
+                }
             } else {
                 navigate('/blogs');
             }

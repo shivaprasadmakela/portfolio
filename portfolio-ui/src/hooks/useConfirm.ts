@@ -10,7 +10,7 @@ interface ConfirmState {
     onCancel: () => void;
 }
 
-export const useConfirmStore = create<ConfirmState>((set, get) => ({
+export const useConfirm = create<ConfirmState>((set, get) => ({
     isOpen: false,
     title: '',
     message: '',

@@ -9,11 +9,11 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 import { useToast } from '../../components/ui/Toast';
-import { useConfirmStore } from '../../store/useConfirmStore';
+import { useConfirm } from '../../hooks/useConfirm';
 
 const InterviewAdmin: React.FC = () => {
     const { showToast } = useToast();
-    const { confirm } = useConfirmStore();
+    const { confirm } = useConfirm();
     const [activeTab, setActiveTab] = useState<'questions' | 'categories' | 'sets'>('questions');
     const [questions, setQuestions] = useState<QuestionDto[]>([]);
     const [categories, setCategories] = useState<CollectionDto[]>([]);
