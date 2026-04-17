@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Modal, Button, Input } from '../ui';
 import { useToast } from '../ui/Toast';
+import { AiAssistant } from './AiAssistant';
 import { type Blog, type NewBlog } from '../../types/blog';
 import styles from '../../styles/BlogEditor.module.css';
 
@@ -19,6 +20,13 @@ export default function BlogEditor({ isOpen, onClose, onSave, editingBlog }: Blo
     const [excerpt, setExcerpt] = useState('');
     const [isPremium, setIsPremium] = useState(false);
     const { showToast } = useToast();
+
+    const handleAiApply = (type: 'title' | 'content' | 'excerpt', value: string) => {
+        if (type === 'title') setTitle(value);
+        else if (type === 'content') setContent(value);
+        else if (type === 'excerpt') setExcerpt(value);
+        showToast(`AI ${type} applied!`, 'success');
+    };
 
     useEffect(() => {
         if (editingBlog) {
@@ -66,6 +74,11 @@ export default function BlogEditor({ isOpen, onClose, onSave, editingBlog }: Blo
         >
             <div className={styles.editorBody}>
                 <div className={styles.inputSection}>
+                    <AiAssistant 
+                        title={title} 
+                        content={content} 
+                        onApply={handleAiApply} 
+                    />
                     <div className={styles.field}>
                         <label className={styles.label}>Post Title</label>
                         <Input 
