@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/ai")
-@CrossOrigin(origins = "*") // Allow frontend to communicate
 public class AiController {
 
     private final AiService aiService;
