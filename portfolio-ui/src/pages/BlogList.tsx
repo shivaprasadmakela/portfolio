@@ -161,7 +161,11 @@ export default function BlogList() {
                                 icon={<FiSearch />}
                             />
                         </div>
-                        <Button onClick={handleCreateNew} icon={<FiPlus />}>
+                        <Button 
+                            onClick={handleCreateNew} 
+                            icon={<FiPlus />}
+                            className={styles.createBtn}
+                        >
                             Create Post
                         </Button>
                     </div>
