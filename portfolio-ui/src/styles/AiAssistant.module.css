@@ -130,3 +130,60 @@
 .applyBtn {
     width: 100%;
 }
+
+.variationList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.variationItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.variationItem:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.selectedItem {
+    background: rgba(16, 185, 129, 0.1) !important;
+    border-color: var(--color-text-primary-green) !important;
+    box-shadow: 0 0 0 1px var(--color-text-primary-green);
+}
+
+.variationNumber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--color-text-primary-green);
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.variationText {
+    flex: 1;
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
+}
+
+.explanationText {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    font-style: italic;
+    margin-top: 0.5rem;
+    padding: 0 0.5rem;
+}

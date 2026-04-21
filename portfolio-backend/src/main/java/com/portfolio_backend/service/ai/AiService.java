@@ -15,12 +15,13 @@ public class AiService {
     public String improveTitle(String title) {
         validate(title);
         String prompt = """
-            As a professional blog editor, improve the following article title. 
-            Provide 5 catchy, SEO-friendly variations.
+            Improve the following article title. 
+            Provide 5 catchy variations using simple words and easy-to-understand English. 
+            Avoid complex jargon. Keep them punchy and clear.
             Return ONLY a valid JSON object in the following format:
             {
                 "variations": ["variation 1", "variation 2", ...],
-                "explanation": "concise reasoning"
+                "explanation": "concise reasoning in simple words"
             }
             
             Original Title: %s
@@ -31,10 +32,11 @@ public class AiService {
     public String enhanceContent(String content) {
         validate(content);
         String prompt = """
-            Improve the following blog content while maintaining its original meaning and tone:
+            Improve the following blog content:
+            - Use simple English and clear, basic sentences that everyone can understand
             - Fix any grammatical or spelling errors
-            - Improve sentence structure and clarity
-            - Use professional and engaging language
+            - Improve clarity while keeping the original meaning
+            - Keep the tone friendly and easy to read
             Return ONLY a valid JSON object in the following format:
             {
                 "enhancedContent": "the improved markdown content here"
@@ -49,8 +51,8 @@ public class AiService {
     public String summarize(String content) {
         validate(content);
         String prompt = """
-            Provide a concise, 2-3 sentence summary/excerpt for the following blog post. 
-            This will be used as a search meta-description.
+            Provide a very simple, 2-3 sentence summary for the following blog post. 
+            Use basic words that a general audience will easily understand.
             Return ONLY a valid JSON object in the following format:
             {
                 "summary": "the summary text here"
