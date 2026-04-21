@@ -21,10 +21,9 @@ export default function BlogEditor({ isOpen, onClose, onSave, editingBlog }: Blo
     const [isPremium, setIsPremium] = useState(false);
     const { showToast } = useToast();
 
-    const handleAiApply = (type: 'title' | 'content' | 'excerpt', value: string) => {
+    const handleAiApply = (type: 'title' | 'content', value: string) => {
         if (type === 'title') setTitle(value);
         else if (type === 'content') setContent(value);
-        else if (type === 'excerpt') setExcerpt(value);
         showToast(`AI ${type} applied!`, 'success');
     };
 

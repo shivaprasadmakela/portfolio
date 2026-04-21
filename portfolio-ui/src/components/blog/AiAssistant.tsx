@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { aiApi } from '../../api/aiApi';
 import { Button } from '../ui';
-import { FiZap, FiEdit3, FiFileText, FiCopy, FiCheck, FiX } from 'react-icons/fi';
+import { FiZap, FiEdit3, FiCopy, FiCheck, FiX } from 'react-icons/fi';
 import styles from '../../styles/AiAssistant.module.css';
 
 interface AiAssistantProps {
@@ -21,7 +21,7 @@ interface ParsedResult {
 export const AiAssistant: React.FC<AiAssistantProps> = ({ content, title, onApply }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [result, setResult] = useState<string | null>(null);
-    const [activeTool, setActiveTool] = useState<'title' | 'content' | 'summary' | null>(null);
+    const [activeTool, setActiveTool] = useState<'title' | 'content' | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
@@ -34,7 +34,7 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ content, title, onAppl
         }
     }, [result]);
 
-    const handleAction = async (tool: 'title' | 'content' | 'summary') => {
+    const handleAction = async (tool: 'title' | 'content') => {
         setIsLoading(true);
         setError(null);
         setResult(null);
@@ -44,8 +44,7 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ content, title, onAppl
         try {
             let res;
             if (tool === 'title') res = await aiApi.improveTitle(title);
-            else if (tool === 'content') res = await aiApi.enhanceContent(content);
-            else res = await aiApi.summarize(content);
+            else res = await aiApi.enhanceContent(content);
 
             setResult(res.result);
         } catch (err: any) {
@@ -64,8 +63,6 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ content, title, onAppl
             valueToApply = parsedResult.variations[selectedIndex];
         } else if (activeTool === 'content' && parsedResult.enhancedContent) {
             valueToApply = parsedResult.enhancedContent;
-        } else if (activeTool === 'summary' && parsedResult.summary) {
-            valueToApply = parsedResult.summary;
         } else {
             valueToApply = parsedResult.rawText || result;
         }
@@ -81,8 +78,6 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ content, title, onAppl
             text = parsedResult.variations[selectedIndex];
         } else if (parsedResult.enhancedContent) {
             text = parsedResult.enhancedContent;
-        } else if (parsedResult.summary) {
-            text = parsedResult.summary;
         }
         navigator.clipboard.writeText(text);
     };
@@ -111,14 +106,6 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ content, title, onAppl
                 >
                     <FiZap /> Enhance Body
                 </Button>
-                <Button 
-                    variant="secondary" 
-                    className={styles.toolBtn} 
-                    onClick={() => handleAction('summary')}
-                    disabled={isLoading || !content}
-                >
-                    <FiFileText /> Generate Summary
-                </Button>
             </div>
 
             {isLoading && (
@@ -133,7 +120,7 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ content, title, onAppl
             {result && (
                 <div className={styles.resultArea}>
                     <div className={styles.resultHeader}>
-                        <span>Suggested {activeTool === 'summary' ? 'Excerpt' : activeTool}:</span>
+                        <span>Suggested {activeTool}:</span>
                         <div className={styles.resultActions}>
                             <button 
                                 className={styles.iconBtn} 
@@ -170,7 +157,7 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ content, title, onAppl
                         </div>
                     ) : (
                         <pre className={styles.resultContent}>
-                            {parsedResult.enhancedContent || parsedResult.summary || parsedResult.rawText || result}
+                            {parsedResult.enhancedContent || parsedResult.rawText || result}
                         </pre>
                     )}
 

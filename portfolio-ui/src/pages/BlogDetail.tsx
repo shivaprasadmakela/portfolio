@@ -8,6 +8,7 @@ import { type Blog } from '../types/blog';
 import { FiChevronLeft, FiLock, FiClock, FiCalendar } from 'react-icons/fi';
 import FadeInSection from '../components/FadeInSection';
 import { Button } from '../components/ui';
+import { AiSummarizer } from '../components/blog/AiSummarizer';
 import styles from '../styles/BlogDetail.module.css';
 
 const STORAGE_KEY = 'portfolio_blogs';
@@ -77,6 +78,10 @@ export default function BlogDetail() {
                                 <p className={styles.excerpt}>{blog.excerpt}</p>
                             </FadeInSection>
                         </header>
+
+                        <FadeInSection delay={0.15}>
+                            <AiSummarizer content={blog.content} />
+                        </FadeInSection>
 
                         <FadeInSection delay={0.2}>
                             <div className={`${styles.content} ${blog.isPremium ? styles.blurred : ''}`}>
