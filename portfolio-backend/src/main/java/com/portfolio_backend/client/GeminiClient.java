@@ -22,7 +22,8 @@ public class GeminiClient {
     @Value("${gemini.api.key:PLACEHOLDER}")
     private String apiKey;
 
-    private static final String GEMINI_URL_TEMPLATE = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=%s";
+    @Value("${gemini.url.template:https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=%s}")
+    private String urlTemplate;
 
     public GeminiClient() {
         this.restTemplate = new RestTemplate();
@@ -34,7 +35,7 @@ public class GeminiClient {
             return "AI feature is currently disabled (missing Gemini API Key).";
         }
 
-        String url = String.format(GEMINI_URL_TEMPLATE, apiKey);
+        String url = String.format(urlTemplate, apiKey);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

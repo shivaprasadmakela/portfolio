@@ -43,7 +43,6 @@ export const AiSummarizer: React.FC<AiSummarizerProps> = ({ content }) => {
                 </div>
                 {!summary && !isLoading && (
                     <Button 
-                        size="sm" 
                         className={styles.summarizeBtn}
                         onClick={handleSummarize}
                     >

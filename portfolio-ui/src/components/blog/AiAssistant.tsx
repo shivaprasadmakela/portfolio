@@ -7,7 +7,7 @@ import styles from '../../styles/AiAssistant.module.css';
 interface AiAssistantProps {
     content: string;
     title: string;
-    onApply: (type: 'title' | 'content' | 'excerpt', value: string) => void;
+    onApply: (type: 'title' | 'content', value: string) => void;
 }
 
 interface ParsedResult {
@@ -56,7 +56,6 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ content, title, onAppl
 
     const handleApply = () => {
         if (!result || !activeTool) return;
-        const type = activeTool === 'summary' ? 'excerpt' : activeTool;
         
         let valueToApply = "";
         if (activeTool === 'title' && parsedResult.variations) {
@@ -67,7 +66,7 @@ export const AiAssistant: React.FC<AiAssistantProps> = ({ content, title, onAppl
             valueToApply = parsedResult.rawText || result;
         }
 
-        onApply(type, valueToApply);
+        onApply(activeTool, valueToApply);
         setResult(null);
         setActiveTool(null);
     };

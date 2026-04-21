@@ -1,15 +1,14 @@
 import { type Blog } from '../../types/blog';
 import styles from '../../styles/BlogList.module.css';
-import { FiEdit2, FiTrash2, FiClock, FiLock, FiArrowRight } from 'react-icons/fi';
+import { FiEdit2, FiClock, FiLock, FiArrowRight } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 interface BlogCardProps {
     blog: Blog;
     onEdit: (blog: Blog) => void;
-    onDelete: (id: string) => void;
 }
 
-export default function BlogCard({ blog, onEdit, onDelete }: BlogCardProps) {
+export default function BlogCard({ blog, onEdit }: BlogCardProps) {
     const formattedDate = new Date(blog.createdAt).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
@@ -54,13 +53,6 @@ export default function BlogCard({ blog, onEdit, onDelete }: BlogCardProps) {
                             title="Edit post"
                         >
                             <FiEdit2 size={15} />
-                        </button>
-                        <button 
-                            className={`${styles.iconAction} ${styles.dangerAction}`} 
-                            onClick={(e) => { e.preventDefault(); onDelete(blog.id); }}
-                            title="Delete post"
-                        >
-                            <FiTrash2 size={15} />
                         </button>
                     </div>
                 </div>

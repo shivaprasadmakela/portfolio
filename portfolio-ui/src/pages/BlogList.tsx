@@ -4,7 +4,6 @@ import Footer from '../components/home/Footer';
 import { Input, Button } from '../components/ui';
 import { FiSearch, FiPlus } from 'react-icons/fi';
 import { useToast } from '../components/ui/Toast';
-import { useConfirm } from '../hooks/useConfirm';
 import { type Blog, type FilterType, type SortType } from '../types/blog';
 import BlogCard from '../components/blog/BlogCard';
 import BlogEditor from '../components/blog/BlogEditor';
@@ -48,7 +47,6 @@ const MOCK_BLOGS: Blog[] = [
 ];
 
 export default function BlogList() {
-    const { confirm } = useConfirm();
     const { showToast } = useToast();
 
     // State
@@ -128,18 +126,7 @@ export default function BlogList() {
         setIsEditorOpen(true);
     };
 
-    const handleDelete = async (id: string) => {
-        const confirmed = await confirm(
-            'Delete Post',
-            'Are you sure you want to delete this post? This action cannot be undone.'
-        );
 
-        if (confirmed) {
-            const updated = blogs.filter(b => b.id !== id);
-            saveBlogs(updated);
-            showToast('Blog deleted successfully', 'success');
-        }
-    };
 
     const handleSave = (blogData: any) => {
         if (editingBlog) {
@@ -206,7 +193,6 @@ export default function BlogList() {
                                 <BlogCard
                                     blog={blog}
                                     onEdit={handleEdit}
-                                    onDelete={handleDelete}
                                 />
                             </FadeInSection>
                         ))
