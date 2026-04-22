@@ -23,7 +23,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 .search {
@@ -58,7 +58,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 2.5rem;
-  padding-top: 2rem;
+  padding-top: 1rem;
 }
 
 /* Card Styles matching Project Cards */
