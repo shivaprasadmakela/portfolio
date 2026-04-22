@@ -10,6 +10,7 @@ import FadeInSection from '../components/FadeInSection';
 import { Button } from '../components/ui';
 import { AiSummarizer } from '../components/blog/AiSummarizer';
 import styles from '../styles/BlogDetail.module.css';
+import { MOCK_BLOGS } from './BlogList';
 
 const STORAGE_KEY = 'portfolio_blogs';
 
@@ -22,18 +23,24 @@ export default function BlogDetail() {
     useEffect(() => {
         if (id) {
             const stored = localStorage.getItem(STORAGE_KEY);
+            let found: Blog | undefined;
+
             if (stored) {
                 try {
                     const blogs: Blog[] = JSON.parse(stored);
-                    const found = blogs.find(b => b.id === id);
-                    if (found) {
-                        setBlog(found);
-                    } else {
-                        navigate('/blogs');
-                    }
+                    found = blogs.find(b => String(b.id) === String(id));
                 } catch (e) {
-                    navigate('/blogs');
+                    console.error("Failed to parse blogs from storage", e);
                 }
+            }
+
+            // Fallback to MOCK_BLOGS if not found in storage
+            if (!found) {
+                found = MOCK_BLOGS.find(b => String(b.id) === String(id));
+            }
+
+            if (found) {
+                setBlog(found);
             } else {
                 navigate('/blogs');
             }

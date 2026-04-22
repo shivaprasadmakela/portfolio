@@ -12,7 +12,7 @@ import styles from '../styles/BlogList.module.css';
 
 const STORAGE_KEY = 'portfolio_blogs';
 
-const MOCK_BLOGS: Blog[] = [
+export const MOCK_BLOGS: Blog[] = [
 
     {
         id: '1',
