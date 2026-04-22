@@ -40,18 +40,26 @@ export default function BlogList() {
             existingBlogs = MOCK_BLOGS;
         }
 
-        // Ensure any new mock blogs (by ID) are added to existing storage
+        // Force update existing mock blogs with latest data from MOCK_BLOGS
+        // This ensures slugs and new content are synced even if the ID already exists
+        const updatedBlogs = existingBlogs.map(eb => {
+            const mock = MOCK_BLOGS.find(m => m.id === eb.id);
+            return mock ? { ...mock } : eb;
+        });
+
+        // Add any completely new mock blogs
         const missingDefaults = MOCK_BLOGS.filter(
-            defaultBlog => !existingBlogs.some(eb => eb.id === defaultBlog.id)
+            defaultBlog => !updatedBlogs.some(ub => ub.id === defaultBlog.id)
         );
 
-        if (missingDefaults.length > 0) {
-            const updated = [...missingDefaults, ...existingBlogs];
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-            return updated;
+        const finalBlogs = [...missingDefaults, ...updatedBlogs];
+        
+        // Save back to localStorage if there were changes
+        if (JSON.stringify(finalBlogs) !== stored) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(finalBlogs));
         }
 
-        return existingBlogs;
+        return finalBlogs;
     };
 
     const saveBlogs = (updatedBlogs: Blog[]) => {

@@ -95,9 +95,9 @@
 
 .premiumOverlay {
     position: relative;
-    margin-top: -200px;
     z-index: 10;
-    padding-bottom: 4rem;
+    padding: 2rem 0;
+    margin-bottom: -450px;
 }
 
 .premiumCard {
@@ -124,6 +124,10 @@
     align-items: center;
     justify-content: center;
     color: var(--color-text-secondary);
+}
+
+.article {
+    position: relative;
 }
 
 @media (max-width: 768px) {

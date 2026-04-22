@@ -1,13 +1,13 @@
 import { type Blog } from '../types/blog';
 
 export const MOCK_BLOGS: Blog[] = [
-  {
-    id: '1',
-    slug: 'ai-blogging-assistant',
-    title: 'Building an AI Blogging Assistant Powered by Gemini',
-    excerpt:
-      'How I added a Gemini-powered writing assistant to my portfolio blog — title suggestions, content polish, and reader summaries, all in one.',
-    content: `# Building an AI Blogging Assistant Powered by Gemini
+    {
+        id: '1',
+        slug: 'ai-blogging-assistant',
+        title: 'Building an AI Blogging Assistant Powered by Gemini',
+        excerpt:
+            'How I added a Gemini-powered writing assistant to my portfolio blog — title suggestions, content polish, and reader summaries, all in one.',
+        content: `# Building an AI Blogging Assistant Powered by Gemini
 
 Writing consistently is hard. Coming up with good titles is even harder. So I decided to stop fighting the blank page and build something to help.
 
@@ -42,19 +42,19 @@ This approach means the UI can render the AI output as selectable options — no
 I chose Flash over the heavier models for one reason: speed. The context window is large enough for any blog post, and the response time is fast enough to feel instant in the editor. For a writing tool, latency matters more than raw capability.
 
 It is a small feature on the surface, but it changed how I write. Having a title generator and a readability pass available in the same tab removes most of the friction that used to make posting feel like a chore.`,
-    isPremium: false,
-    createdAt: new Date('2026-04-21').toISOString(),
-    updatedAt: new Date('2026-04-21').toISOString(),
-    readTime: '4 min read',
-  },
+        isPremium: false,
+        createdAt: new Date('2026-04-21').toISOString(),
+        updatedAt: new Date('2026-04-21').toISOString(),
+        readTime: '4 min read',
+    },
 
-  {
-    id: '2',
-    slug: 'modern-portfolio-architecture',
-    title: 'Building a Modern Portfolio: AI, Interview Prep, and Daily Challenges',
-    excerpt:
-      'A behind-the-scenes look at how I built my portfolio using Spring Boot, React, and Gemini — and why I made it more than just a static resume.',
-    content: `# Building a Modern Portfolio: AI, Interview Prep, and Daily Challenges
+    {
+        id: '2',
+        slug: 'modern-portfolio-architecture',
+        title: 'Building a Modern Portfolio: AI, Interview Prep, and Daily Challenges',
+        excerpt:
+            'A behind-the-scenes look at how I built my portfolio using Spring Boot, React, and Gemini — and why I made it more than just a static resume.',
+        content: `# Building a Modern Portfolio: AI, Interview Prep, and Daily Challenges
 
 When I started building this portfolio, I had one rule: it should not be a static resume.
 
@@ -91,19 +91,19 @@ Even in a personal project, keys do not belong in the codebase.
 Every sensitive value — Gemini, database credentials, EmailJS — lives in environment variables. The production build runs in a multi-stage Docker container on Google Cloud Run, where secrets are managed by Cloud Secret Manager and never touch the repository.
 
 It is more setup than a personal project technically needs. But doing it right once means you never have to undo a mistake later.`,
-    isPremium: false,
-    createdAt: new Date('2026-04-15').toISOString(),
-    updatedAt: new Date('2026-04-15').toISOString(),
-    readTime: '6 min read',
-  },
+        isPremium: false,
+        createdAt: new Date('2026-04-15').toISOString(),
+        updatedAt: new Date('2026-04-15').toISOString(),
+        readTime: '6 min read',
+    },
 
-  {
-    id: '3',
-    slug: 'self-taught-developer-journey',
-    title: 'What Nobody Tells You About Being a Self-Taught Developer',
-    excerpt:
-      'Self-teaching is not about finding the right course. It is about being willing to break things, fix them, and build again.',
-    content: `# What Nobody Tells You About Being a Self-Taught Developer
+    {
+        id: '3',
+        slug: 'self-taught-developer-journey',
+        title: 'What Nobody Tells You About Being a Self-Taught Developer',
+        excerpt:
+            'Self-teaching is not about finding the right course. It is about being willing to break things, fix them, and build again.',
+        content: `# What Nobody Tells You About Being a Self-Taught Developer
 
 Nobody taught me to code in a classroom. Everything I know came from reading documentation, breaking things in the terminal, and slowly figuring out why.
 
@@ -140,19 +140,19 @@ Do not wait for a certificate to start building.
 I built the Wake-Up Challenge because I wanted to understand date logic. I built the DSA Roadmap because I wanted to understand SVG rendering. Every feature on this site exists because I had a question I could only answer by writing the code.
 
 That is the whole thing. Pick a problem. Build toward it. The learning follows.`,
-    isPremium: false,
-    createdAt: new Date('2026-04-08').toISOString(),
-    updatedAt: new Date('2026-04-08').toISOString(),
-    readTime: '5 min read',
-  },
+        isPremium: false,
+        createdAt: new Date('2026-04-08').toISOString(),
+        updatedAt: new Date('2026-04-08').toISOString(),
+        readTime: '5 min read',
+    },
 
-  {
-    id: '4',
-    slug: 'spring-boot-vs-node-backend',
-    title: 'Why I Chose Spring Boot Over Node for My Portfolio Backend',
-    excerpt:
-      'A practical look at why a self-taught developer picked Java and Spring Boot — and what I learned about backend architecture along the way.',
-    content: `# Why I Chose Spring Boot Over Node for My Portfolio Backend
+    {
+        id: '4',
+        slug: 'spring-boot-vs-node-backend',
+        title: 'Why I Chose Spring Boot Over Node for My Portfolio Backend',
+        excerpt:
+            'A practical look at why a self-taught developer picked Java and Spring Boot — and what I learned about backend architecture along the way.',
+        content: `# Why I Chose Spring Boot Over Node for My Portfolio Backend
 
 When most developers build a personal project, they reach for Node.js. It is fast to set up, the ecosystem is huge, and you stay in JavaScript all the way through.
 
@@ -185,19 +185,19 @@ If you already know Node and want to grow, building something real in Spring Boo
 The first week is rough. The dependency injection model, the annotation-heavy configuration, the verbosity of Java compared to JavaScript — it all feels like too much at once. Push through it. By week two, the structure starts to feel like an asset rather than a burden.
 
 The best way to learn a framework is to build something you actually want to finish. That pressure keeps you going when the documentation gets dense.`,
-    isPremium: false,
-    createdAt: new Date('2026-03-28').toISOString(),
-    updatedAt: new Date('2026-03-28').toISOString(),
-    readTime: '5 min read',
-  },
+        isPremium: false,
+        createdAt: new Date('2026-03-28').toISOString(),
+        updatedAt: new Date('2026-03-28').toISOString(),
+        readTime: '5 min read',
+    },
 
-  {
-    id: '5',
-    slug: 'interactive-dsa-roadmap',
-    title: 'How I Built a DSA Roadmap You Can Actually Navigate',
-    excerpt:
-      'Flat lists of topics do not help you see the path. Here is how I built an interactive roadmap using SVG and CSS grid to make learning DSA feel less overwhelming.',
-    content: `# How I Built a DSA Roadmap You Can Actually Navigate
+    {
+        id: '5',
+        slug: 'interactive-dsa-roadmap',
+        title: 'How I Built a DSA Roadmap You Can Actually Navigate',
+        excerpt:
+            'Flat lists of topics do not help you see the path. Here is how I built an interactive roadmap using SVG and CSS grid to make learning DSA feel less overwhelming.',
+        content: `# How I Built a DSA Roadmap You Can Actually Navigate
 
 Every DSA study guide I found online was a list. A long, flat, alphabetically sorted list of topics with no sense of order or priority.
 
@@ -234,9 +234,9 @@ The feature also taught me something about React state I had not fully internali
 The roadmap is not the most technically impressive feature on this site. But it is one of the most useful.
 
 Every time I sit down to study, I open it first. It tells me where I left off and what to do next. That is the whole goal. A good tool should make the decision for you so you can spend your energy on the actual work.`,
-    isPremium: false,
-    createdAt: new Date('2026-03-18').toISOString(),
-    updatedAt: new Date('2026-03-18').toISOString(),
-    readTime: '6 min read',
-  },
+        isPremium: true,
+        createdAt: new Date('2026-03-18').toISOString(),
+        updatedAt: new Date('2026-03-18').toISOString(),
+        readTime: '6 min read',
+    },
 ];
