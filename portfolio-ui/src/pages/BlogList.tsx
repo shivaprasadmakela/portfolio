@@ -174,13 +174,15 @@ export default function BlogList() {
                                 icon={<FiSearch />}
                             />
                         </div>
-                        <Button
-                            onClick={handleCreateNew}
-                            icon={<FiPlus />}
-                            className={styles.createBtn}
-                        >
-                            Create Post
-                        </Button>
+                        {import.meta.env.DEV && (
+                            <Button
+                                onClick={handleCreateNew}
+                                icon={<FiPlus />}
+                                className={styles.createBtn}
+                            >
+                                Create Post
+                            </Button>
+                        )}
                     </div>
                 </FadeInSection>
 
@@ -193,6 +195,7 @@ export default function BlogList() {
                                 <BlogCard
                                     blog={blog}
                                     onEdit={handleEdit}
+                                    showEdit={import.meta.env.DEV}
                                 />
                             </FadeInSection>
                         ))

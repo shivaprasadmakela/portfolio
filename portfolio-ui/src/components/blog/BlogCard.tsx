@@ -6,9 +6,10 @@ import { Link } from 'react-router-dom';
 interface BlogCardProps {
     blog: Blog;
     onEdit: (blog: Blog) => void;
+    showEdit?: boolean;
 }
 
-export default function BlogCard({ blog, onEdit }: BlogCardProps) {
+export default function BlogCard({ blog, onEdit, showEdit = false }: BlogCardProps) {
     const formattedDate = new Date(blog.createdAt).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
@@ -47,13 +48,15 @@ export default function BlogCard({ blog, onEdit }: BlogCardProps) {
                     </Link>
                     
                     <div className={styles.cardActions}>
-                        <button 
-                            className={styles.iconAction} 
-                            onClick={(e) => { e.preventDefault(); onEdit(blog); }}
-                            title="Edit post"
-                        >
-                            <FiEdit2 size={15} />
-                        </button>
+                        {showEdit && (
+                            <button 
+                                className={styles.iconAction} 
+                                onClick={(e) => { e.preventDefault(); onEdit(blog); }}
+                                title="Edit post"
+                            >
+                                <FiEdit2 size={15} />
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
