@@ -1,36 +1,27 @@
-const BASE_URL = '/api/ai';
+import { apiClient } from './apiClient';
 
 export interface AiResponse {
     result: string;
 }
 
+const BASE_PATH = '/api/ai';
+
 export const aiApi = {
-    async improveTitle(title: string): Promise<AiResponse> {
-        return this.post('/improve-title', title);
-    },
-
-    async enhanceContent(content: string): Promise<AiResponse> {
-        return this.post('/enhance-content', content);
-    },
-
-    async summarize(content: string): Promise<AiResponse> {
-        return this.post('/summarize', content);
-    },
-
-    async post(endpoint: string, input: string): Promise<AiResponse> {
-        const response = await fetch(`${BASE_URL}${endpoint}`, {
+    improveTitle: (title: string): Promise<AiResponse> => 
+        apiClient<AiResponse>(`${BASE_PATH}/improve-title`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ input }),
-        });
+            body: JSON.stringify({ input: title }),
+        }),
 
-        if (!response.ok) {
-            const error = await response.json().catch(() => ({ result: 'Request failed' }));
-            throw new Error(error.result || 'AI service error');
-        }
+    enhanceContent: (content: string): Promise<AiResponse> => 
+        apiClient<AiResponse>(`${BASE_PATH}/enhance-content`, {
+            method: 'POST',
+            body: JSON.stringify({ input: content }),
+        }),
 
-        return response.json();
-    }
+    summarize: (content: string): Promise<AiResponse> => 
+        apiClient<AiResponse>(`${BASE_PATH}/summarize`, {
+            method: 'POST',
+            body: JSON.stringify({ input: content }),
+        }),
 };
