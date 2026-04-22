@@ -10,7 +10,7 @@ import FadeInSection from '../components/FadeInSection';
 import { Button } from '../components/ui';
 import { AiSummarizer } from '../components/blog/AiSummarizer';
 import styles from '../styles/BlogDetail.module.css';
-import { MOCK_BLOGS } from './BlogList';
+import { MOCK_BLOGS } from '../data/blogs';
 
 const STORAGE_KEY = 'portfolio_blogs';
 
