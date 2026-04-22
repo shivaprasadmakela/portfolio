@@ -15,28 +15,27 @@ import { MOCK_BLOGS } from '../data/blogs';
 const STORAGE_KEY = 'portfolio_blogs';
 
 export default function BlogDetail() {
-    const { id } = useParams<{ id: string }>();
+    const { slug } = useParams<{ slug: string }>();
     const navigate = useNavigate();
     const [blog, setBlog] = useState<Blog | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        if (id) {
+        if (slug) {
             const stored = localStorage.getItem(STORAGE_KEY);
             let found: Blog | undefined;
 
             if (stored) {
                 try {
                     const blogs: Blog[] = JSON.parse(stored);
-                    found = blogs.find(b => String(b.id) === String(id));
+                    found = blogs.find(b => b.slug === slug);
                 } catch (e) {
                     console.error("Failed to parse blogs from storage", e);
                 }
             }
 
-            // Fallback to MOCK_BLOGS if not found in storage
             if (!found) {
-                found = MOCK_BLOGS.find(b => String(b.id) === String(id));
+                found = MOCK_BLOGS.find(b => b.slug === slug);
             }
 
             if (found) {
@@ -46,7 +45,7 @@ export default function BlogDetail() {
             }
         }
         setIsLoading(false);
-    }, [id, navigate]);
+    }, [slug, navigate]);
 
     if (isLoading) return <div className={styles.loading}>Loading insightful content...</div>;
     if (!blog) return null;

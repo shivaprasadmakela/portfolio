@@ -58,7 +58,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/blogs" element={<BlogList />} />
-            <Route path="/blog/:id" element={<BlogDetail />} />
+            <Route path="/blog/:slug" element={<BlogDetail />} />
             <Route path="/projects" element={<AllProjects />} />
             <Route path="/my-youtube" element={<MyYoutube />} />
             <Route path="/challenge" element={<WakeUpChallenge />} />

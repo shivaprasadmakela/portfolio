@@ -36,14 +36,14 @@ export default function BlogCard({ blog, onEdit, showEdit = false }: BlogCardPro
                     )}
                 </div>
 
-                <Link to={`/blog/${blog.id}`} className={styles.cardTitle}>
+                <Link to={`/blog/${blog.slug}`} className={styles.cardTitle}>
                     {blog.title}
                 </Link>
                 
                 <p className={styles.cardExcerpt}>{blog.excerpt}</p>
                 
                 <div className={styles.cardFooter}>
-                    <Link to={`/blog/${blog.id}`} className={styles.readMore}>
+                    <Link to={`/blog/${blog.slug}`} className={styles.readMore}>
                         Read Article <FiArrowRight size={14} />
                     </Link>
                     
