@@ -45,7 +45,6 @@ export default function BlogDetail() {
                 console.error("Failed to parse blogs from storage", e);
             }
         } else {
-            // Fallback to MOCK_BLOGS if storage was cleared
             blogs = MOCK_BLOGS;
         }
 
