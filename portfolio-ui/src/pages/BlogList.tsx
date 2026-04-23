@@ -16,7 +16,6 @@ const STORAGE_KEY = 'portfolio_blogs';
 export default function BlogList() {
     const { showToast } = useToast();
 
-    // State
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -25,7 +24,6 @@ export default function BlogList() {
     const [isEditorOpen, setIsEditorOpen] = useState(false);
     const [editingBlog, setEditingBlog] = useState<Blog | null>(null);
 
-    // Storage Functions
     const loadBlogs = () => {
         const stored = localStorage.getItem(STORAGE_KEY);
         let existingBlogs: Blog[] = [];
@@ -38,13 +36,11 @@ export default function BlogList() {
             }
         }
 
-        // Always sync mock blogs to ensure latest content/slugs
         const updatedBlogs = MOCK_BLOGS.map(mock => {
             const existing = existingBlogs.find(eb => eb.id === mock.id);
             return existing ? { ...mock, summary: existing.summary } : mock;
         });
 
-        // Keep any user-created blogs that aren't in MOCK_BLOGS
         const userBlogs = existingBlogs.filter(
             eb => !MOCK_BLOGS.some(m => m.id === eb.id)
         );
@@ -66,7 +62,6 @@ export default function BlogList() {
         setIsLoading(false);
     }, []);
 
-    // Filter Logic
     const filteredBlogs = useMemo(() => {
         if (!blogs || !Array.isArray(blogs)) return [];
 
@@ -88,7 +83,6 @@ export default function BlogList() {
         });
     }, [blogs, searchTerm, filter, sortBy]);
 
-    // Handlers
     const handleCreateNew = () => {
         setEditingBlog(null);
         setIsEditorOpen(true);

@@ -28,10 +28,37 @@ export const AiSummarizer: React.FC<AiSummarizerProps> = ({
         return saved ? parseInt(saved, 10) : 0;
     });
 
-    // Update local state if props change (e.g. navigation)
+
     React.useEffect(() => {
         setSummary(existingSummary || null);
     }, [existingSummary]);
+
+    const loadingMessages = [
+        "Diving into the content...",
+        "Analyzing key insights...",
+        "Extracting technical gems...",
+        "Gemini is thinking...",
+        "Crafting your snapshot...",
+        "Summarizing the journey..."
+    ];
+
+    const [messageIndex, setMessageIndex] = useState(0);
+
+    React.useEffect(() => {
+        let interval: NodeJS.Timeout;
+        if (isLoading) {
+            setMessageIndex(0);
+            interval = setInterval(() => {
+                setMessageIndex((prev) => {
+                    if (prev < loadingMessages.length - 1) {
+                        return prev + 1;
+                    }
+                    return prev;
+                });
+            }, 3000);
+        }
+        return () => clearInterval(interval);
+    }, [isLoading, loadingMessages.length]);
 
     const isLimitReached = usageCount >= MAX_USAGE;
     const isDisabled = isLimitReached || isPremium;
@@ -45,18 +72,27 @@ export const AiSummarizer: React.FC<AiSummarizerProps> = ({
         try {
             const res = await aiApi.summarize(content);
 
-            // Increment usage count on success
             const newCount = usageCount + 1;
             setUsageCount(newCount);
             localStorage.setItem(USAGE_KEY, newCount.toString());
 
             let finalSummary = res.result;
-            // Parse result if it's JSON, or use raw if fallback
             try {
                 const parsed = JSON.parse(res.result);
+                // Check if the response body itself contains an error object
+                if (parsed.error) {
+                    throw new Error(parsed.error.message || 'AI processing error');
+                }
                 finalSummary = parsed.summary || res.result;
-            } catch (e) {
+            } catch (e: any) {
+                if (e.message && (e.message.includes('AI processing') || e.message.includes('error'))) {
+                    throw e;
+                }
                 finalSummary = res.result;
+            }
+
+            if (finalSummary.includes('"error"') || finalSummary.includes('503 Service Unavailable')) {
+                throw new Error("Received malformed response from AI");
             }
 
             setSummary(finalSummary);
@@ -64,7 +100,13 @@ export const AiSummarizer: React.FC<AiSummarizerProps> = ({
                 onSummaryGenerated(finalSummary);
             }
         } catch (err: any) {
-            setError(err.message || 'Failed to generate summary');
+            const errorMsg = err.message || '';
+            if (errorMsg.includes('503') || errorMsg.includes('high demand')) {
+                setError("Gemini is currently experiencing high demand and is taking a short break. Please try again in a few moments!");
+            } else {
+                setError("Something went wrong while generating the summary. Please try again later.");
+            }
+            console.error('AI Summary Error:', err);
         } finally {
             setIsLoading(false);
         }
@@ -97,7 +139,7 @@ export const AiSummarizer: React.FC<AiSummarizerProps> = ({
             {isLoading && (
                 <div className={styles.loadingArea}>
                     <div className={styles.spinner}></div>
-                    <span>Diving into the content...</span>
+                    <span>{loadingMessages[messageIndex]}</span>
                 </div>
             )}
 
