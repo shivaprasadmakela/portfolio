@@ -83,7 +83,7 @@ const QUESTIONS: Omit<VerificationQuestion, 'id'>[] = [
 
   { question: "Type the word 'consistency'", correctAnswer: "consistency", placeholder: "c..." },
   { question: "Type the word 'discipline' without the letter 'i'", correctAnswer: "dscplne", placeholder: "d..." },
-  { question: "Type the word 'morning' without the letter 'n'", correctAnswer: "mori g".replace(' ',''), placeholder: "m..." }, // ignore if you want, remove this one if confusing
+  { question: "Type the word 'morning' without the letter 'n'", correctAnswer: "mori g".replace(' ', ''), placeholder: "m..." }, // ignore if you want, remove this one if confusing
   { question: "Type the word 'habit' twice", correctAnswer: "habithabit", placeholder: "h..." },
   { question: "Type the word 'focus' twice", correctAnswer: "focusfocus", placeholder: "f..." },
 
@@ -119,7 +119,7 @@ const QUESTIONS: Omit<VerificationQuestion, 'id'>[] = [
 
   { question: "Type only the vowels from 'discipline'", correctAnswer: "iiie", placeholder: "i..." },
   { question: "Type only the consonants from 'focus'", correctAnswer: "fcs", placeholder: "f..." },
-  { question: "Type only the vowels from 'awake'", correctAnswer: "a a e".replace(' ',''), placeholder: "a..." }, // again remove if confusing
+  { question: "Type only the vowels from 'awake'", correctAnswer: "a a e".replace(' ', ''), placeholder: "a..." }, // again remove if confusing
   { question: "Type the number 123 backwards", correctAnswer: "321", placeholder: "3..." },
   { question: "Type the number 908 backwards", correctAnswer: "809", placeholder: "8..." },
 

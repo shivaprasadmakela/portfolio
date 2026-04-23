@@ -47,15 +47,15 @@ public class CheckInService {
         int questionIndex = (int) (dayIndex % activeQuestions.size());
 
         return activeQuestions.get(questionIndex);
-        
+
     }
 
     @Transactional
     public CheckInResponse checkIn(CheckInRequest request) {
         java.time.LocalTime start = java.time.LocalTime.of(5, 0);
-        java.time.LocalTime end = java.time.LocalTime.of(7, 10);
+        java.time.LocalTime end = java.time.LocalTime.of(7, 0);
         if (!IstTimeUtil.inWindow(start, end)) {
-            throw new CheckInException("Submission window is closed. Please check in between 5:00 AM and 7:10 AM IST.");
+            throw new CheckInException("Submission window is closed. Please check in between 5:00 AM and 7:00 AM IST.");
         }
 
         String email = request.getEmail().trim().toLowerCase();
@@ -73,9 +73,9 @@ public class CheckInService {
         updateStreaks(p, today);
         recordDailyCheckIn(p.getId(), today);
 
-        String message = p.getCurrentStreak() > 1 
-            ? String.format("Streak continued! Day %d locked in. 🔥", p.getCurrentStreak())
-            : "Welcome to the challenge! Day 1 locked in. 🔥";
+        String message = p.getCurrentStreak() > 1
+                ? String.format("Streak continued! Day %d locked in. 🔥", p.getCurrentStreak())
+                : "Welcome to the challenge! Day 1 locked in. 🔥";
 
         return new CheckInResponse(true, message, p.getCurrentStreak(), p.getLongestStreak());
     }

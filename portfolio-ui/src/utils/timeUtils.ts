@@ -12,26 +12,25 @@ export const getISTDateString = (date: Date = getCurrentIST()): string => {
 };
 
 export const isSubmissionWindowActive = (): { active: boolean; reason?: string } => {
- 
+
   if (import.meta.env.VITE_TEST_MODE === 'true') {
     return { active: true };
   }
 
   const ist = getCurrentIST();
   const hours = ist.getHours();
-  const minutes = ist.getMinutes();
-  
-  const isActive = hours >= 5 && (hours < 7 || (hours === 7 && minutes < 10));
-  
+
+  const isActive = hours >= 5 && hours < 7;
+
   if (isActive) {
     return { active: true };
   }
-  
+
   if (hours < 5) {
     return { active: false, reason: "It's too early! Submissions open at 5:00 AM IST." };
   }
-  
-  return { active: false, reason: "Submission window closed at 7:10 AM IST. Come back tomorrow!" };
+
+  return { active: false, reason: "Submission window closed at 7:00 AM IST. Come back tomorrow!" };
 };
 
 export const getISTTimeDisplay = (): string => {
@@ -46,14 +45,13 @@ export const getISTTimeDisplay = (): string => {
 export const getCountdown = (): { label: string; time: string } => {
   const now = getCurrentIST();
   const hours = now.getHours();
-  const minutes = now.getMinutes();
-  
+
   const target = new Date(now);
   target.setSeconds(0);
   target.setMilliseconds(0);
 
   let label = "";
-  const inWindow = hours >= 5 && (hours < 7 || (hours === 7 && minutes < 10));
+  const inWindow = hours >= 5 && hours < 7;
 
   if (hours < 5) {
     label = "Opens in";
@@ -62,7 +60,7 @@ export const getCountdown = (): { label: string; time: string } => {
   } else if (inWindow) {
     label = "Closes in";
     target.setHours(7);
-    target.setMinutes(10);
+    target.setMinutes(0);
   } else {
     label = "Opens in";
     target.setDate(target.getDate() + 1);
@@ -76,13 +74,13 @@ export const getCountdown = (): { label: string; time: string } => {
   const s = Math.floor((diff % (1000 * 60)) / 1000);
 
   const time = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-  
+
   return { label, time };
 };
 export const formatDateTime = (dateStr: string): string => {
   if (!dateStr) return 'N/A';
   const date = new Date(dateStr);
-  
+
   const datePart = date.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
@@ -95,6 +93,6 @@ export const formatDateTime = (dateStr: string): string => {
     second: '2-digit',
     hour12: true
   });
-  
+
   return `${datePart} ${timePart}`;
 };

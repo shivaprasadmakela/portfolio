@@ -13,7 +13,7 @@ A high-performance, modern web application designed to showcase professional wor
 - **Premium Experience**: Gated content system with blurred previews, custom unlock overlays, and interactive "premium" feedback.
 
 ### 📅 Wake-Up Challenge
-- **Discipline Building**: Check-in daily between **5:00 AM - 7:10 AM IST** to maintain your streak.
+- **Discipline Building**: Check-in daily between **5:00 AM - 7:00 AM IST** to maintain your streak.
 - **Verification System**: Anti-spam verification questions fetched dynamically from the backend.
 - **Live Clock**: Real-time IST clock synchronization for precise window tracking.
 
