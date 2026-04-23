@@ -98,8 +98,8 @@ It is more setup than a personal project technically needs. But doing it right o
     },
 
     {
-        id: '3',
-        slug: 'self-taught-developer-journey',
+        id: 'blog-3',
+        slug: 'the-self-taught-path',
         title: 'What Nobody Tells You About Being a Self-Taught Developer',
         excerpt:
             'Self-teaching is not about finding the right course. It is about being willing to break things, fix them, and build again.',
@@ -117,29 +117,100 @@ The "minimum required" part is important. You do not need to finish a course bef
 
 The frustration of staring at a red console is not a sign that you are doing it wrong. It is the whole process. The day you stop finding errors uncomfortable is the day learning gets faster.
 
+## The Part Nobody Admits: You Will Feel Stupid Daily
+
+There are days where nothing works.
+
+You fix one bug, create three more. You follow a tutorial, and your version somehow behaves differently. You copy something exactly and still get a different output.
+
+And the worst part? You don’t even know what you don’t know.
+
+There were times I spent hours debugging only to realize I missed a semicolon, a config property, or a tiny mismatch in API response.
+
+This is normal. Not beginner-level normal. Permanent normal.
+
+## Tutorial Hell Is Real — And It Is Comfortable
+
+Watching tutorials feels like progress. It is not.
+
+You understand everything while watching. You feel smart. Then you open your own project… and suddenly you don’t know where to start.
+
+That gap is the truth.
+
+I have started courses I never finished. Not because they were bad, but because building something real always taught me more than completing another module.
+
+If you are always “learning” but not building, you are just delaying failure. And failure is where actual learning happens.
+
 ## Using AI as a Mentor, Not a Crutch
 
-The self-taught path used to mean hours digging through Stack Overflow threads from 2014. Now it means having a conversation.
+I use AI to help me understand patterns I have not seen before — things like Spring Interceptors, DTO mapping, or structuring a service layer.
 
-I use AI to help me understand patterns I have not seen before — things like Spring Interceptors, DTO mapping, or how to structure a clean service layer. I do not ask it to write the code for me. I ask it to explain the concept, then I write the code myself and see what breaks.
+But here is the rule: I do not copy-paste and move on.
 
-The distinction matters. Using AI to shortcut understanding is a trap. Using it to accelerate understanding is a genuine advantage that did not exist five years ago.
+I ask, I try, I break things, and then I come back with better questions.
+
+If you let AI think for you, you will stay dependent.
+If you use it to challenge your thinking, you will grow faster than most people.
 
 ## Building Your Own Tools Teaches You More Than Any Tutorial
 
-The fastest way to understand state management is to build something where state management actually matters.
+The fastest way to understand something is to need it.
 
-By building my own blogging platform instead of using WordPress, I had to figure out how to sync \`localStorage\` with React state across multiple pages. By building my own interview prep section instead of using Notion, I had to think about URL structure, SEO slugs, and how data flows from a REST API to a rendered component.
+I didn’t learn React state management by reading docs. I learned it when my UI started behaving weird and I had no idea why.
 
-Pre-built tools hide the complexity. Building from scratch forces you to confront it.
+I didn’t learn backend flow from diagrams. I learned it when my APIs broke between controller → service → database and I had to trace the entire flow.
+
+Every time you build something real, you are forced to connect concepts.
+
+That connection is what tutorials never give you.
+
+## The Hidden Skill: Learning How to Stay Consistent
+
+Nobody talks about this, but this is the hardest part.
+
+Not Java. Not React. Not system design.
+
+Consistency.
+
+Working a full day and still sitting down to debug your side project.
+Coming back to unfinished code after two days and trying to understand your own logic.
+Continuing even when you feel like you are not improving.
+
+There is no shortcut here. Either you show up or you don’t.
+
+## The Ugly Truth About Being “Self-Taught”
+
+Being self-taught sounds cool until you realize:
+
+- You don’t have a structured path  
+- You don’t know if you are learning the “right” things  
+- You compare yourself to people who seem ahead  
+- You doubt your progress more than you should  
+
+But here is the flip side:
+
+You learn how to figure things out.
+
+And that skill is more valuable than any course.
 
 ## The Philosophy in One Sentence
 
 Do not wait for a certificate to start building.
 
-I built the Wake-Up Challenge because I wanted to understand date logic. I built the DSA Roadmap because I wanted to understand SVG rendering. Every feature on this site exists because I had a question I could only answer by writing the code.
+I built things because I needed to understand them.
+Not because I was “ready.”
 
-That is the whole thing. Pick a problem. Build toward it. The learning follows.`,
+That is the whole thing.
+
+Pick a problem.
+Start before you feel prepared.
+Break things.
+Fix them.
+
+Repeat.
+
+Eventually, you stop feeling like someone who is “learning to code”  
+and start becoming someone who just… builds.`,
         isPremium: false,
         createdAt: new Date('2026-04-08').toISOString(),
         updatedAt: new Date('2026-04-08').toISOString(),

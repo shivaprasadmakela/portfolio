@@ -3,6 +3,7 @@ import styles from '../../styles/SharedUI.module.css';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'primary' | 'secondary' | 'ghost' | 'icon';
+    size?: 'sm' | 'md' | 'lg';
     isLoading?: boolean;
     className?: string;
     icon?: React.ReactNode;
@@ -11,13 +12,14 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button: React.FC<ButtonProps> = ({
     children,
     variant = 'primary',
+    size = 'md',
     isLoading = false,
     className = '',
     icon,
     disabled,
     ...props
 }) => {
-    const buttonClass = `${styles.button} ${styles[variant]} ${className}`;
+    const buttonClass = `${styles.button} ${styles[variant]} ${styles[size]} ${className}`;
 
     return (
         <button

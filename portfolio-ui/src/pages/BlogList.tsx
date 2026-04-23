@@ -34,31 +34,24 @@ export default function BlogList() {
             try {
                 existingBlogs = JSON.parse(stored);
             } catch (e) {
-                existingBlogs = MOCK_BLOGS;
+                existingBlogs = [];
             }
-        } else {
-            existingBlogs = MOCK_BLOGS;
         }
 
-        // Force update existing mock blogs with latest data from MOCK_BLOGS
-        // This ensures slugs and new content are synced even if the ID already exists
-        const updatedBlogs = existingBlogs.map(eb => {
-            const mock = MOCK_BLOGS.find(m => m.id === eb.id);
-            return mock ? { ...mock } : eb;
+        // Always sync mock blogs to ensure latest content/slugs
+        const updatedBlogs = MOCK_BLOGS.map(mock => {
+            const existing = existingBlogs.find(eb => eb.id === mock.id);
+            return existing ? { ...mock, summary: existing.summary } : mock;
         });
 
-        // Add any completely new mock blogs
-        const missingDefaults = MOCK_BLOGS.filter(
-            defaultBlog => !updatedBlogs.some(ub => ub.id === defaultBlog.id)
+        // Keep any user-created blogs that aren't in MOCK_BLOGS
+        const userBlogs = existingBlogs.filter(
+            eb => !MOCK_BLOGS.some(m => m.id === eb.id)
         );
 
-        const finalBlogs = [...missingDefaults, ...updatedBlogs];
+        const finalBlogs = [...updatedBlogs, ...userBlogs];
         
-        // Save back to localStorage if there were changes
-        if (JSON.stringify(finalBlogs) !== stored) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(finalBlogs));
-        }
-
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(finalBlogs));
         return finalBlogs;
     };
 
@@ -75,17 +68,22 @@ export default function BlogList() {
 
     // Filter Logic
     const filteredBlogs = useMemo(() => {
-        let result = blogs.filter(blog =>
-            blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            blog.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+        if (!blogs || !Array.isArray(blogs)) return [];
+
+        let result = blogs.filter(blog => {
+            if (!blog) return false;
+            const title = blog.title || '';
+            const excerpt = blog.excerpt || '';
+            return title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                   excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+        });
 
         if (filter === 'Premium') result = result.filter(b => b.isPremium);
         else if (filter === 'Free') result = result.filter(b => !b.isPremium);
 
         return result.sort((a, b) => {
-            const dateA = new Date(a.createdAt).getTime();
-            const dateB = new Date(b.createdAt).getTime();
+            const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+            const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
             return sortBy === 'Latest' ? dateB - dateA : dateA - dateB;
         });
     }, [blogs, searchTerm, filter, sortBy]);

@@ -8,6 +8,7 @@ export interface Blog {
     createdAt: string;
     updatedAt: string;
     readTime: string;
+    summary?: string;
 }
 
 export type NewBlog = Omit<Blog, 'id' | 'createdAt' | 'updatedAt' | 'readTime'>;

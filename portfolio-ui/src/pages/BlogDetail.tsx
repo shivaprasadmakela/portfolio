@@ -5,8 +5,7 @@ import remarkGfm from 'remark-gfm';
 import Header from '../components/home/Header';
 import Footer from '../components/home/Footer';
 import { type Blog } from '../types/blog';
-import { FiChevronLeft, FiLock, FiClock, FiCalendar } from 'react-icons/fi';
-import FadeInSection from '../components/FadeInSection';
+import { FiLock, FiClock, FiCalendar, FiArrowLeft } from 'react-icons/fi';
 import { Button } from '../components/ui';
 import { useToast } from '../components/ui/Toast';
 import { AiSummarizer } from '../components/blog/AiSummarizer';
@@ -31,6 +30,24 @@ export default function BlogDetail() {
         ];
         const randomMsg = messages[Math.floor(Math.random() * messages.length)];
         showToast(randomMsg, 'info');
+    };
+
+    const handleSummaryGenerated = (summary: string) => {
+        if (!blog || !slug) return;
+
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            try {
+                const blogs: Blog[] = JSON.parse(stored);
+                const updated = blogs.map(b =>
+                    b.slug === slug ? { ...b, summary } : b
+                );
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+                setBlog({ ...blog, summary });
+            } catch (e) {
+                console.error("Failed to save summary", e);
+            }
+        }
     };
 
     useEffect(() => {
@@ -63,54 +80,53 @@ export default function BlogDetail() {
     if (isLoading) return <div className={styles.loading}>Loading insightful content...</div>;
     if (!blog) return null;
 
-    const formattedDate = new Date(blog.createdAt).toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric'
-    });
-
     return (
         <>
             <Header />
             <main className={styles.blogDetailMain}>
                 <div className={styles.container}>
-                    <FadeInSection>
-                        <Link to="/blogs" className={styles.backBtn}>
-                            <FiChevronLeft /> Back to all articles
-                        </Link>
+                    <Link to="/blogs" className={styles.backBtn}>
+                        <FiArrowLeft /> Back to all articles
+                    </Link>
 
+                    {blog && (
                         <article className={styles.article}>
                             <header className={styles.header}>
                                 <div className={styles.meta}>
-                                    <span className={styles.metaItem}>
-                                        <FiCalendar className={styles.icon} />
-                                        {formattedDate}
-                                    </span>
-                                    <span className={styles.metaItem}>
-                                        <FiClock className={styles.icon} />
-                                        {blog.readTime}
-                                    </span>
+                                    <div className={styles.metaItem}>
+                                        <FiCalendar /> {new Date(blog.createdAt).toLocaleDateString()}
+                                    </div>
+                                    <div className={styles.metaItem}>
+                                        <FiClock /> {blog.readTime}
+                                    </div>
+                                    {blog.isPremium && (
+                                        <div className={styles.metaItem}>
+                                            <FiLock /> Premium
+                                        </div>
+                                    )}
                                 </div>
                                 <h1 className={styles.title}>{blog.title}</h1>
                                 <p className={styles.excerpt}>{blog.excerpt}</p>
-                            </header>
 
-                            <AiSummarizer 
-                                content={blog.content} 
-                                isPremium={blog.isPremium} 
-                            />
+                                <AiSummarizer
+                                    content={blog.content}
+                                    isPremium={blog.isPremium}
+                                    existingSummary={blog.summary}
+                                    onSummaryGenerated={handleSummaryGenerated}
+                                />
+                            </header>
 
                             {blog.isPremium && (
                                 <div className={styles.premiumOverlay}>
                                     <div className={styles.premiumCard}>
-                                        <div className={styles.lockIcon}>
-                                            <FiLock />
-                                        </div>
-                                        <h2 className={styles.premiumTitle}>Premium Article</h2>
-                                        <p className={styles.premiumDesc}>
-                                            This content is reserved for premium members. Unlock full access to gain deep insights and advanced tutorials.
-                                        </p>
-                                        <Button onClick={handleUnlockPremium}>
+                                        <FiLock className={styles.lockIcon} />
+                                        <h2>Premium Article</h2>
+                                        <p>This deep-dive is available for premium members. Unlock full access to all engineering journals.</p>
+                                        <Button
+                                            variant="primary"
+                                            size="lg"
+                                            onClick={handleUnlockPremium}
+                                        >
                                             Unlock Access
                                         </Button>
                                     </div>
@@ -123,7 +139,7 @@ export default function BlogDetail() {
                                 </ReactMarkdown>
                             </div>
                         </article>
-                    </FadeInSection>
+                    )}
                 </div>
             </main>
             <Footer />
