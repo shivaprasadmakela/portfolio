@@ -34,20 +34,27 @@ export default function BlogDetail() {
 
     const handleSummaryGenerated = (summary: string) => {
         if (!blog || !slug) return;
-
+        
         const stored = localStorage.getItem(STORAGE_KEY);
+        let blogs: Blog[] = [];
+        
         if (stored) {
             try {
-                const blogs: Blog[] = JSON.parse(stored);
-                const updated = blogs.map(b =>
-                    b.slug === slug ? { ...b, summary } : b
-                );
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-                setBlog({ ...blog, summary });
+                blogs = JSON.parse(stored);
             } catch (e) {
-                console.error("Failed to save summary", e);
+                console.error("Failed to parse blogs from storage", e);
             }
+        } else {
+            // Fallback to MOCK_BLOGS if storage was cleared
+            blogs = MOCK_BLOGS;
         }
+
+        const updated = blogs.map(b => 
+            b.slug === slug ? { ...b, summary } : b
+        );
+        
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+        setBlog({ ...blog, summary });
     };
 
     useEffect(() => {

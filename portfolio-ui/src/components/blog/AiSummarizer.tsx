@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { aiApi } from '../../api/aiApi';
 import { Button } from '../ui';
-import { FiFileText, FiZap, FiX } from 'react-icons/fi';
+import { FiFileText, FiZap } from 'react-icons/fi';
 import styles from '../../styles/AiSummarizer.module.css';
 
 interface AiSummarizerProps {
@@ -11,8 +11,8 @@ interface AiSummarizerProps {
     onSummaryGenerated?: (summary: string) => void;
 }
 
-export const AiSummarizer: React.FC<AiSummarizerProps> = ({ 
-    content, 
+export const AiSummarizer: React.FC<AiSummarizerProps> = ({
+    content,
     isPremium = false,
     existingSummary,
     onSummaryGenerated
@@ -78,16 +78,16 @@ export const AiSummarizer: React.FC<AiSummarizerProps> = ({
                     <span>AI Content Snapshot</span>
                 </div>
                 {!summary && !isLoading && (
-                    <Button 
+                    <Button
                         className={styles.summarizeBtn}
                         onClick={handleSummarize}
                         disabled={isDisabled}
                     >
                         <FiFileText /> {
-                            isPremium 
-                                ? 'Summarizer Locked (Premium)' 
-                                : isLimitReached 
-                                    ? 'Daily Limit Reached' 
+                            isPremium
+                                ? 'Summarizer Locked (Premium)'
+                                : isLimitReached
+                                    ? 'Daily Limit Reached'
                                     : 'Summarize Insight'
                         }
                     </Button>
