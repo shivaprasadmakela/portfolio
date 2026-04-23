@@ -1,11 +1,5 @@
-/**
- * Utility functions for handling IST (India Standard Time)
- * IST is UTC+5:30
- */
-
 export const getCurrentIST = (): Date => {
   const now = new Date();
-  // We use Intl to get the current time in IST regardless of user's local system time
   const istString = now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
   return new Date(istString);
 };
@@ -25,8 +19,11 @@ export const isSubmissionWindowActive = (): { active: boolean; reason?: string }
 
   const ist = getCurrentIST();
   const hours = ist.getHours();
-  // window is 5:00:00 to 5:59:59
-  if (hours === 5) {
+  const minutes = ist.getMinutes();
+  
+  const isActive = hours >= 5 && (hours < 7 || (hours === 7 && minutes < 10));
+  
+  if (isActive) {
     return { active: true };
   }
   
@@ -34,7 +31,7 @@ export const isSubmissionWindowActive = (): { active: boolean; reason?: string }
     return { active: false, reason: "It's too early! Submissions open at 5:00 AM IST." };
   }
   
-  return { active: false, reason: "Submission window closed at 6:00 AM IST. Come back tomorrow!" };
+  return { active: false, reason: "Submission window closed at 7:10 AM IST. Come back tomorrow!" };
 };
 
 export const getISTTimeDisplay = (): string => {
@@ -49,23 +46,28 @@ export const getISTTimeDisplay = (): string => {
 export const getCountdown = (): { label: string; time: string } => {
   const now = getCurrentIST();
   const hours = now.getHours();
+  const minutes = now.getMinutes();
   
   const target = new Date(now);
-  target.setMinutes(0);
   target.setSeconds(0);
   target.setMilliseconds(0);
 
   let label = "";
+  const inWindow = hours >= 5 && (hours < 7 || (hours === 7 && minutes < 10));
+
   if (hours < 5) {
     label = "Opens in";
     target.setHours(5);
-  } else if (hours === 5) {
+    target.setMinutes(0);
+  } else if (inWindow) {
     label = "Closes in";
-    target.setHours(6);
+    target.setHours(7);
+    target.setMinutes(10);
   } else {
     label = "Opens in";
     target.setDate(target.getDate() + 1);
     target.setHours(5);
+    target.setMinutes(0);
   }
 
   const diff = target.getTime() - now.getTime();
@@ -81,14 +83,12 @@ export const formatDateTime = (dateStr: string): string => {
   if (!dateStr) return 'N/A';
   const date = new Date(dateStr);
   
- 
   const datePart = date.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric'
   });
 
-  
   const timePart = date.toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: '2-digit',

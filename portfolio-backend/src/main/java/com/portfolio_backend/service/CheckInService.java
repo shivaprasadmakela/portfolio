@@ -52,6 +52,12 @@ public class CheckInService {
 
     @Transactional
     public CheckInResponse checkIn(CheckInRequest request) {
+        java.time.LocalTime start = java.time.LocalTime.of(5, 0);
+        java.time.LocalTime end = java.time.LocalTime.of(7, 10);
+        if (!IstTimeUtil.inWindow(start, end)) {
+            throw new CheckInException("Submission window is closed. Please check in between 5:00 AM and 7:10 AM IST.");
+        }
+
         String email = request.getEmail().trim().toLowerCase();
         String name = request.getName().trim();
 
