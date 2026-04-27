@@ -1,0 +1,221 @@
+.chatWrapper {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.chatButton {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chatButton:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+.chatWindow {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 380px;
+  max-width: calc(100vw - 4rem);
+  height: 500px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.chatHeader {
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  background: #28a745;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.headerInfo h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.closeButton:hover {
+  color: #fff;
+}
+
+.messageList {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message {
+  max-width: 80%;
+  padding: 0.75rem 1rem;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.userMessage {
+  align-self: flex-end;
+  background: #28a745;
+  color: white;
+  border-bottom-right-radius: 2px;
+}
+
+.aiMessage {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.1);
+  color: #eee;
+  border-bottom-left-radius: 2px;
+}
+
+.thinking {
+  font-style: italic;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 5px;
+}
+
+.suggestions {
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.suggestionChip {
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  color: #aaa;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.suggestionChip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: #28a745;
+}
+
+.chatInputArea {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chatInputArea input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  color: white;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.chatInputArea input:focus {
+  border-color: #28a745;
+}
+
+.sendButton {
+  background: #28a745;
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.sendButton:hover {
+  background: #218838;
+}
+
+.sendButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Custom Scrollbar */
+.messageList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messageList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messageList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.messageList::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

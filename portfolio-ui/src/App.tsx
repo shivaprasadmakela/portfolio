@@ -32,6 +32,8 @@ const AdminConfiguration = lazy(() => import('./pages/admin/AdminConfiguration')
 const NotFound = lazy(() => import('./pages/error/NotFound'));
 const Forbidden = lazy(() => import('./pages/error/Forbidden'));
 
+import PortfolioChat from './components/ai/PortfolioChat';
+
 function App() {
   useEffect(() => {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -54,6 +56,7 @@ function App() {
       <Router>
         <BackgroundDecoration />
         <ScrollToTop />
+        {import.meta.env.DEV && <PortfolioChat />}
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Home />} />
