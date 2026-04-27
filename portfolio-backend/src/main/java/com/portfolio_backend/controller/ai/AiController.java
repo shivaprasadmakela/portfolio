@@ -34,6 +34,12 @@ public class AiController {
         return ResponseEntity.ok(new AiResponse(res));
     }
 
+    @PostMapping("/chat")
+    public ResponseEntity<AiResponse> chat(@RequestBody AiRequest request) {
+        String res = aiService.chatAboutMe(request.getInput());
+        return ResponseEntity.ok(new AiResponse(res));
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<AiResponse> handleValidation(IllegalArgumentException e) {
         return ResponseEntity.badRequest().body(new AiResponse(e.getMessage()));
