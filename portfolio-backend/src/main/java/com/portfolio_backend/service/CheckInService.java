@@ -126,7 +126,7 @@ public class CheckInService {
     private String hashAnswer(String answer) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(answer.getBytes());
+            byte[] hash = digest.digest(answer.getBytes(java.nio.charset.StandardCharsets.UTF_8));
             return bytesToHex(hash);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("Error hashing answer", e);
@@ -134,12 +134,10 @@ public class CheckInService {
     }
 
     private String bytesToHex(byte[] bytes) {
-        Formatter formatter = new Formatter();
+        StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
-            formatter.format("%02x", b);
+            sb.append(String.format("%02x", b));
         }
-        String result = formatter.toString();
-        formatter.close();
-        return result;
+        return sb.toString();
     }
 }
