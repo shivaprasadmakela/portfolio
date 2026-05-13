@@ -8,6 +8,15 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    title: 'AI Blogging Assistant',
+    image: '/assets/ai_blog_assistant.png',
+    description: 'A Gemini-powered writing assistant integrated into the portfolio blog. Features include smart title suggestions, content enhancement, and AI-generated reader summaries.',
+    tags: ['React', 'Spring Boot', 'Google Gemini', 'Markdown'],
+    link: '/blog/ai-blogging-assistant',
+    github: 'https://github.com/shivaprasadmakela/portfolio',
+  },
+
 
   {
     title: 'Wake Up With Me',
@@ -32,6 +41,14 @@ export const projects: Project[] = [
     tags: ['Javascript', 'React'],
     link: 'https://flames-fun.vercel.app/',
     github: 'https://github.com/shivaprasadmakela/flames-fun.git',
+  },
+  {
+    title: 'React Practice Suite',
+    image: '/assets/mini_projects.png',
+    description: 'A dedicated workspace for mastering React through hands-on development. Includes a collection of mini-projects, interactive components, and technical experiments designed to sharpen frontend engineering skills.',
+    tags: ['React', 'Vite', 'TypeScript', 'Framer Motion'],
+    link: 'https://mini-projects-silk.vercel.app',
+    github: 'https://github.com/shivaprasadmakela/mini-projects.git',
   },
   {
     title: 'Integrated Door Landing Page',
