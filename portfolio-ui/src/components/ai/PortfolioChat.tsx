@@ -60,7 +60,13 @@ export default function PortfolioChat() {
       const response = await fetch(`${API_BASE_URL}/api/ai/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ input: text }),
+        body: JSON.stringify({ 
+          input: text,
+          history: messages.map(msg => ({
+            text: msg.text,
+            sender: msg.sender
+          }))
+        }),
       });
 
       if (!response.ok) throw new Error('Failed to fetch response');
@@ -68,7 +74,7 @@ export default function PortfolioChat() {
       const data = await response.json();
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: data.response || "I'm sorry, I couldn't process that. Please try again.",
+        text: data.result || "I'm sorry, I couldn't process that. Please try again.",
         sender: 'ai',
         timestamp: new Date(),
       };

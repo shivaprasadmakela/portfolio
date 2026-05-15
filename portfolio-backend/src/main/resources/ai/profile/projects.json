@@ -1,0 +1,22 @@
+[
+  {
+    "name": "AI-Powered Blogging Platform",
+    "stack": ["React", "TypeScript", "Spring Boot", "Gemini AI"],
+    "highlights": ["AI summarization", "Prompt engineering", "Structured AI response handling"]
+  },
+  {
+    "name": "TalkNow (Real-Time Chat)",
+    "stack": ["React", "Node.js", "Express", "Socket.IO"],
+    "highlights": ["Real-time messaging", "WebSocket communication"]
+  },
+  {
+    "name": "Wake Up With Me",
+    "stack": ["React", "Spring Boot", "MySQL", "Framer Motion"],
+    "highlights": ["Productivity platform", "Interactive animations"]
+  },
+  {
+    "name": "Portfolio Website",
+    "stack": ["React", "TypeScript", "Tailwind CSS"],
+    "highlights": ["Integrated AI chatbot", "Modern responsive design"]
+  }
+]

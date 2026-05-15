@@ -1,0 +1,26 @@
+{
+  "company": "Modlix",
+  "roles": [
+    {
+      "title": "Software Development Engineer I (SDE-I)",
+      "period": "August 2024 - Present"
+    },
+    {
+      "title": "Software Engineer Intern",
+      "period": "February 2024 - July 2024"
+    }
+  ],
+  "work": [
+    "Building scalable frontend systems with React and TypeScript",
+    "Developing backend APIs using Java Spring Boot and Spring WebFlux",
+    "Working on Leadzump (SaaS CRM) - authentication, onboarding, and business workflows",
+    "Handling production deployments and debugging complex issues",
+    "Integrating WhatsApp business workflows and mobile-responsive systems"
+  ],
+  "strengths": [
+    "End-to-end feature ownership",
+    "Frontend architecture",
+    "Production debugging",
+    "Fast learning"
+  ]
+}
