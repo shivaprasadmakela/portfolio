@@ -121,7 +121,7 @@ POST   /api/interview/admin/collections            - Create/update collection
 
 ### Running the Application
 ```bash
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
 ### Testing an Endpoint
