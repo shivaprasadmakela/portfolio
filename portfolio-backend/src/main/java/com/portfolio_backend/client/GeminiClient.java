@@ -64,8 +64,13 @@ public class GeminiClient {
                     return candidate.get("content").get("parts").get(0).get("text").asText();
                 }
             }
+        } catch (org.springframework.web.client.HttpStatusCodeException e) {
+            if (e.getStatusCode().value() == 429) {
+                return "The AI assistant is currently taking a short break (daily limit reached). Please try again later or contact Shiva directly!";
+            }
+            return "AI service is temporarily unavailable. Error: " + e.getStatusCode();
         } catch (Exception e) {
-            return "Error calling Gemini AI: " + e.getMessage();
+            return "Oops! Something went wrong while talking to the AI. Please try again later.";
         }
 
         return "No response from Gemini AI.";

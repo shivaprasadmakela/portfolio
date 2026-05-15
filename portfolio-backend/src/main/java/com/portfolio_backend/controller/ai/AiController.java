@@ -36,7 +36,7 @@ public class AiController {
 
     @PostMapping("/chat")
     public ResponseEntity<AiResponse> chat(@RequestBody AiRequest request) {
-        String res = aiService.chatAboutMe(request.getInput());
+        String res = aiService.chatAboutMe(request.getInput(), request.getHistory());
         return ResponseEntity.ok(new AiResponse(res));
     }
 
