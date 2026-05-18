@@ -13,22 +13,40 @@ interface Message {
 }
 
 const SUGGESTIONS = [
-  "Who is Shiva Prasad?",
-  "Tell me about your projects.",
-  "What are your core skills?",
-  "How can I contact you?",
+  "Tell me about Shiva's experience.",
+  "What is his core tech stack?",
+  "Can you share some of his full-stack projects?",
+  "Does he have a YouTube channel?",
 ];
 
 export default function PortfolioChat() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      text: "Hi there! I'm Shiva's AI Assistant. Ask me anything about Shiva's career, projects, or skills!",
-      sender: 'ai',
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>(() => {
+    const saved = localStorage.getItem('portfolio_chat_messages');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        return parsed.map((msg: any) => ({
+          ...msg,
+          timestamp: new Date(msg.timestamp)
+        }));
+      } catch (e) {
+        console.error('Failed to parse chat history', e);
+      }
+    }
+    return [
+      {
+        id: '1',
+        text: "Hi there! I'm Shiva's AI Assistant. Ask me anything about Shiva's career, projects, or skills!",
+        sender: 'ai',
+        timestamp: new Date(),
+      },
+    ];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('portfolio_chat_messages', JSON.stringify(messages));
+  }, [messages]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -38,8 +56,12 @@ export default function PortfolioChat() {
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, isTyping]);
+    if (isOpen) {
+      setTimeout(() => scrollToBottom(), 150);
+    } else {
+      scrollToBottom();
+    }
+  }, [messages, isTyping, isOpen]);
 
   const handleSend = async (text: string) => {
     if (!text.trim()) return;
@@ -60,7 +82,7 @@ export default function PortfolioChat() {
       const response = await fetch(`${API_BASE_URL}/api/ai/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           input: text,
           history: messages.map(msg => ({
             text: msg.text,
@@ -125,9 +147,8 @@ export default function PortfolioChat() {
               {messages.map((msg) => (
                 <div
                   key={msg.id}
-                  className={`${styles.message} ${
-                    msg.sender === 'user' ? styles.userMessage : styles.aiMessage
-                  }`}
+                  className={`${styles.message} ${msg.sender === 'user' ? styles.userMessage : styles.aiMessage
+                    }`}
                 >
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {msg.text}
