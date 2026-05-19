@@ -40,6 +40,11 @@ public class AiController {
         return ResponseEntity.ok(new AiResponse(res));
     }
 
+    @PostMapping(value = "/chat/stream", produces = org.springframework.http.MediaType.TEXT_EVENT_STREAM_VALUE)
+    public org.springframework.web.servlet.mvc.method.annotation.SseEmitter streamChat(@RequestBody AiRequest request) {
+        return aiService.streamChatAboutMe(request.getInput(), request.getHistory());
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<AiResponse> handleValidation(IllegalArgumentException e) {
         return ResponseEntity.badRequest().body(new AiResponse(e.getMessage()));

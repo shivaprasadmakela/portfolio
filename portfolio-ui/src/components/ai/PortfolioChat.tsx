@@ -10,7 +10,25 @@ interface Message {
   text: string;
   sender: 'user' | 'ai';
   timestamp: Date;
+  animate?: boolean;
 }
+
+const TypewriterMessage: React.FC<{ text: string; animate?: boolean }> = ({ text, animate }) => {
+  const [displayedText, setDisplayedText] = useState(animate ? '' : text);
+
+  useEffect(() => {
+    if (!animate) return;
+    
+    const timeout = setTimeout(() => {
+      if (displayedText.length < text.length) {
+        setDisplayedText(text.substring(0, displayedText.length + 3));
+      }
+    }, 15);
+    return () => clearTimeout(timeout);
+  }, [text, displayedText, animate]);
+
+  return <ReactMarkdown remarkPlugins={[remarkGfm]}>{animate ? displayedText : text}</ReactMarkdown>;
+};
 
 const SUGGESTIONS = [
   "Tell me about Shiva's experience.",
@@ -79,7 +97,7 @@ export default function PortfolioChat() {
 
     try {
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
-      const response = await fetch(`${API_BASE_URL}/api/ai/chat`, {
+      const response = await fetch(`${API_BASE_URL}/api/ai/chat/stream`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -92,16 +110,45 @@ export default function PortfolioChat() {
       });
 
       if (!response.ok) throw new Error('Failed to fetch response');
+      if (!response.body) throw new Error('No readable stream available');
 
-      const data = await response.json();
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: data.result || "I'm sorry, I couldn't process that. Please try again.",
+      setIsTyping(false); // Remove "Assistant is thinking..."
+      
+      const aiMessageId = (Date.now() + 1).toString();
+      // Add empty message that will be filled up
+      setMessages((prev) => [...prev, {
+        id: aiMessageId,
+        text: '',
         sender: 'ai',
         timestamp: new Date(),
-      };
+        animate: true
+      }]);
 
-      setMessages((prev) => [...prev, aiMessage]);
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        
+        const chunk = decoder.decode(value, { stream: true });
+        // The chunk might contain SSE formatted lines like "data: hello\n\n"
+        // Since the backend just does emitter.send(text), Spring usually formats it as "data:text\n\n"
+        // Wait, Spring's SseEmitter usually prefixes with "data:"
+        // Let's clean the SSE format for text
+        const textChunks = chunk.split('\n')
+            .filter(line => line.startsWith('data:'))
+            .map(line => line.substring(5))
+            .join('');
+
+        if (textChunks) {
+            setMessages((prev) => 
+              prev.map((msg) => 
+                msg.id === aiMessageId ? { ...msg, text: msg.text + textChunks } : msg
+              )
+            );
+        }
+      }
     } catch (error) {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -150,9 +197,13 @@ export default function PortfolioChat() {
                   className={`${styles.message} ${msg.sender === 'user' ? styles.userMessage : styles.aiMessage
                     }`}
                 >
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {msg.text}
-                  </ReactMarkdown>
+                  {msg.sender === 'ai' ? (
+                    <TypewriterMessage text={msg.text} animate={msg.animate} />
+                  ) : (
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {msg.text}
+                    </ReactMarkdown>
+                  )}
                 </div>
               ))}
               {isTyping && (
