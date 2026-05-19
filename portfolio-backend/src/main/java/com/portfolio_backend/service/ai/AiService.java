@@ -23,19 +23,6 @@ public class AiService {
         return geminiClient.call(systemPrompt);
     }
 
-    public org.springframework.web.servlet.mvc.method.annotation.SseEmitter streamChatAboutMe(String userMessage, List<AiRequest.ChatMessage> history) {
-        validate(userMessage);
-        String systemPrompt = aiPromptBuilder.buildChatPrompt(userMessage, history);
-        org.springframework.web.servlet.mvc.method.annotation.SseEmitter emitter = new org.springframework.web.servlet.mvc.method.annotation.SseEmitter(-1L); // No timeout
-        
-        // Start streaming asynchronously to not block the main thread
-        java.util.concurrent.CompletableFuture.runAsync(() -> {
-            geminiClient.streamCall(systemPrompt, emitter);
-        });
-        
-        return emitter;
-    }
-
     public String improveTitle(String title) {
         validate(title);
         String prompt = AiPromptTemplates.IMPROVE_TITLE_PROMPT.formatted(title);

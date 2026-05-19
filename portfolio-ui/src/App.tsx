@@ -33,13 +33,6 @@ const NotFound = lazy(() => import('./pages/error/NotFound'));
 const Forbidden = lazy(() => import('./pages/error/Forbidden'));
 
 import PortfolioChat from './components/ai/PortfolioChat';
-import { useLocation } from 'react-router-dom';
-
-function ChatWrapper() {
-  const location = useLocation();
-  const showChat = location.pathname.includes('/chat') || location.search.includes('chat');
-  return showChat ? <PortfolioChat /> : null;
-}
 
 function App() {
   useEffect(() => {
@@ -63,7 +56,7 @@ function App() {
       <Router>
         <BackgroundDecoration />
         <ScrollToTop />
-        <ChatWrapper />
+        {import.meta.env.DEV && <PortfolioChat />}
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Home />} />
