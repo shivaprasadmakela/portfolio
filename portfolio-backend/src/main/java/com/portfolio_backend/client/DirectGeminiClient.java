@@ -2,6 +2,8 @@ package com.portfolio_backend.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.portfolio_backend.dto.ai.AiRequest.ChatMessage;
+import com.portfolio_backend.exception.ai.RateLimitException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,10 +13,11 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
-public class GeminiClient {
+public class DirectGeminiClient implements AiClient {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
@@ -25,14 +28,15 @@ public class GeminiClient {
     @Value("${gemini.url.template:https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=%s}")
     private String urlTemplate;
 
-    public GeminiClient() {
+    public DirectGeminiClient() {
         this.restTemplate = new RestTemplate();
         this.objectMapper = new ObjectMapper();
     }
 
+    @Override
     public String call(String prompt) {
         if ("PLACEHOLDER".equals(apiKey)) {
-            return "AI feature is currently disabled (missing Gemini API Key).";
+            throw new RuntimeException("AI feature is currently disabled (missing Gemini API Key).");
         }
 
         String url = String.format(urlTemplate, apiKey);
@@ -53,11 +57,9 @@ public class GeminiClient {
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 
         try {
-            // Use String.class to avoid TypeDefinition errors with JsonNode
             String responseStr = restTemplate.postForObject(url, entity, String.class);
             JsonNode response = objectMapper.readTree(responseStr);
             
-            // Gemini Response Structure: candidates[0].content.parts[0].text
             if (response != null && response.has("candidates") && response.get("candidates").size() > 0) {
                 JsonNode candidate = response.get("candidates").get(0);
                 if (candidate.has("content") && candidate.get("content").has("parts") && candidate.get("content").get("parts").size() > 0) {
@@ -66,19 +68,20 @@ public class GeminiClient {
             }
         } catch (org.springframework.web.client.HttpStatusCodeException e) {
             if (e.getStatusCode().value() == 429) {
-                return "The AI assistant is currently taking a short break (daily limit reached). Please try again later or contact Shiva directly!";
+                throw new RateLimitException("Gemini rate limit exceeded");
             }
-            return "AI service is temporarily unavailable. Error: " + e.getStatusCode();
+            throw new RuntimeException("AI service is temporarily unavailable. Error: " + e.getStatusCode());
         } catch (Exception e) {
-            return "Oops! Something went wrong while talking to the AI. Please try again later.";
+            throw new RuntimeException("Oops! Something went wrong while talking to the AI. Please try again later.", e);
         }
 
         return "No response from Gemini AI.";
     }
 
-    public String call(String systemInstruction, java.util.List<com.portfolio_backend.dto.ai.AiRequest.ChatMessage> history, String currentInput) {
+    @Override
+    public String call(String systemInstruction, List<ChatMessage> history, String currentInput) {
         if ("PLACEHOLDER".equals(apiKey)) {
-            return "AI feature is currently disabled (missing Gemini API Key).";
+            throw new RuntimeException("AI feature is currently disabled (missing Gemini API Key).");
         }
 
         String url = String.format(urlTemplate, apiKey);
@@ -94,13 +97,13 @@ public class GeminiClient {
         systemInstructionMap.put("parts", Collections.singletonList(systemPart));
 
         // 2. Build contents list (history + current message)
-        java.util.List<Map<String, Object>> contentsList = new java.util.ArrayList<>();
+        List<Map<String, Object>> contentsList = new java.util.ArrayList<>();
 
         // Add history (limit to last 10 messages)
         if (history != null && !history.isEmpty()) {
             int start = Math.max(0, history.size() - 10);
             for (int i = start; i < history.size(); i++) {
-                com.portfolio_backend.dto.ai.AiRequest.ChatMessage msg = history.get(i);
+                ChatMessage msg = history.get(i);
                 
                 Map<String, Object> part = new HashMap<>();
                 part.put("text", msg.getText());
@@ -142,11 +145,11 @@ public class GeminiClient {
             }
         } catch (org.springframework.web.client.HttpStatusCodeException e) {
             if (e.getStatusCode().value() == 429) {
-                return "The AI assistant is currently taking a short break (daily limit reached). Please try again later or contact Shiva directly!";
+                throw new RateLimitException("Gemini rate limit exceeded");
             }
-            return "AI service is temporarily unavailable. Error: " + e.getStatusCode();
+            throw new RuntimeException("AI service is temporarily unavailable. Error: " + e.getStatusCode());
         } catch (Exception e) {
-            return "Oops! Something went wrong while talking to the AI. Please try again later.";
+            throw new RuntimeException("Oops! Something went wrong while talking to the AI. Please try again later.", e);
         }
 
         return "No response from Gemini AI.";

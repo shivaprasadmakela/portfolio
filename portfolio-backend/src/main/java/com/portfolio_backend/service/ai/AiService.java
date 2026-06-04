@@ -1,6 +1,6 @@
 package com.portfolio_backend.service.ai;
 
-import com.portfolio_backend.client.GeminiClient;
+import com.portfolio_backend.client.AiClient;
 import com.portfolio_backend.dto.ai.AiRequest;
 import org.springframework.stereotype.Service;
 
@@ -9,36 +9,36 @@ import java.util.List;
 @Service
 public class AiService {
 
-    private final GeminiClient geminiClient;
+    private final AiClient aiClient;
     private final AiPromptBuilder aiPromptBuilder;
 
-    public AiService(GeminiClient geminiClient, AiPromptBuilder aiPromptBuilder) {
-        this.geminiClient = geminiClient;
+    public AiService(AiClient aiClient, AiPromptBuilder aiPromptBuilder) {
+        this.aiClient = aiClient;
         this.aiPromptBuilder = aiPromptBuilder;
     }
 
     public String chatAboutMe(String userMessage, List<AiRequest.ChatMessage> history) {
         validate(userMessage);
         String systemInstruction = aiPromptBuilder.buildSystemInstruction(userMessage);
-        return geminiClient.call(systemInstruction, history, userMessage);
+        return aiClient.call(systemInstruction, history, userMessage);
     }
 
     public String improveTitle(String title) {
         validate(title);
         String prompt = AiPromptTemplates.IMPROVE_TITLE_PROMPT.formatted(title);
-        return cleanResponse(geminiClient.call(prompt));
+        return cleanResponse(aiClient.call(prompt));
     }
 
     public String enhanceContent(String content) {
         validate(content);
         String prompt = AiPromptTemplates.ENHANCE_CONTENT_PROMPT.formatted(content);
-        return cleanResponse(geminiClient.call(prompt));
+        return cleanResponse(aiClient.call(prompt));
     }
 
     public String summarize(String content) {
         validate(content);
         String prompt = AiPromptTemplates.SUMMARIZE_PROMPT.formatted(content);
-        return cleanResponse(geminiClient.call(prompt));
+        return cleanResponse(aiClient.call(prompt));
     }
 
     private String cleanResponse(String response) {
