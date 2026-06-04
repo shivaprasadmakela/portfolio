@@ -19,8 +19,8 @@ public class AiService {
 
     public String chatAboutMe(String userMessage, List<AiRequest.ChatMessage> history) {
         validate(userMessage);
-        String systemPrompt = aiPromptBuilder.buildChatPrompt(userMessage, history);
-        return geminiClient.call(systemPrompt);
+        String systemInstruction = aiPromptBuilder.buildSystemInstruction(userMessage);
+        return geminiClient.call(systemInstruction, history, userMessage);
     }
 
     public String improveTitle(String title) {

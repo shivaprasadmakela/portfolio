@@ -75,4 +75,80 @@ public class GeminiClient {
 
         return "No response from Gemini AI.";
     }
+
+    public String call(String systemInstruction, java.util.List<com.portfolio_backend.dto.ai.AiRequest.ChatMessage> history, String currentInput) {
+        if ("PLACEHOLDER".equals(apiKey)) {
+            return "AI feature is currently disabled (missing Gemini API Key).";
+        }
+
+        String url = String.format(urlTemplate, apiKey);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // 1. Build systemInstruction Map
+        Map<String, Object> systemPart = new HashMap<>();
+        systemPart.put("text", systemInstruction);
+
+        Map<String, Object> systemInstructionMap = new HashMap<>();
+        systemInstructionMap.put("parts", Collections.singletonList(systemPart));
+
+        // 2. Build contents list (history + current message)
+        java.util.List<Map<String, Object>> contentsList = new java.util.ArrayList<>();
+
+        // Add history (limit to last 10 messages)
+        if (history != null && !history.isEmpty()) {
+            int start = Math.max(0, history.size() - 10);
+            for (int i = start; i < history.size(); i++) {
+                com.portfolio_backend.dto.ai.AiRequest.ChatMessage msg = history.get(i);
+                
+                Map<String, Object> part = new HashMap<>();
+                part.put("text", msg.getText());
+
+                Map<String, Object> contentMap = new HashMap<>();
+                contentMap.put("role", "ai".equalsIgnoreCase(msg.getSender()) ? "model" : "user");
+                contentMap.put("parts", Collections.singletonList(part));
+
+                contentsList.add(contentMap);
+            }
+        }
+
+        // Add current input
+        Map<String, Object> currentPart = new HashMap<>();
+        currentPart.put("text", currentInput);
+
+        Map<String, Object> currentContentMap = new HashMap<>();
+        currentContentMap.put("role", "user");
+        currentContentMap.put("parts", Collections.singletonList(currentPart));
+
+        contentsList.add(currentContentMap);
+
+        // 3. Construct Request Body
+        Map<String, Object> body = new HashMap<>();
+        body.put("contents", contentsList);
+        body.put("systemInstruction", systemInstructionMap);
+
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
+
+        try {
+            String responseStr = restTemplate.postForObject(url, entity, String.class);
+            JsonNode response = objectMapper.readTree(responseStr);
+            
+            if (response != null && response.has("candidates") && response.get("candidates").size() > 0) {
+                JsonNode candidate = response.get("candidates").get(0);
+                if (candidate.has("content") && candidate.get("content").has("parts") && candidate.get("content").get("parts").size() > 0) {
+                    return candidate.get("content").get("parts").get(0).get("text").asText();
+                }
+            }
+        } catch (org.springframework.web.client.HttpStatusCodeException e) {
+            if (e.getStatusCode().value() == 429) {
+                return "The AI assistant is currently taking a short break (daily limit reached). Please try again later or contact Shiva directly!";
+            }
+            return "AI service is temporarily unavailable. Error: " + e.getStatusCode();
+        } catch (Exception e) {
+            return "Oops! Something went wrong while talking to the AI. Please try again later.";
+        }
+
+        return "No response from Gemini AI.";
+    }
 }
