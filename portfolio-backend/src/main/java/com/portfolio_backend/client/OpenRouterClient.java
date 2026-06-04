@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio_backend.dto.ai.AiRequest.ChatMessage;
 import com.portfolio_backend.exception.ai.RateLimitException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +21,8 @@ import java.util.Map;
 @Component
 public class OpenRouterClient implements AiClient {
 
+    private static final Logger logger = LoggerFactory.getLogger(OpenRouterClient.class);
+
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
@@ -28,11 +32,14 @@ public class OpenRouterClient implements AiClient {
     @Value("${openrouter.url:https://openrouter.ai/api/v1/chat/completions}")
     private String apiUrl;
 
-    @Value("${openrouter.model:qwen/qwen-3.7-plus}")
+    @Value("${openrouter.model:google/gemma-4-31b-it:free}")
     private String model;
 
     public OpenRouterClient() {
-        this.restTemplate = new RestTemplate();
+        org.springframework.http.client.SimpleClientHttpRequestFactory factory = new org.springframework.http.client.SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(5000); // 5 seconds
+        factory.setReadTimeout(12000);   // 12 seconds
+        this.restTemplate = new RestTemplate(factory);
         this.objectMapper = new ObjectMapper();
     }
 
@@ -62,6 +69,7 @@ public class OpenRouterClient implements AiClient {
             String responseStr = restTemplate.postForObject(apiUrl, entity, String.class);
             return parseOpenResponse(responseStr);
         } catch (org.springframework.web.client.HttpStatusCodeException e) {
+            logger.error("OpenRouter HTTP Error: {}, Body: {}", e.getStatusCode(), e.getResponseBodyAsString());
             if (e.getStatusCode().value() == 429) {
                 throw new RateLimitException("OpenRouter rate limit exceeded");
             }
@@ -117,6 +125,7 @@ public class OpenRouterClient implements AiClient {
             String responseStr = restTemplate.postForObject(apiUrl, entity, String.class);
             return parseOpenResponse(responseStr);
         } catch (org.springframework.web.client.HttpStatusCodeException e) {
+            logger.error("OpenRouter HTTP Error: {}, Body: {}", e.getStatusCode(), e.getResponseBodyAsString());
             if (e.getStatusCode().value() == 429) {
                 throw new RateLimitException("OpenRouter rate limit exceeded");
             }
