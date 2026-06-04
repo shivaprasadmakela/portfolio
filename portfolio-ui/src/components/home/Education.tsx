@@ -2,19 +2,25 @@ import styles from '../../styles/home/Education.module.css';
 
 const educationData = [
   {
-    degree: 'Secondary School Certificate (SSC)',
-    institution: 'Sabarmathi High School',
-    years: '2014',
+    degree: 'Secondary Schooling (SSC)',
+    institution: 'Planet High School',
+    years: '2010 - 2014',
   },
   {
-    degree: 'Diploma in Electrical and Electronics Engineering',
+    degree: 'High School Diploma (Electrical & Electronics Engineering)',
     institution: 'St. Mary’s Engineering College',
     years: '2014 - 2018',
   },
   {
-    degree: 'Bachelor in Electrical and Electronics Engineering',
+    degree: 'Bachelor of Technology (BTech) in EEE',
     institution: 'St. Mary’s Engineering College',
     years: '2018 - 2021',
+  },
+  {
+    degree: 'CCBP 4.0 Intensive (Full Stack Development)',
+    institution: 'NxtWave',
+    years: '2022 - 2023',
+    description: 'Specialized in Full Stack Web Development (JavaScript, Databases, React, Node.js)',
   },
 ];
 
@@ -32,6 +38,7 @@ export default function Education({ isPopup = false }: { isPopup?: boolean }) {
               <span className={styles.cap}>🎓</span>{' '}
               <h3 className={styles.degree}>{edu.degree}</h3>
               <div className={styles.institution}>{edu.institution}</div>
+              {edu.description && <div className={styles.description}>{edu.description}</div>}
             </div>
             {idx < educationData.length - 1 && (
               <div className={styles.timelineConnector}>

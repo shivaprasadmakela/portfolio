@@ -1,26 +1,31 @@
 {
   "company": "Modlix",
+  "total_duration": "2 yrs 5 mos",
+  "location": "Bengaluru, Karnataka, India",
   "roles": [
     {
-      "title": "Software Development Engineer I (SDE-I)",
-      "period": "August 2024 - Present"
+      "title": "Software Development Engineer (SDE)",
+      "period": "August 2024 - Present · 1 yr 11 mos"
     },
     {
       "title": "Software Engineer Intern",
-      "period": "February 2024 - July 2024"
+      "period": "February 2024 - July 2024 · 6 mos"
     }
   ],
   "work": [
-    "Building scalable frontend systems with React and TypeScript",
-    "Developing backend APIs using Java Spring Boot and Spring WebFlux",
-    "Working on Leadzump (SaaS CRM) - authentication, onboarding, and business workflows",
-    "Handling production deployments and debugging complex issues",
-    "Integrating WhatsApp business workflows and mobile-responsive systems"
+    "User Management System (Admin & CP): Led end-to-end development of onboarding, access handling, and user management workflows across Admin and Channel Partner (CP) flows.",
+    "CP Mobile Application Flow: Designed and built the complete CP mobile flow (login, onboarding, configuration-based flows, and access management) that is live and used by production users.",
+    "WhatsApp Integration & Notification System: Developed platform-wide WhatsApp integrations and notification flows to automate communication across multiple user journeys.",
+    "Login, Signup & User Invite System: Engineered authentication-related workflows, signup, secure login, and user invitation systems to simplify onboarding.",
+    "LeadCollector Backend Development: Contributed heavily to Java Spring Boot backend services (Entity Processor) for capturing and processing leads from multiple sources into Leadzump.",
+    "Team Leadership & Delivery: Led and coordinated a team of 2–3 developers to ensure feature delivery, maintain platform stability, and prevent regressions.",
+    "Platform Enhancements & Support: Implemented Meta JSON tagging, multi-manager support for CP workflows, and fixed no-code editor UI issues, hierarchy bugs, and integration blockers."
   ],
   "strengths": [
     "End-to-end feature ownership",
-    "Frontend architecture",
-    "Production debugging",
-    "Fast learning"
+    "Full-stack development (React, TypeScript, Java Spring Boot)",
+    "Production debugging and performance optimization",
+    "Team coordination and delivery ownership",
+    "AI integration and workflow automation"
   ]
 }

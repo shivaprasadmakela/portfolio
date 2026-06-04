@@ -1,12 +1,35 @@
 {
-  "name": "Shiva Prasad M",
-  "location": "Bengaluru, Karnataka, India",
-  "current_role": "Software Development Engineer I (SDE-I) at Modlix",
+  "name": "Shiva Prasad Mekala",
+  "location": "Lives in Hyderabad, India (Working in Bengaluru; Native of Warangal Kazipet)",
+  "current_role": "Software Development Engineer (SDE) at Modlix",
   "contact": {
     "portfolio": "https://shivaprasadm.in",
     "github": "shivaprasadmakela",
     "linkedin": "shiva-prasad-m",
     "email": "shivaprasadmakela@gmail.com"
   },
-  "summary": "Software Engineer specializing in full-stack development (React, Java, Spring Boot). Passionate about building products from scratch and solving practical engineering problems."
+  "summary": "Software Engineer specializing in full-stack development (React, Java, Spring Boot). Experienced in leading feature delivery, building SaaS CRM workflows, and developing backend integrations.",
+  "education": [
+    {
+      "institution": "NxtWave (CCBP 4.0 Intensive)",
+      "degree": "Fellow in Full Stack Development",
+      "period": "September 2022 – November 2023",
+      "details": "Learning 4.0 Technologies - Full Stack development (JavaScript, React, Node.js, databases)."
+    },
+    {
+      "institution": "St. Mary's Engineering College",
+      "degree": "Bachelor of Technology (BTech) in Electrical and Electronics Engineering",
+      "period": "July 2018 – September 2021"
+    },
+    {
+      "institution": "St. Mary's Engineering College",
+      "degree": "High School Diploma in Electrical and Electronics Engineering",
+      "period": "August 2014 – March 2018"
+    },
+    {
+      "institution": "Planet High School",
+      "degree": "Secondary Schooling",
+      "period": "May 2010 – July 2014"
+    }
+  ]
 }

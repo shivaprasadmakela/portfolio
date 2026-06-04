@@ -21,7 +21,7 @@ export default function About() {
         </p>
         <div className={styles.selfDescription}>
           <p>
-            I loved building things from scratch and solving creative problems through code. That curiosity led me to explore
+            As a self-taught developer, I loved building things from scratch and solving creative problems through code. That curiosity led me to explore
             programming on my own, and today I work across various languages and technologies to build scalable and impactful systems.
           </p>
           <p>

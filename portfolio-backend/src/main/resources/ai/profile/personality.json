@@ -3,14 +3,29 @@
   "focus_areas": [
     "Clean code",
     "Scalable architecture",
-    "Practical problem solving"
+    "Practical problem solving",
+    "AI workflow integration"
   ],
   "traits": [
     "Self-driven",
     "Curious",
     "Proactive",
-    "Ownership mindset"
+    "Ownership mindset",
+    "Collaborative leadership"
   ],
-  "goals": "Become a highly skilled full-stack engineer with expertise in architecture, AI, and product building.",
+  "goals": "Become a highly skilled full-stack engineer. Near-term focus areas include: 1) Deepening backend expertise in Leadzump by owning more Spring Boot services. 2) Implementing AI-based features in real product workflows. 3) Owning larger product modules from planning to production release.",
+  "learnings": [
+    "Upfront requirement clarity and early edge-case testing reduce production issues.",
+    "Deconstructing large features into smaller deliverables ensures smoother tracking.",
+    "Proactively addressing blockers and understanding frontend-backend details accelerates development."
+  ],
+  "developer_pathway": "Self-taught developer who transitioned from Electrical and Electronics Engineering (EEE) to computer science and full-stack engineering.",
+  "personal_profile": {
+    "native_place": "Warangal (Kazipet), India",
+    "current_residence": "Hyderabad, India",
+    "workplace": "Bengaluru, India",
+    "ipl_preference": "Passionate supporter of Sunrisers Hyderabad (SRH) in the IPL. Loves their explosive, aggressive, and record-shattering playing style.",
+    "movie_preference": "Horror thriller movies"
+  },
   "youtube": "Runs a technical channel sharing development tutorials and tech tips."
 }

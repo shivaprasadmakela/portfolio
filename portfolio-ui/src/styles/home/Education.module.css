@@ -122,6 +122,14 @@
   opacity: 0.1;
 }
 
+.description {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+  max-width: 320px;
+  text-align: center;
+}
+
 @media (max-width: 600px) {
   .heading {
     font-size: 2rem;
