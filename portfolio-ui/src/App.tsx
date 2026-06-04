@@ -50,13 +50,15 @@ function App() {
     }
   }, []);
 
+  const showChat = import.meta.env.DEV || new URLSearchParams(window.location.search).has('chat');
+
   return (
     <ToastProvider>
       <ConfirmDialog />
       <Router>
         <BackgroundDecoration />
         <ScrollToTop />
-        {import.meta.env.DEV && <PortfolioChat />}
+        {showChat && <PortfolioChat />}
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Home />} />
