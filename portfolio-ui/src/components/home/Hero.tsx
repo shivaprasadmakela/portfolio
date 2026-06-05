@@ -3,6 +3,7 @@ import styles from '../../styles/home/Hero.module.css';
 import DotPattern from '../../assets/dot-pattern.svg';
 import { FaLinkedin, FaEnvelope, FaGithub } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { PortfolioMascot } from '../ai/PortfolioMascot';
 
 interface PieceData {
   id: number;
@@ -60,7 +61,30 @@ export default function Hero() {
     >
       <section className={styles.hero}>
         <img src={DotPattern} className={styles.pattern} alt="" loading="lazy" />
-        <p className={styles.greeting}>Hey there!, I'm–</p>
+        <p className={styles.greeting} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+          Hey there!, I'm–
+          <motion.span 
+            onClick={(e) => {
+              e.stopPropagation(); // Avoid triggering full-screen burst
+              const url = new URL(window.location.href);
+              url.searchParams.set('chat', 'true');
+              window.history.pushState({}, '', url.toString());
+              window.dispatchEvent(new Event('chat-visibility-change'));
+            }}
+            whileHover={{ scale: 1.15, rotate: 8 }}
+            whileTap={{ scale: 0.95 }}
+            title="Click to talk to Shiva's AI assistant!"
+            style={{ 
+              cursor: 'pointer', 
+              display: 'inline-flex',
+              alignItems: 'center', 
+              justifyContent: 'center',
+              marginLeft: '0.25rem'
+            }}
+          >
+            <PortfolioMascot state="listening" size={32} />
+          </motion.span>
+        </p>
 
         <div
           className={styles.nameContainer}

@@ -1,4 +1,4 @@
-import { useEffect, Suspense, lazy } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/admin/ProtectedRoute';
@@ -35,6 +35,22 @@ const Forbidden = lazy(() => import('./pages/error/Forbidden'));
 import PortfolioChat from './components/ai/PortfolioChat';
 
 function App() {
+  const [showChat, setShowChat] = useState(() => {
+    return new URLSearchParams(window.location.search).has('chat');
+  });
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setShowChat(new URLSearchParams(window.location.search).has('chat'));
+    };
+    window.addEventListener('chat-visibility-change', handleVisibilityChange);
+    window.addEventListener('popstate', handleVisibilityChange);
+    return () => {
+      window.removeEventListener('chat-visibility-change', handleVisibilityChange);
+      window.removeEventListener('popstate', handleVisibilityChange);
+    };
+  }, []);
+
   useEffect(() => {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -49,8 +65,6 @@ function App() {
       window.history.scrollRestoration = 'manual';
     }
   }, []);
-
-  const showChat = import.meta.env.DEV || new URLSearchParams(window.location.search).has('chat');
 
   return (
     <ToastProvider>

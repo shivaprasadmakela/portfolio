@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaPaperPlane, FaTimes, FaRegComments } from 'react-icons/fa';
+import { FaPaperPlane, FaTimes } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import styles from '../../styles/ai/PortfolioChat.module.css';
+import { PortfolioMascot, type MascotState } from './PortfolioMascot';
 
 interface Message {
   id: string;
@@ -49,6 +50,7 @@ export default function PortfolioChat() {
   }, [messages]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [chatStatus, setChatStatus] = useState<MascotState>('listening');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -76,6 +78,7 @@ export default function PortfolioChat() {
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsTyping(true);
+    setChatStatus('thinking');
 
     try {
       const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
@@ -102,6 +105,8 @@ export default function PortfolioChat() {
       };
 
       setMessages((prev) => [...prev, aiMessage]);
+      setChatStatus('success');
+      setTimeout(() => setChatStatus('listening'), 2000);
     } catch (error) {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -110,6 +115,8 @@ export default function PortfolioChat() {
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
+      setChatStatus('error');
+      setTimeout(() => setChatStatus('listening'), 3000);
     } finally {
       setIsTyping(false);
     }
@@ -118,7 +125,7 @@ export default function PortfolioChat() {
   return (
     <div className={styles.chatWrapper}>
       <button className={styles.chatButton} onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? <FaTimes /> : <FaRegComments />}
+        {isOpen ? <FaTimes /> : <PortfolioMascot state="listening" size={40} />}
       </button>
 
       <AnimatePresence>
@@ -132,10 +139,20 @@ export default function PortfolioChat() {
           >
             <div className={styles.chatHeader}>
               <div className={styles.headerInfo}>
-                <div className={styles.avatar}>S</div>
+                <PortfolioMascot state={chatStatus} size={32} />
                 <div>
                   <h3>Shiva's AI</h3>
-                  <p style={{ margin: 0, fontSize: '0.7rem', color: '#28a745' }}>Online</p>
+                  <p 
+                    style={{ 
+                      margin: 0, 
+                      fontSize: '0.7rem', 
+                      color: chatStatus === 'error' ? '#f43f5e' : chatStatus === 'thinking' ? '#818cf8' : '#28a745',
+                      fontWeight: 600,
+                      transition: 'color 0.3s ease'
+                    }}
+                  >
+                    {chatStatus === 'thinking' ? 'Thinking...' : chatStatus === 'error' ? 'Offline/Error' : 'Online'}
+                  </p>
                 </div>
               </div>
               <button className={styles.closeButton} onClick={() => setIsOpen(false)}>

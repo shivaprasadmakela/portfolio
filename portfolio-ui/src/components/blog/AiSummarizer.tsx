@@ -45,7 +45,7 @@ export const AiSummarizer: React.FC<AiSummarizerProps> = ({
     const [messageIndex, setMessageIndex] = useState(0);
 
     React.useEffect(() => {
-        let interval: NodeJS.Timeout;
+        let interval: ReturnType<typeof setInterval> | undefined;
         if (isLoading) {
             setMessageIndex(0);
             interval = setInterval(() => {
