@@ -11,15 +11,24 @@ interface AiSummarizerProps {
     onSummaryGenerated?: (summary: string) => void;
 }
 
+const USAGE_KEY = 'portfolio_ai_usage';
+const MAX_USAGE = 3;
+
+const LOADING_MESSAGES = [
+    "Diving into the content...",
+    "Analyzing key insights...",
+    "Extracting technical gems...",
+    "Gemini is thinking...",
+    "Crafting your snapshot...",
+    "Summarizing the journey..."
+];
+
 export const AiSummarizer: React.FC<AiSummarizerProps> = ({
     content,
     isPremium = false,
     existingSummary,
     onSummaryGenerated
 }) => {
-    const USAGE_KEY = 'portfolio_ai_usage';
-    const MAX_USAGE = 3;
-
     const [isLoading, setIsLoading] = useState(false);
     const [summary, setSummary] = useState<string | null>(existingSummary || null);
     const [error, setError] = useState<string | null>(null);
@@ -33,15 +42,6 @@ export const AiSummarizer: React.FC<AiSummarizerProps> = ({
         setSummary(existingSummary || null);
     }, [existingSummary]);
 
-    const loadingMessages = [
-        "Diving into the content...",
-        "Analyzing key insights...",
-        "Extracting technical gems...",
-        "Gemini is thinking...",
-        "Crafting your snapshot...",
-        "Summarizing the journey..."
-    ];
-
     const [messageIndex, setMessageIndex] = useState(0);
 
     React.useEffect(() => {
@@ -50,7 +50,7 @@ export const AiSummarizer: React.FC<AiSummarizerProps> = ({
             setMessageIndex(0);
             interval = setInterval(() => {
                 setMessageIndex((prev) => {
-                    if (prev < loadingMessages.length - 1) {
+                    if (prev < LOADING_MESSAGES.length - 1) {
                         return prev + 1;
                     }
                     return prev;
@@ -58,7 +58,7 @@ export const AiSummarizer: React.FC<AiSummarizerProps> = ({
             }, 3000);
         }
         return () => clearInterval(interval);
-    }, [isLoading, loadingMessages.length]);
+    }, [isLoading]);
 
     const isLimitReached = usageCount >= MAX_USAGE;
     const isDisabled = isLimitReached || isPremium;
@@ -139,7 +139,7 @@ export const AiSummarizer: React.FC<AiSummarizerProps> = ({
             {isLoading && (
                 <div className={styles.loadingArea}>
                     <div className={styles.spinner}></div>
-                    <span>{loadingMessages[messageIndex]}</span>
+                    <span>{LOADING_MESSAGES[messageIndex]}</span>
                 </div>
             )}
 

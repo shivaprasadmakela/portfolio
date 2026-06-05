@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, type ReactNode } from 'react';
+import { useState, createContext, useContext, useCallback, useMemo, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiCheckCircle, FiAlertCircle, FiX } from 'react-icons/fi';
 import styles from './Toast.module.css';
@@ -26,18 +26,20 @@ export const useToast = () => {
 export const ToastProvider = ({ children }: { children: ReactNode }) => {
     const [toasts, setToasts] = useState<Toast[]>([]);
 
-    const showToast = (message: string, type: ToastType) => {
+    const removeToast = useCallback((id: string) => {
+        setToasts(prev => prev.filter(t => t.id !== id));
+    }, []);
+
+    const showToast = useCallback((message: string, type: ToastType) => {
         const id = Math.random().toString(36).substring(2, 9);
         setToasts(prev => [...prev, { id, message, type }]);
         setTimeout(() => removeToast(id), 3000);
-    };
+    }, [removeToast]);
 
-    const removeToast = (id: string) => {
-        setToasts(prev => prev.filter(t => t.id !== id));
-    };
+    const value = useMemo(() => ({ showToast }), [showToast]);
 
     return (
-        <ToastContext.Provider value={{ showToast }}>
+        <ToastContext.Provider value={value}>
             {children}
             <div className={styles.container}>
                 <AnimatePresence>

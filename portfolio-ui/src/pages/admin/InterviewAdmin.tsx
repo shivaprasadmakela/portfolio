@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from '../../styles/admin/Admin.module.css';
 import intStyles from '../../styles/interview/Interview.module.css';
@@ -10,6 +10,14 @@ import remarkGfm from 'remark-gfm';
 
 import { useToast } from '../../components/ui/Toast';
 import { useConfirm } from '../../hooks/useConfirm';
+
+const EmptyState = ({ title, message }: { title: string, message: string }) => (
+    <div className={styles.emptyState}>
+        <div className={styles.emptyStateIcon}><MdInbox /></div>
+        <div className={styles.emptyStateTitle}>{title}</div>
+        <div className={styles.emptyStateText}>{message}</div>
+    </div>
+);
 
 const InterviewAdmin: React.FC = () => {
     const { showToast } = useToast();
@@ -105,26 +113,24 @@ const InterviewAdmin: React.FC = () => {
         }
     };
 
-    const filteredQuestions = questions.filter(q =>
-        q.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        q.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
+    const filteredQuestions = useMemo(() => {
+        return questions.filter(q =>
+            q.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            q.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()))
+        );
+    }, [questions, searchQuery]);
 
-    const filteredCategories = categories.filter(c =>
-        c.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredCategories = useMemo(() => {
+        return categories.filter(c =>
+            c.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, [categories, searchQuery]);
 
-    const filteredSets = sets.filter(s =>
-        s.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-
-    const EmptyState = ({ title, message }: { title: string, message: string }) => (
-        <div className={styles.emptyState}>
-            <div className={styles.emptyStateIcon}><MdInbox /></div>
-            <div className={styles.emptyStateTitle}>{title}</div>
-            <div className={styles.emptyStateText}>{message}</div>
-        </div>
-    );
+    const filteredSets = useMemo(() => {
+        return sets.filter(s =>
+            s.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }, [sets, searchQuery]);
 
     return (
         <div className={styles.adminConfig}>

@@ -22,7 +22,7 @@ export function useDSAProgress() {
     setNotes(prev => ({ ...prev, [id]: note }));
   }, []);
 
-  const getNote = (id: string) => notes[id] ?? '';
+  const getNote = useCallback((id: string) => notes[id] ?? '', [notes]);
 
   return { notes, updateNotes, getNote };
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from '../../styles/home/About.module.css';
-import profileImage from '../../assets/profile.png';
+import profileImage from '../../assets/profile.webp';
 import pattern from '../../assets/dot-pattern.svg';
 import { Modal } from '../ui';
 import Experience from './Experience';

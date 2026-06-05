@@ -110,21 +110,21 @@ export const PortfolioMascot: React.FC<PortfolioMascotProps> = ({
           100% { transform: rotate(360deg) scale(1); }
         }
 
-        /* Periodic Cartoonish Jump/Hop for the Idle state */
+        /* Periodic Cartoonish Jump/Hop for the Idle state - jumps initially, then waits and repeats */
         @keyframes custom-idle-jump {
-          0%, 75%, 100% { transform: translateY(0px) scaleY(1) scaleX(1); }
+          0% { transform: translateY(0px) scaleY(1) scaleX(1); }
           /* Squish down in preparation */
-          78% { transform: translateY(2px) scaleY(0.82) scaleX(1.15); }
+          3% { transform: translateY(2px) scaleY(0.82) scaleX(1.15); }
           /* Jump up! */
-          82% { transform: translateY(-24px) scaleY(1.15) scaleX(0.85); }
+          7% { transform: translateY(-24px) scaleY(1.15) scaleX(0.85); }
           /* Floating at the peak */
-          86% { transform: translateY(-26px) scaleY(1.02) scaleX(0.98); }
+          11% { transform: translateY(-26px) scaleY(1.02) scaleX(0.98); }
           /* Landing squish */
-          90% { transform: translateY(0px) scaleY(0.8) scaleX(1.2); }
+          15% { transform: translateY(0px) scaleY(0.8) scaleX(1.2); }
           /* Bounce up slightly */
-          94% { transform: translateY(-4px) scaleY(1.05) scaleX(0.95); }
-          /* Settle back down */
-          97% { transform: translateY(0px) scaleY(1) scaleX(1); }
+          19% { transform: translateY(-4px) scaleY(1.05) scaleX(0.95); }
+          /* Settle back down and wait */
+          22%, 100% { transform: translateY(0px) scaleY(1) scaleX(1); }
         }
 
         .anim-base { 

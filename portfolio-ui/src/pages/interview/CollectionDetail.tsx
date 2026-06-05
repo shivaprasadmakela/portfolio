@@ -11,6 +11,8 @@ import { motion } from 'framer-motion';
 import { Input, Button } from '../../components/ui';
 import { FiSearch, FiChevronLeft, FiCalendar } from 'react-icons/fi';
 
+const DIFFICULTIES = ['All', 'EASY', 'MEDIUM', 'HARD'] as const;
+
 const CollectionDetail: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
     const [collection, setCollection] = useState<CollectionDto | null>(null);
@@ -144,7 +146,7 @@ const CollectionDetail: React.FC = () => {
                     />
 
                     <div className={styles.filters}>
-                        {(['All', 'EASY', 'MEDIUM', 'HARD'] as const).map(d => (
+                        {DIFFICULTIES.map(d => (
                             <Button
                                 key={d}
                                 variant={filter === d ? 'primary' : 'secondary'}

@@ -8,14 +8,18 @@ import type { CollectionDto } from '../../types/interview';
 import styles from '../../styles/interview/Interview.module.css';
 
 
+let cachedCategories: CollectionDto[] | null = null;
+
 export default function InterviewHub() {
-    const [categories, setCategories] = useState<CollectionDto[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [categories, setCategories] = useState<CollectionDto[]>(() => cachedCategories || []);
+    const [isLoading, setIsLoading] = useState(() => !cachedCategories);
 
     useEffect(() => {
+        if (cachedCategories) return;
         const fetchCategories = async () => {
             try {
                 const data = await interviewApi.getAllCategories();
+                cachedCategories = data;
                 setCategories(data);
             } catch (error) {
                 console.error('Failed to fetch categories:', error);

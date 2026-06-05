@@ -1,5 +1,5 @@
 /* src/pages/WakeUpChallenge.tsx */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Header from '../components/home/Header';
 import { ChallengeHero } from '../components/challenge/ChallengeHero';
 import { CheckInCard } from '../components/challenge/CheckInCard';
@@ -21,18 +21,18 @@ const WakeUpChallenge: React.FC = () => {
             .finally(() => setIsLoading(false));
     }, []);
 
-    const handleSuccessfulCheckIn = () => {
+    const handleSuccessfulCheckIn = useCallback(() => {
         challengeApi.getLeaderboard()
             .then(setLeaderboardData)
             .catch(() => setError("Failed to load leaderboard."));
-    };
+    }, []);
 
-    const scrollToJoin = () => {
+    const scrollToJoin = useCallback(() => {
         const section = document.getElementById('check-in-section');
         if (section) {
             section.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-    };
+    }, []);
 
     return (
         <div style={{ background: 'transparent', minHeight: '100vh' }}>
