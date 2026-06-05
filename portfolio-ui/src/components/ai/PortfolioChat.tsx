@@ -21,7 +21,15 @@ const SUGGESTIONS = [
 ];
 
 export default function PortfolioChat() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleCloseChat = () => {
+    setIsOpen(false);
+    const url = new URL(window.location.href);
+    url.searchParams.delete('chat');
+    window.history.pushState({}, '', url.toString());
+    window.dispatchEvent(new Event('chat-visibility-change'));
+  };
   const [messages, setMessages] = useState<Message[]>(() => {
     const saved = localStorage.getItem('portfolio_chat_messages');
     if (saved) {
@@ -124,8 +132,17 @@ export default function PortfolioChat() {
 
   return (
     <div className={styles.chatWrapper}>
-      <button className={styles.chatButton} onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? <FaTimes /> : <PortfolioMascot state="listening" size={40} />}
+      <button className={styles.chatButton} onClick={isOpen ? handleCloseChat : () => setIsOpen(true)}>
+        {isOpen ? (
+          <FaTimes />
+        ) : (
+          <motion.div 
+            layoutId="hero-to-chat-mascot"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}
+          >
+            <PortfolioMascot state="listening" size={40} />
+          </motion.div>
+        )}
       </button>
 
       <AnimatePresence>
@@ -139,7 +156,9 @@ export default function PortfolioChat() {
           >
             <div className={styles.chatHeader}>
               <div className={styles.headerInfo}>
-                <PortfolioMascot state={chatStatus} size={32} />
+                <motion.div layoutId="hero-to-chat-mascot" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <PortfolioMascot state={chatStatus} size={32} />
+                </motion.div>
                 <div>
                   <h3>Shiva's AI</h3>
                   <p 
@@ -155,7 +174,7 @@ export default function PortfolioChat() {
                   </p>
                 </div>
               </div>
-              <button className={styles.closeButton} onClick={() => setIsOpen(false)}>
+              <button className={styles.closeButton} onClick={handleCloseChat}>
                 <FaTimes />
               </button>
             </div>
