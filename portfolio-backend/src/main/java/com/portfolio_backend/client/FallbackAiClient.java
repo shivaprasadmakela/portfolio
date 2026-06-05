@@ -16,6 +16,11 @@ public class FallbackAiClient implements AiClient {
 
     private static final Logger logger = LoggerFactory.getLogger(FallbackAiClient.class);
 
+    private static final String RATE_LIMIT_FALLBACK = 
+        "Oof! I've talked too much today and my brain is overloaded (daily limit reached). 🥤 Ask Shiva directly, or try again in a bit!";
+    private static final String ERROR_FALLBACK = 
+        "Yikes! My server wires crossed and I had a minor short circuit. ⚡ Try again in a moment, or reach out to Shiva Mekala directly!";
+
     private final DirectGeminiClient geminiClient;
     private final OpenRouterClient openRouterClient;
 
@@ -48,10 +53,10 @@ public class FallbackAiClient implements AiClient {
                 return geminiClient.call(prompt);
             } catch (RateLimitException e) {
                 logger.warn("Gemini rate limit exceeded in direct mode.");
-                return "The AI assistant is currently taking a short break (daily limit reached). Please try again later or contact Shiva directly!";
+                return RATE_LIMIT_FALLBACK;
             } catch (Exception e) {
                 logger.error("Error calling Gemini in direct mode", e);
-                return "AI service is temporarily unavailable.";
+                return ERROR_FALLBACK;
             }
         }
 
@@ -62,10 +67,10 @@ public class FallbackAiClient implements AiClient {
                 return openRouterClient.call(prompt);
             } catch (RateLimitException ex) {
                 logger.error("OpenRouter rate limit reached during cooldown bypass.", ex);
-                return "The AI assistant is currently taking a short break (daily limit reached). Please try again later or contact Shiva directly!";
+                return RATE_LIMIT_FALLBACK;
             } catch (Exception ex) {
                 logger.error("Error calling OpenRouter during cooldown bypass", ex);
-                return "AI service is temporarily unavailable.";
+                return ERROR_FALLBACK;
             }
         }
 
@@ -79,10 +84,10 @@ public class FallbackAiClient implements AiClient {
                 return openRouterClient.call(prompt);
             } catch (RateLimitException ex) {
                 logger.error("OpenRouter rate limit reached during fallback.", ex);
-                return "The AI assistant is currently taking a short break (daily limit reached). Please try again later or contact Shiva directly!";
+                return RATE_LIMIT_FALLBACK;
             } catch (Exception ex) {
                 logger.error("Error calling OpenRouter during fallback", ex);
-                return "AI service is temporarily unavailable.";
+                return ERROR_FALLBACK;
             }
         } catch (Exception e) {
             logger.error("Error calling Gemini. Attempting fallback to OpenRouter.", e);
@@ -90,7 +95,7 @@ public class FallbackAiClient implements AiClient {
                 return openRouterClient.call(prompt);
             } catch (Exception ex) {
                 logger.error("Error calling OpenRouter during fallback", ex);
-                return "AI service is temporarily unavailable.";
+                return ERROR_FALLBACK;
             }
         }
     }
@@ -107,10 +112,10 @@ public class FallbackAiClient implements AiClient {
                 return geminiClient.call(systemInstruction, history, currentInput);
             } catch (RateLimitException e) {
                 logger.warn("Gemini rate limit exceeded in direct mode.");
-                return "The AI assistant is currently taking a short break (daily limit reached). Please try again later or contact Shiva directly!";
+                return RATE_LIMIT_FALLBACK;
             } catch (Exception e) {
                 logger.error("Error calling Gemini in direct mode", e);
-                return "AI service is temporarily unavailable.";
+                return ERROR_FALLBACK;
             }
         }
 
@@ -121,10 +126,10 @@ public class FallbackAiClient implements AiClient {
                 return openRouterClient.call(systemInstruction, history, currentInput);
             } catch (RateLimitException ex) {
                 logger.error("OpenRouter rate limit reached during cooldown bypass.", ex);
-                return "The AI assistant is currently taking a short break (daily limit reached). Please try again later or contact Shiva directly!";
+                return RATE_LIMIT_FALLBACK;
             } catch (Exception ex) {
                 logger.error("Error calling OpenRouter during cooldown bypass", ex);
-                return "AI service is temporarily unavailable.";
+                return ERROR_FALLBACK;
             }
         }
 
@@ -138,10 +143,10 @@ public class FallbackAiClient implements AiClient {
                 return openRouterClient.call(systemInstruction, history, currentInput);
             } catch (RateLimitException ex) {
                 logger.error("OpenRouter rate limit reached during fallback.", ex);
-                return "The AI assistant is currently taking a short break (daily limit reached). Please try again later or contact Shiva directly!";
+                return RATE_LIMIT_FALLBACK;
             } catch (Exception ex) {
                 logger.error("Error calling OpenRouter during fallback", ex);
-                return "AI service is temporarily unavailable.";
+                return ERROR_FALLBACK;
             }
         } catch (Exception e) {
             logger.error("Error calling Gemini. Attempting fallback to OpenRouter.", e);
@@ -149,7 +154,7 @@ public class FallbackAiClient implements AiClient {
                 return openRouterClient.call(systemInstruction, history, currentInput);
             } catch (Exception ex) {
                 logger.error("Error calling OpenRouter during fallback", ex);
-                return "AI service is temporarily unavailable.";
+                return ERROR_FALLBACK;
             }
         }
     }

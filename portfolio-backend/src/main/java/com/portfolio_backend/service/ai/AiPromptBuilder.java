@@ -26,9 +26,12 @@ public class AiPromptBuilder {
 
         String lowerMessage = userMessage != null ? userMessage.toLowerCase().trim() : "";
         boolean isSimpleGreeting = isSimpleGreeting(lowerMessage);
+        boolean isAcknowledgment = isAcknowledgment(lowerMessage);
 
         if (isSimpleGreeting) {
             instruction.append("Contextual Instruction: This is a simple greeting. Respond with exactly one short, friendly sentence. Do NOT start with 'Hi there!', do NOT offer help, and do NOT mention Shiva's location.\n\n");
+        } else if (isAcknowledgment) {
+            instruction.append("Contextual Instruction: The user is acknowledging your response (e.g. saying 'ok' or 'thanks'). Respond with exactly one short, polite sentence saying you're happy to help and asking if they have other questions about Shiva's projects or stack.\n\n");
         } else {
             boolean isRelated = containsAny(lowerMessage, "work", "job", "experience", "role", "company", "modlix", "career",
                     "project", "build", "create", "app", "demo", "github", "stack", "tech", "ai", "feature", "skills",
@@ -48,6 +51,16 @@ public class AiPromptBuilder {
     private boolean isSimpleGreeting(String message) {
         Set<String> greetings = Set.of("hi", "hello", "hey", "how are you", "how are u", "gm", "gn", "good morning", "good evening");
         return greetings.contains(message) || (message.length() < 10 && containsAny(message, "hi", "hello", "hey"));
+    }
+
+    private boolean isAcknowledgment(String message) {
+        Set<String> acks = Set.of(
+            "ok", "okay", "okk", "okey", "k", "cool", "nice", "great", 
+            "awesome", "fine", "sure", "thanks", "thank you", "thx", 
+            "yep", "yes", "no", "perfect", "got it", "understood"
+        );
+        return acks.contains(message) || 
+               (message.length() < 12 && (message.contains("thank") || message.contains("got it") || message.contains("ok")));
     }
 
     private boolean containsAny(String message, String... keywords) {

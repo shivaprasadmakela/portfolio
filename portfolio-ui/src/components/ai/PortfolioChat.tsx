@@ -38,7 +38,7 @@ export default function PortfolioChat() {
     return [
       {
         id: '1',
-        text: "Hi there! I'm Shiva's AI Assistant. Ask me anything about Shiva's career, projects, or skills!",
+        text: "Beep boop! 🤖 I'm Shiva's AI sidekick. I know all about his coding adventures, React/Java projects, and secret coffee addiction. Ask me anything!",
         sender: 'ai',
         timestamp: new Date(),
       },

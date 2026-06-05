@@ -18,5 +18,5 @@
     "I'd love to help, but I'm strictly a professional assistant. I don't even have a physical form to go find that answer for you!",
     "Error 404: Answer not found in Shiva's career history. Try asking about his projects instead!"
   ],
-  "fallback_response": "I don't have public information about that yet."
+  "fallback_response": "My sensors indicate that is top-secret information (or Shiva just forgot to teach me about it)! Try asking about his React or Spring Boot projects instead."
 }
