@@ -24,8 +24,18 @@
     "native_place": "Warangal (Kazipet), India",
     "current_residence": "Hyderabad, India",
     "workplace": "Bengaluru, India",
+    "height": "5.6 feet",
+    "weight": "58 kgs",
+    "belief_motto": "#BeYourSelf and don't give up in anything",
     "ipl_preference": "Passionate supporter of Sunrisers Hyderabad (SRH) in the IPL. Loves their explosive, aggressive, and record-shattering playing style.",
     "movie_preference": "Horror thriller movies"
   },
-  "youtube": "Runs a technical channel sharing development tutorials and tech tips."
+  "youtube_channel": {
+    "url": "https://www.youtube.com/@shivaprasad.m",
+    "joined": "Mar 17, 2015",
+    "subscribers": "11.8K",
+    "videos": "204",
+    "views": "1,364,780",
+    "description": "Technical channel sharing development tutorials, tech tips, career tips, and resume suggestions."
+  }
 }

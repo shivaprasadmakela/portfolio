@@ -899,7 +899,7 @@ export const youtubeVideos = [
     title:
       "How to Join Nxtwave intensive 2.0 | Latest Fee details in Telugu by shiva prasad m",
     description:
-      "Our Teligram group Link https://t.me/shivatechcareerhub Email id: shivaprasadmakela@gmail.com Instagram id ...",
+      "Our Teligram group Link https://t.me/shivatechcareerhub Email id: shivamekala001@gmail.com Instagram id ...",
     thumbnailUrl: "https://i.ytimg.com/vi/iNOqoUHhoXg/hqdefault.jpg",
     publishedAt: "2023-02-10T13:12:47Z",
     channelName: "shiva prasad m",

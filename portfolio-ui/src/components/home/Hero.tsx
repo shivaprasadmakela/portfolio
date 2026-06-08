@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styles from '../../styles/home/Hero.module.css';
 import DotPattern from '../../assets/dot-pattern.svg';
-import { FaLinkedin, FaEnvelope, FaGithub } from 'react-icons/fa';
+import { FaLinkedin, FaEnvelope, FaGithub, FaFileAlt } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PortfolioMascot } from '../ai/PortfolioMascot';
 
@@ -132,15 +133,20 @@ export default function Hero() {
             <FaLinkedin className={styles.icon} />
             LinkedIn
           </a>
-          <a href="mailto:shivaprasadmakela@gmail.com" className={styles.button}>
+          <a href="mailto:shivamekala001@gmail.com" className={styles.button}>
             <FaEnvelope className={styles.icon} />
             Email
           </a>
 
-          <a href="https://github.com/shivaprasadmakela" className={styles.button} download>
+          <a href="https://github.com/shivaprasadmakela" className={styles.button} target="_blank" rel="noopener noreferrer">
             <FaGithub className={styles.icon} />
             Github
           </a>
+
+          <Link to="/resume" className={styles.button}>
+            <FaFileAlt className={styles.icon} />
+            Resume
+          </Link>
         </div>
 
         {/* Paper pieces full window */}

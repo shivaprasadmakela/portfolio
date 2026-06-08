@@ -1,0 +1,271 @@
+.resumePage {
+  color: var(--color-text-primary);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 5rem 1.5rem;
+}
+
+.headerSection {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.name {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+  color: var(--color-text-primary);
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary-green);
+  margin-bottom: 0.8rem;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+}
+
+.links a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.3s;
+}
+
+.links a:hover {
+  color: var(--color-text-primary-green);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.printBtn {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.printBtn:hover {
+  background-color: var(--color-border);
+  border-color: var(--color-text-primary-green);
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-bottom: 1.5px solid var(--color-border);
+  padding-bottom: 0.3rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-primary-green);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.summaryText {
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  font-size: 0.98rem;
+}
+
+.skillsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.skillsRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.skillCategory {
+  font-weight: 700;
+  width: 180px;
+  flex-shrink: 0;
+  color: var(--color-text-primary);
+  font-size: 0.98rem;
+}
+
+.skillList {
+  color: var(--color-text-secondary);
+  font-size: 0.98rem;
+}
+
+.experienceItem {
+  margin-bottom: 1.8rem;
+}
+
+.jobHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.2rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.companyRole {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.company {
+  color: var(--color-text-primary-green);
+}
+
+.dates {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+.location {
+  font-style: italic;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 0.6rem;
+}
+
+.bullets {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.bullets li {
+  margin-bottom: 0.4rem;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+.bullets li strong {
+  color: var(--color-text-primary);
+}
+
+.subSection {
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+  padding-left: 0.8rem;
+  border-left: 2px solid var(--color-border);
+}
+
+.subSectionTitle {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+  color: var(--color-text-primary);
+}
+
+.projectItem {
+  margin-bottom: 1.2rem;
+}
+
+.projectHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.3rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.projectName {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.projectLinks {
+  display: flex;
+  gap: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.projectLinks a {
+  color: var(--color-text-primary-green);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.projectLinks a:hover {
+  text-decoration: underline;
+}
+
+.eduHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.2rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.institution {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.degree {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+@media print {
+  :global(body) {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .resumePage {
+    padding: 0;
+    max-width: 100%;
+    margin: 0;
+  }
+  .actions, :global(header), :global(footer), :global(.bg-decoration) {
+    display: none !important;
+  }
+  .sectionTitle {
+    border-bottom: 1px solid #000000;
+    color: #000000 !important;
+  }
+  .company {
+    color: #000000 !important;
+  }
+  .projectLinks a {
+    color: #000000 !important;
+  }
+  .bullets li {
+    color: #333333 !important;
+  }
+  .bullets li strong {
+    color: #000000 !important;
+  }
+  .skillList, .dates, .location, .degree, .links, .links a {
+    color: #444444 !important;
+  }
+}
