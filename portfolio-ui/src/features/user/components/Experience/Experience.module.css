@@ -1,0 +1,149 @@
+.experienceSection {
+    width: 100%;
+}
+
+.card {
+    border-radius: 16px;
+    background: transparent;
+}
+
+.experienceList {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.experienceItem {
+    display: flex;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.companyLogo {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(40, 167, 69, 0.1);
+    color: var(--color-text-primary-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    z-index: 2;
+}
+
+.logoImage {
+    width: 24px;
+    height: 24px;
+}
+
+.itemContent {
+    flex: 1;
+}
+
+.companyName {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin: 0 0 0.25rem 0;
+}
+
+.totalDuration {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.location {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.roles {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.roles::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background-color: var(--color-border);
+}
+
+.roleItem {
+    position: relative;
+}
+
+.roleDot {
+    position: absolute;
+    left: -1.5rem;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--color-text-primary-green);
+    border: 2px solid var(--color-background);
+    transform: translateX(-4px);
+}
+
+.roleTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 0.25rem 0;
+}
+
+.employmentType {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.roleDuration {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+}
+
+.deliverablesList {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.deliverableItem {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.deliverableItem strong {
+    color: var(--color-text-primary);
+}
+
+@media (max-width: 600px) {
+    .experienceItem {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .companyLogo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .companyName {
+        font-size: 1.3rem;
+    }
+}

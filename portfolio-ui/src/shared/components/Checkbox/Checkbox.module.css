@@ -1,0 +1,37 @@
+/* Checkbox Styles */
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+}
+
+.checkbox {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid var(--color-border);
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.checkbox:checked {
+    background: var(--color-text-primary-green);
+    border-color: var(--color-text-primary-green);
+}
+
+.checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-size: 12px;
+    font-weight: bold;
+}

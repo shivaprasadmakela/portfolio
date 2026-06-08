@@ -1,0 +1,14 @@
+export { default as Home } from './pages/Home';
+export { default as AllProjects } from './pages/AllProjects';
+export { default as MyYoutube } from './pages/MyYoutube';
+export { default as Resume } from './pages/Resume';
+export { default as Header } from './components/Header/Header';
+export { default as Footer } from './components/Footer/Footer';
+export { ThemeToggle } from './components/ThemeToggle/ThemeToggle';
+export { default as About } from './components/About/About';
+export { default as Contact } from './components/Contact/Contact';
+export { default as Hero } from './components/Hero/Hero';
+export { default as Projects } from './components/Projects/Projects';
+export { default as YouTubeHome } from './components/YouTubeHome/YouTubeHome';
+export { default as Education } from './components/Education/Education';
+export { default as Experience } from './components/Experience/Experience';

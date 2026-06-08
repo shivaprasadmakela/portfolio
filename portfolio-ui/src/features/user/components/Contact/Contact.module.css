@@ -1,0 +1,196 @@
+.contactSection {
+  padding: 4rem 2rem;
+  max-width: 1000px;
+  margin: var(--primary-margin);
+}
+
+.container {
+  width: 100%;
+}
+
+.contactCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.contactCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(40, 167, 69, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cardHeader {
+  flex: 1.2;
+}
+
+.tag {
+  color: var(--color-text-primary-green);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+.green {
+  color: var(--color-text-primary-green);
+}
+
+.description {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.highlight {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.actionSection {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-width: 320px;
+}
+
+.mailGroup {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.iconWrapper {
+  width: 48px;
+  height: 48px;
+  background: rgba(40, 167, 69, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary-green);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.mailInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cardTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.cardSubtitle {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.sendButton,
+.copyButton {
+  flex: 1;
+  padding: 0.85rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.sendButton {
+  background: var(--color-text-primary-green);
+  color: #000000;
+  border: 1px solid var(--color-text-primary-green);
+}
+
+.sendButton:hover {
+  background: transparent;
+  color: var(--color-text-primary-green);
+}
+
+.copyButton {
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+
+.copyButton:hover {
+  background: var(--color-surface-hover);
+  border-color: var(--color-text-secondary);
+}
+
+.btnIcon {
+  font-size: 1rem;
+}
+
+@media (max-width: 900px) {
+  .contactCard {
+    flex-direction: column;
+    padding: 2.5rem;
+    gap: 2.5rem;
+  }
+
+  .actionSection {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .contactSection {
+    padding: 2rem 1rem;
+  }
+
+  .contactCard {
+    padding: 2rem 1.5rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+  }
+}

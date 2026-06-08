@@ -1,0 +1,39 @@
+@import './reset.css';
+@import './variables.css';
+@import './typography.css';
+@import './animations.css';
+
+:root {
+  color-scheme: light dark;
+  color: var(--color-text-primary);
+  background: var(--bg-gradient-main);
+  background-attachment: fixed;
+}
+
+body {
+  background: var(--bg-gradient-main);
+  background-attachment: fixed;
+  color: var(--color-text-primary);
+  min-height: 100vh;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-background) var(--color-surface);
+}
+
+/* Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-background);
+  border-radius: 10px;
+  border: 2px solid var(--color-surface);
+}
