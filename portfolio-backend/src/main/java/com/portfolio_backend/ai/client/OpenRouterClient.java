@@ -54,8 +54,8 @@ public class OpenRouterClient implements AiClient {
         }
 
         org.springframework.http.client.SimpleClientHttpRequestFactory factory = new org.springframework.http.client.SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(5000); // 5 seconds
-        factory.setReadTimeout(12000);   // 12 seconds
+        factory.setConnectTimeout(8000);  // 8 seconds
+        factory.setReadTimeout(30000);    // 30 seconds — fallback; free models can be slow
         this.restTemplate = new RestTemplate(factory);
         this.objectMapper = new ObjectMapper();
     }

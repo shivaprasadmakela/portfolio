@@ -52,8 +52,8 @@ public class DirectGeminiClient implements AiClient {
         }
 
         org.springframework.http.client.SimpleClientHttpRequestFactory factory = new org.springframework.http.client.SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(3000); // 3 seconds
-        factory.setReadTimeout(6000);    // 6 seconds
+        factory.setConnectTimeout(8000);  // 8 seconds
+        factory.setReadTimeout(25000);    // 25 seconds — Gemini chat can take 8-20s
         this.restTemplate = new RestTemplate(factory);
         this.objectMapper = new ObjectMapper();
     }
