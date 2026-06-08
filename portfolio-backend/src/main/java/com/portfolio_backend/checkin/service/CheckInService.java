@@ -1,0 +1,143 @@
+package com.portfolio_backend.checkin.service;
+
+import com.portfolio_backend.checkin.exception.CheckInException;
+
+import com.portfolio_backend.checkin.dto.CheckInRequest;
+import com.portfolio_backend.checkin.dto.CheckInResponse;
+import com.portfolio_backend.checkin.entity.DailyCheckIn;
+import com.portfolio_backend.checkin.entity.Participation;
+import com.portfolio_backend.checkin.repository.DailyCheckInRepository;
+import com.portfolio_backend.checkin.repository.ParticipationRepository;
+import com.portfolio_backend.user.repository.UserRepository;
+import com.portfolio_backend.user.entity.User;
+import com.portfolio_backend.common.util.IstTimeUtil;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import com.portfolio_backend.checkin.entity.VerificationQuestion;
+import com.portfolio_backend.checkin.repository.VerificationQuestionRepository;
+import java.util.List;
+import com.portfolio_backend.checkin.dto.LeaderboardEntry;
+import java.time.Instant;
+import java.time.LocalDate;
+
+@Service
+@RequiredArgsConstructor
+public class CheckInService {
+
+    private final ParticipationRepository participationRepo;
+    private final DailyCheckInRepository checkRepo;
+    private final VerificationQuestionRepository questionRepo;
+    private final UserRepository userRepo;
+
+    public List<LeaderboardEntry> getLeaderboard() {
+        return participationRepo.findAllLeaderboard();
+    }
+
+    public VerificationQuestion getRandomQuestion() {
+        List<VerificationQuestion> activeQuestions = questionRepo.findAllByIsActiveTrueOrderByIdAsc();
+        if (activeQuestions.isEmpty()) {
+            throw new CheckInException("No verification questions found");
+        }
+
+        long dayIndex = IstTimeUtil.today().toEpochDay();
+        int questionIndex = (int) (dayIndex % activeQuestions.size());
+
+        return activeQuestions.get(questionIndex);
+
+    }
+
+    @Transactional
+    public CheckInResponse checkIn(CheckInRequest request) {
+        java.time.LocalTime start = java.time.LocalTime.of(5, 0);
+        java.time.LocalTime end = java.time.LocalTime.of(7, 0);
+        if (!IstTimeUtil.inWindow(start, end)) {
+            throw new CheckInException("Submission window is closed. Please check in between 5:00 AM and 7:00 AM IST.");
+        }
+
+        String email = request.getEmail().trim().toLowerCase();
+        String name = request.getName().trim();
+
+        User user = getOrCreateUser(email, name);
+        validateAnswer(request.getQuestionId(), request.getAnswer());
+        Participation p = getOrCreateParticipation(user.getId());
+
+        LocalDate today = IstTimeUtil.today();
+        if (checkRepo.existsByParticipationIdAndCheckInDate(p.getId(), today)) {
+            throw new CheckInException("Already checked in today");
+        }
+
+        updateStreaks(p, today);
+        recordDailyCheckIn(p.getId(), today);
+
+        String message = p.getCurrentStreak() > 1
+                ? String.format("Streak continued! Day %d locked in. 🔥", p.getCurrentStreak())
+                : "Welcome to the challenge! Day 1 locked in. 🔥";
+
+        return new CheckInResponse(true, message, p.getCurrentStreak(), p.getLongestStreak());
+    }
+
+    private User getOrCreateUser(String email, String name) {
+        return userRepo.findByEmail(email)
+                .orElseGet(() -> userRepo.save(new User()
+                        .setEmail(email)
+                        .setName(name)
+                        .setRole(User.Role.USER)));
+    }
+
+    private void validateAnswer(Long questionId, String answer) {
+        questionRepo.findById(questionId)
+                .filter(q -> q.getAnswerHash().equals(hashAnswer(answer.trim().toLowerCase())))
+                .orElseThrow(() -> new CheckInException("Incorrect answer. Please try again."));
+    }
+
+    private Participation getOrCreateParticipation(Long userId) {
+        return participationRepo.findByUserId(userId)
+                .orElseGet(() -> participationRepo.save(new Participation()
+                        .setUserId(userId)
+                        .setCurrentStreak(0)
+                        .setLongestStreak(0)
+                        .setTotalCheckIns(0)
+                        .setStatus("ACTIVE")));
+    }
+
+    private void updateStreaks(Participation p, LocalDate today) {
+        LocalDate yesterday = today.minusDays(1);
+        LocalDate lastCheckInDate = IstTimeUtil.toLocalDate(p.getLastCheckIn());
+
+        p.setCurrentStreak(yesterday.equals(lastCheckInDate) ? p.getCurrentStreak() + 1 : 1);
+        p.setLongestStreak(Math.max(p.getLongestStreak(), p.getCurrentStreak()));
+        p.setLastCheckIn(Instant.now());
+        p.setTotalCheckIns(p.getTotalCheckIns() + 1);
+
+        participationRepo.save(p);
+    }
+
+    private void recordDailyCheckIn(Long participationId, LocalDate today) {
+        checkRepo.save(new DailyCheckIn()
+                .setParticipationId(participationId)
+                .setCheckInDate(today)
+                .setVerified(true));
+    }
+
+    private String hashAnswer(String answer) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(answer.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            return bytesToHex(hash);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error hashing answer", e);
+        }
+    }
+
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    }
+}
