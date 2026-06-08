@@ -29,7 +29,7 @@ public class DirectGeminiClient implements AiClient {
     private final ObjectMapper objectMapper;
     private final List<ApiToken> tokenPool = new CopyOnWriteArrayList<>();
 
-    @Value("${gemini.url.template:https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=%s}")
+    @Value("${gemini.url.template:https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=%s}")
     private String urlTemplate;
 
     public DirectGeminiClient(
