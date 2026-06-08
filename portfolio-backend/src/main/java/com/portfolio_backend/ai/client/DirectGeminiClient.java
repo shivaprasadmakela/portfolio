@@ -76,7 +76,7 @@ public class DirectGeminiClient implements AiClient {
             throw new RuntimeException("AI feature is currently disabled (missing Gemini API Key).");
         }
 
-        long cooldownMs = 60000; // 1 minute block on 429 rate limit
+        long cooldownMs = 3600000; // 1 hour block on 429 rate limit
         int maxAttempts = tokenPool.size();
 
         for (int attempt = 0; attempt < maxAttempts; attempt++) {
@@ -139,7 +139,7 @@ public class DirectGeminiClient implements AiClient {
             throw new RuntimeException("AI feature is currently disabled (missing Gemini API Key).");
         }
 
-        long cooldownMs = 60000; // 1 minute block on 429 rate limit
+        long cooldownMs = 3600000; // 1 hour block on 429 rate limit
         int maxAttempts = tokenPool.size();
 
         for (int attempt = 0; attempt < maxAttempts; attempt++) {

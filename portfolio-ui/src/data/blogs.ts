@@ -1,4 +1,4 @@
-import { type Blog } from '../types/blog';
+import { type Blog } from '../features/blog/types/blog';
 
 export const MOCK_BLOGS: Blog[] = [
     {
