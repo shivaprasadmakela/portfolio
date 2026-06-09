@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <FadeInSection><About /></FadeInSection>
+      <FadeInSection delay={0.3}><About /></FadeInSection>
       <FadeInSection><Projects /></FadeInSection>
       <FadeInSection><YouTubeHome /></FadeInSection>
       <FadeInSection><Contact /></FadeInSection>
