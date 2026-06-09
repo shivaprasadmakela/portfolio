@@ -20,27 +20,31 @@ const experienceData: ExperienceData = {
     location: 'Bengaluru, Karnataka, India',
     roles: [
         {
-            title: 'Software Development Engineer (SDE)',
+            title: 'Software Development Engineer I (SDE I)',
             type: 'Full-time',
             duration: 'Aug 2024 - Present · 1 yr 11 mos',
             deliverables: [
-                "Led end-to-end development for user management features across Admin and Channel Partner (CP) flows, enabling smooth user onboarding, access handling, and workflows in production.",
-                "Built complete CP mobile application flow (login, onboarding, configuration-based flows, and access management) that is live in production.",
-                "Worked end-to-end on WhatsApp integrations and notification flows across the platform, improving communication workflows.",
-                "Developed authentication-related flows including signup, login, and user invite handling.",
-                "Contributed heavily to Java Spring Boot backend services (LeadCollector / Entity Processor) for capturing leads from multiple sources.",
-                "Led and coordinated a team of 2–3 developers to ensure feature delivery and maintain platform stability.",
-                "Worked on Meta JSON tagging, CP workflows hierarchy fixes, multi-manager support, and resolved production/UI bugs."
+                "Owned end-to-end development and delivery of 10+ production-ready features across 5+ major CRM modules for Leadzump, a multi-tenant CRM platform built using React.js, TypeScript, Java Spring Boot, and REST APIs.",
+                "Built a complete User Management and Access Control Platform covering onboarding, invitations, lifecycle management, RBAC, user activation/deactivation, hierarchy handling, and multi-role access across Admin and Channel Partner ecosystems.",
+                "Built and delivered an end-to-end In-App Notification System including backend integration, notification workflows, and a reusable Server-Sent Events (SSE) listener component for real-time notification delivery across the platform.",
+                "Implemented WhatsApp Integrations and notification workflows across multiple CRM processes, improving communication automation and user engagement in production.",
+                "Developed authentication and access management workflows including login, signup, user invitations, session handling, and secure role-based access across multiple product modules.",
+                "Delivered end-to-end CP Mobile Application Flow including login, onboarding, configuration-driven experiences, and access control, supporting 1000+ production users across mobile and web platforms.",
+                "Developed backend services for LeadCollector using Java Spring Boot, building lead ingestion, validation, normalization, entity processing, and multi-source routing workflows for scalable lead management.",
+                "Coordinated and mentored 2–3 developers across multiple releases, ensuring smooth feature delivery, production stability, and avoidance of breaking changes.",
+                "Collaborated closely with Product, Design, and Backend teams to finalize requirements, improve features, and resolve 50+ production issues impacting user experience and platform stability."
             ]
         },
         {
-            title: 'Software Engineer Intern',
+            title: 'Software Developer Intern',
             type: 'Internship',
             duration: 'Feb 2024 - Jul 2024 · 6 mos',
             deliverables: [
-                "Developed and enhanced frontend UI features using React and CSS.",
-                "Assisted in debugging and fixing production-level issues across platforms.",
-                "Gained hands-on experience in Java Spring Boot and API-driven development flows."
+                "Contributed to CRM and workflow automation products using React.js and TypeScript.",
+                "Built reusable UI components, integrated REST APIs, and improved onboarding and workflow management experiences.",
+                "Resolved production issues, fixed UI defects, and improved stability of internal low-code editor components.",
+                "Collaborated with senior engineers in an Agile environment on feature development, testing, debugging, and deployment.",
+                "Converted to a full-time SDE role based on performance and contributions."
             ]
         }
     ]

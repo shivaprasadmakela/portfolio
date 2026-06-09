@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import styles from './Resume.module.css';
-import { FaEnvelope, FaLinkedin, FaGithub, FaPrint } from 'react-icons/fa';
+import { FaEnvelope, FaLinkedin, FaGithub, FaPrint, FaGlobe } from 'react-icons/fa';
 
 export default function Resume() {
     useEffect(() => {
@@ -22,9 +22,10 @@ export default function Resume() {
 
             {/* Header section of resume */}
             <header className={styles.headerSection}>
-                <h1 className={styles.name}>Shiva Prasad Mekala</h1>
-                <div className={styles.title}>Software Engineer | React • TypeScript • Java</div>
+                <h1 className={styles.name}>SHIVA PRASAD MEKALA</h1>
+                <div className={styles.title}>Software Development Engineer | React.js • TypeScript • Java Spring Boot</div>
                 <div className={styles.links}>
+
                     <a href="mailto:shivamekala001@gmail.com">
                         <FaEnvelope /> shivamekala001@gmail.com
                     </a>
@@ -34,6 +35,9 @@ export default function Resume() {
                     <a href="https://github.com/shivaprasadmakela" target="_blank" rel="noopener noreferrer">
                         <FaGithub /> GitHub
                     </a>
+                    <a href="https://shivaprasadm.in" target="_blank" rel="noopener noreferrer">
+                        <FaGlobe /> shivaprasadm.in
+                    </a>
                 </div>
             </header>
 
@@ -41,7 +45,7 @@ export default function Resume() {
             <section className={styles.section}>
                 <h2 className={styles.sectionTitle}>Summary</h2>
                 <p className={styles.summaryText}>
-                    Software Engineer with ~2 years of experience building scalable SaaS platforms and dynamic dashboards using React.js, TypeScript, and Java Spring Boot. Experienced in designing schema-driven UI systems, optimizing frontend performance, and developing data-driven applications handling 200+ daily events and 200K+ records.
+                    Software Development Engineer with 2+ years of experience building and owning end-to-end SaaS product features across frontend and backend. Skilled in React.js, TypeScript, Java Spring Boot, REST APIs, and multi-tenant architectures, with experience delivering production-ready CRM solutions.
                 </p>
             </section>
 
@@ -54,24 +58,24 @@ export default function Resume() {
                         <span className={styles.skillList}>React.js (Hooks, Context API), TypeScript, JavaScript (ES6+), HTML5, CSS3, SCSS, Tailwind CSS, Redux Toolkit, React Query</span>
                     </div>
                     <div className={styles.skillsRow}>
-                        <span className={styles.skillCategory}>Frontend Optimization:</span>
-                        <span className={styles.skillList}>Memoization, Lazy Loading, Rendering Optimization</span>
-                    </div>
-                    <div className={styles.skillsRow}>
                         <span className={styles.skillCategory}>Backend:</span>
-                        <span className={styles.skillList}>Java, Spring Boot, Spring WebFlux, REST APIs, Asynchronous Processing</span>
+                        <span className={styles.skillList}>Java, Spring Boot, Spring WebFlux, REST APIs, Asynchronous Processing, Microservices</span>
                     </div>
                     <div className={styles.skillsRow}>
                         <span className={styles.skillCategory}>Databases:</span>
-                        <span className={styles.skillList}>PostgreSQL, MySQL, MongoDB</span>
+                        <span className={styles.skillList}>MySQL, PostgreSQL, MongoDB</span>
+                    </div>
+                    <div className={styles.skillsRow}>
+                        <span className={styles.skillCategory}>Architecture & Concepts:</span>
+                        <span className={styles.skillList}>Multi-Tenant SaaS Architecture, Authentication & Authorization, RBAC, Real-Time Systems, Server-Sent Events (SSE), Event-Driven Workflows, State Management, API Design, Workflow Automation</span>
                     </div>
                     <div className={styles.skillsRow}>
                         <span className={styles.skillCategory}>Testing:</span>
-                        <span className={styles.skillList}>Jest, React Testing Library, JUnit</span>
+                        <span className={styles.skillList}>Jest, React Testing Library, JUnit, Manual Testing, Edge-Case Handling</span>
                     </div>
                     <div className={styles.skillsRow}>
                         <span className={styles.skillCategory}>Tools:</span>
-                        <span className={styles.skillList}>Git, VS Code, IntelliJ IDEA, Postman, Maven</span>
+                        <span className={styles.skillList}>Git, Maven, Postman, Jira</span>
                     </div>
                 </div>
             </section>
@@ -90,32 +94,16 @@ export default function Resume() {
                     </div>
                     <div className={styles.location}>Bengaluru, India</div>
                     <ul className={styles.bullets}>
-                        <li>Built and scaled a multi-tenant CRM platform with dynamic dashboards handling <strong>200+ daily leads and 200K+ total records</strong>.</li>
-                        <li>Designed a scalable <strong>schema-driven UI architecture</strong> in React + TypeScript to power dynamic dashboards and workflow-driven interfaces.</li>
-                        <li>Integrated React frontend with backend APIs to enable <strong>real-time data-driven UI updates</strong> and seamless workflow execution.</li>
-                        <li>Optimized frontend performance by improving rendering efficiency and reducing unnecessary re-renders in data-heavy views.</li>
-                        <li>Implemented scalable <strong>state management patterns</strong> using React Query and Context API for efficient data handling.</li>
-                        <li>Developed reusable and modular UI components to ensure consistency and faster feature development.</li>
-                        <li>Led a team of <strong>3 developers</strong>, contributing to frontend architecture decisions and ensuring high-quality feature delivery.</li>
+                        <li>Owned end-to-end development and delivery of 10+ production-ready features across 5+ major CRM modules for <strong>Leadzump</strong>, a multi-tenant CRM platform built using React.js, TypeScript, Java Spring Boot, and REST APIs.</li>
+                        <li>Built a complete <strong>User Management and Access Control Platform</strong> covering onboarding, invitations, lifecycle management, RBAC, user activation/deactivation, hierarchy handling, and multi-role access across Admin and Channel Partner ecosystems.</li>
+                        <li>Built and delivered an end-to-end <strong>In-App Notification System</strong> including backend integration, notification workflows, and a reusable Server-Sent Events (SSE) listener component for real-time notification delivery across the platform.</li>
+                        <li>Implemented <strong>WhatsApp Integrations</strong> and notification workflows across multiple CRM processes, improving communication automation and user engagement in production.</li>
+                        <li>Developed authentication and access management workflows including login, signup, user invitations, session handling, and secure role-based access across multiple product modules.</li>
+                        <li>Delivered end-to-end <strong>CP Mobile Application Flow</strong> including login, onboarding, configuration-driven experiences, and access control, supporting 1000+ production users across mobile and web platforms.</li>
+                        <li>Developed backend services for <strong>LeadCollector</strong> using Java Spring Boot, building lead ingestion, validation, normalization, entity processing, and multi-source routing workflows for scalable lead management.</li>
+                        <li>Coordinated and mentored 2–3 developers across multiple releases, ensuring smooth feature delivery, production stability, and avoidance of breaking changes.</li>
+                        <li>Collaborated closely with Product, Design, and Backend teams to finalize requirements, improve features, and resolve 50+ production issues impacting user experience and platform stability.</li>
                     </ul>
-
-                    {/* Lead Collector Section */}
-                    <div className={styles.subSection}>
-                        <h4 className={styles.subSectionTitle}>Lead Collector Service (Backend)</h4>
-                        <ul className={styles.bullets}>
-                            <li>Built a lead ingestion system using <strong>Java Spring Boot</strong> to process data from ads, forms, and APIs.</li>
-                            <li>Implemented pipelines for <strong>data validation, normalization, and routing</strong> across multiple client accounts.</li>
-                        </ul>
-                    </div>
-
-                    {/* Workflow Engine Section */}
-                    <div className={styles.subSection}>
-                        <h4 className={styles.subSectionTitle}>Workflow Engine Platform (Low-Code System)</h4>
-                        <ul className={styles.bullets}>
-                            <li>Developed reusable execution blocks using <strong>TypeScript and Java</strong> for conditional logic and transformations.</li>
-                            <li>Improved schema quality and increased test coverage using <strong>Jest and JUnit</strong>.</li>
-                        </ul>
-                    </div>
                 </div>
 
                 {/* Intern */}
@@ -128,8 +116,11 @@ export default function Resume() {
                     </div>
                     <div className={styles.location}>Bengaluru, India</div>
                     <ul className={styles.bullets}>
-                        <li>Fixed UI issues and improved stability of internal low-code editor components.</li>
-                        <li>Built reusable editor components including dynamic text rendering features.</li>
+                        <li>Contributed to CRM and workflow automation products using React.js and TypeScript.</li>
+                        <li>Built reusable UI components, integrated REST APIs, and improved onboarding and workflow management experiences.</li>
+                        <li>Resolved production issues, fixed UI defects, and improved stability of internal low-code editor components.</li>
+                        <li>Collaborated with senior engineers in an Agile environment on feature development, testing, debugging, and deployment.</li>
+                        <li>Converted to a full-time SDE role based on performance and contributions.</li>
                     </ul>
                 </div>
             </section>
@@ -142,30 +133,14 @@ export default function Resume() {
                     <div className={styles.projectHeader}>
                         <span className={styles.projectName}>AI-Powered Blogging Platform</span>
                         <div className={styles.projectLinks}>
-                            <a href="https://www.shivaprasadm.in" target="_blank" rel="noopener noreferrer">Live</a>
+                            <a href="https://shivaprasadm.in/blogs" target="_blank" rel="noopener noreferrer">Live</a>
                             <span>|</span>
-                            <a href="https://github.com/shivaprasadmakela" target="_blank" rel="noopener noreferrer">Source</a>
+                            <a href="https://github.com/shivaprasadmakela/portfolio/tree/main/portfolio-backend/src/main/java/com/portfolio_backend/controller/ai" target="_blank" rel="noopener noreferrer">Source</a>
                         </div>
                     </div>
                     <ul className={styles.bullets}>
-                        <li>Built a scalable frontend using <strong>React + TypeScript</strong> with optimized API interactions and structured state handling.</li>
-                        <li>Integrated <strong>Google Gemini APIs</strong> with structured prompt engineering for AI-generated content.</li>
-                        <li>Implemented response cleaning, rate limiting, and secure API proxying.</li>
-                        <li>Designed reusable UI components to improve consistency and development speed.</li>
-                    </ul>
-                </div>
-
-                <div className={styles.projectItem}>
-                    <div className={styles.projectHeader}>
-                        <span className={styles.projectName}>Portfolio Website</span>
-                        <div className={styles.projectLinks}>
-                            <a href="https://www.shivaprasadm.in" target="_blank" rel="noopener noreferrer">Live</a>
-                            <span>|</span>
-                            <a href="https://github.com/shivaprasadmakela" target="_blank" rel="noopener noreferrer">Source</a>
-                        </div>
-                    </div>
-                    <ul className={styles.bullets}>
-                        <li>Built a responsive portfolio using <strong>React, TypeScript, and Tailwind CSS</strong>.</li>
+                        <li>Built a full-stack AI-powered blogging platform using React.js, TypeScript, Spring Boot, and Google Gemini APIs.</li>
+                        <li>Implemented Prompt Engineering, AI response cleaning, secure API proxying, and request rate limiting for reliable content generation.</li>
                     </ul>
                 </div>
 
@@ -173,13 +148,27 @@ export default function Resume() {
                     <div className={styles.projectHeader}>
                         <span className={styles.projectName}>TalkNow — Real-time Chat Application</span>
                         <div className={styles.projectLinks}>
-                            <a href="https://www.shivaprasadm.in" target="_blank" rel="noopener noreferrer">Live</a>
+                            <a href="https://talknow.shivaprasadm.in/" target="_blank" rel="noopener noreferrer">Live</a>
                             <span>|</span>
-                            <a href="https://github.com/shivaprasadmakela" target="_blank" rel="noopener noreferrer">Source</a>
+                            <a href="https://github.com/shivaprasadmakela/chat-app.git" target="_blank" rel="noopener noreferrer">Source</a>
                         </div>
                     </div>
                     <ul className={styles.bullets}>
-                        <li>Built a real-time chat system using <strong>React.js, Node.js, Express, and Socket.IO</strong>.</li>
+                        <li>Built a real-time chat application using React.js, Node.js, Express, and Socket.IO, supporting instant messaging, user presence, and bidirectional communication.</li>
+                    </ul>
+                </div>
+
+                <div className={styles.projectItem}>
+                    <div className={styles.projectHeader}>
+                        <span className={styles.projectName}>Portfolio AI Chat Assistant</span>
+                        <div className={styles.projectLinks}>
+                            <a href="https://www.shivaprasadm.in/?chat=true" target="_blank" rel="noopener noreferrer">Live</a>
+                            <span>|</span>
+                            <a href="https://github.com/shivaprasadmakela/portfolio" target="_blank" rel="noopener noreferrer">Source</a>
+                        </div>
+                    </div>
+                    <ul className={styles.bullets}>
+                        <li>Built an AI-powered portfolio assistant using React.js, TypeScript, Spring Boot, Gemini, and OpenRouter, featuring dynamic profile-context injection, prompt engineering, multi-provider failover, circuit breaker protection, and API key rotation for reliable AI responses.</li>
                     </ul>
                 </div>
             </section>
@@ -188,7 +177,7 @@ export default function Resume() {
             <section className={styles.section}>
                 <h2 className={styles.sectionTitle}>Education</h2>
                 <div className={styles.eduHeader}>
-                    <span className={styles.institution}>St. Mary's Engineering College</span>
+                    <span className={styles.institution}>St. Mary’s Engineering College</span>
                     <span className={styles.dates}>Jul 2018 – Sept 2021</span>
                 </div>
                 <div className={styles.degree}>Bachelor of Technology — Electrical and Electronics Engineering</div>
