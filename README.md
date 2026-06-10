@@ -32,7 +32,7 @@ A high-performance, modern web application designed to showcase professional wor
 
 ## 🛠️ Codebase Architecture
 
-The project has been refactored into a clean, modular structure:
+The project has been refactored into a clean, modular structure. For a detailed breakdown of the changes (comparing previous legacy code to the refactored architecture), see [recent_changes.md](file:///Users/shivaprasad/Documents/Projects/portfolio/recent_changes.md).
 
 ### Frontend (`portfolio-ui`)
 - **`src/features/`**: Feature-grouped modules (`ai`, `blog`, `challenge`, `interview`, `admin`, `user`) where pages, components, hooks, types, and api endpoints are kept co-located.
