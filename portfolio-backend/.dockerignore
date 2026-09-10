@@ -1,0 +1,22 @@
+# Never ship secrets or local state into a build layer.
+# COPY . . in the build stage would otherwise bake .env -- which holds live
+# Gemini and OpenRouter keys -- into an image layer permanently.
+.env
+.env.*
+
+.git
+.gitignore
+.gitattributes
+
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+.idea/
+.vscode/
+.agent/
+*.iml
+*.iws
+*.ipr
+
+.DS_Store
+HELP.md

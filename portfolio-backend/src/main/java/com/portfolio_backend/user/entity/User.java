@@ -1,5 +1,6 @@
 package com.portfolio_backend.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.portfolio_backend.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,6 +21,8 @@ public class User extends BaseEntity<User> {
 
     private String name;
 
+    // Never serialise the credential, whatever DTO or entity path a response takes.
+    @JsonIgnore
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)

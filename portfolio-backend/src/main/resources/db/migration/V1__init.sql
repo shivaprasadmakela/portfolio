@@ -1,7 +1,10 @@
-
+-- V1: core challenge schema.
+-- Idempotent by design: this migration is applied to databases that may already
+-- have these tables. It must never DROP anything -- an earlier revision opened with
+-- DROP TABLE ... CASCADE, which would have destroyed live user and streak data the
+-- moment Flyway was enabled.
 -- 1. USERS
-DROP TABLE IF EXISTS users CASCADE;
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id              BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     email           VARCHAR(255)    NOT NULL UNIQUE,
     name            VARCHAR(255)    NOT NULL,
@@ -15,8 +18,7 @@ CREATE TABLE users (
 );
 
 -- 2. VERIFICATION QUESTIONS
-DROP TABLE IF EXISTS verification_questions CASCADE;
-CREATE TABLE verification_questions (
+CREATE TABLE IF NOT EXISTS verification_questions (
     id           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     question     TEXT            NOT NULL,
     answer_hash  VARCHAR(64)     NOT NULL,
@@ -28,8 +30,7 @@ CREATE TABLE verification_questions (
 );
 
 -- 3. USER PARTICIPATION
-DROP TABLE IF EXISTS user_participation CASCADE;
-CREATE TABLE user_participation (
+CREATE TABLE IF NOT EXISTS user_participation (
     id               BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_id          BIGINT          NOT NULL UNIQUE,
     current_streak   INT             NOT NULL DEFAULT 0,
@@ -44,8 +45,7 @@ CREATE TABLE user_participation (
 );
 
 -- 4. DAILY CHECK-INS
-DROP TABLE IF EXISTS daily_check_ins CASCADE;
-CREATE TABLE daily_check_ins (
+CREATE TABLE IF NOT EXISTS daily_check_ins (
     id                BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     participation_id  BIGINT          NOT NULL,
     check_in_date     DATE            NOT NULL,

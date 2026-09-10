@@ -2,10 +2,10 @@ package com.portfolio_backend.ai.service;
 
 import com.portfolio_backend.ai.client.AiClient;
 import com.portfolio_backend.ai.dto.ChatRequest.ChatMessage;
-import com.portfolio_backend.ai.prompts.AiPromptTemplates;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class AiService {
@@ -31,64 +31,29 @@ public class AiService {
         this.aiClient = aiClient;
         this.aiPromptBuilder = aiPromptBuilder;
     }
+
     public String chatAboutMe(String userMessage, List<ChatMessage> history) {
-        validate(userMessage);
-        
+        if (userMessage == null || userMessage.trim().isEmpty()) {
+            throw new IllegalArgumentException("Input content cannot be empty.");
+        }
+
         String cleanMsg = userMessage.trim();
         // Check if the message is purely punctuation/non-alphanumeric noise
         if (cleanMsg.matches("^[^a-zA-Z0-9]*$")) {
-            int idx = java.util.concurrent.ThreadLocalRandom.current().nextInt(NOISE_RESPONSES.size());
-            return NOISE_RESPONSES.get(idx);
+            return pick(NOISE_RESPONSES);
         }
 
         String systemInstruction = aiPromptBuilder.buildSystemInstruction(userMessage);
         String response = aiClient.call(systemInstruction, history, userMessage);
-        
+
         if (response == null || response.trim().isEmpty()) {
-            int idx = java.util.concurrent.ThreadLocalRandom.current().nextInt(EMPTY_RESPONSES.size());
-            return EMPTY_RESPONSES.get(idx);
+            return pick(EMPTY_RESPONSES);
         }
-        
+
         return response;
     }
 
-    public String improveTitle(String title) {
-        validate(title);
-        String prompt = AiPromptTemplates.IMPROVE_TITLE_PROMPT.formatted(title);
-        return cleanResponse(aiClient.call(prompt));
-    }
-
-    public String enhanceContent(String content) {
-        validate(content);
-        String prompt = AiPromptTemplates.ENHANCE_CONTENT_PROMPT.formatted(content);
-        return cleanResponse(aiClient.call(prompt));
-    }
-
-    public String summarize(String content) {
-        validate(content);
-        String prompt = AiPromptTemplates.SUMMARIZE_PROMPT.formatted(content);
-        return cleanResponse(aiClient.call(prompt));
-    }
-
-    private String cleanResponse(String response) {
-        if (response == null)
-            return "{}";
-        // Remove markdown code blocks if present
-        String cleaned = response.trim();
-        if (cleaned.startsWith("```json")) {
-            cleaned = cleaned.substring(7);
-        } else if (cleaned.startsWith("```")) {
-            cleaned = cleaned.substring(3);
-        }
-        if (cleaned.endsWith("```")) {
-            cleaned = cleaned.substring(0, cleaned.length() - 3);
-        }
-        return cleaned.trim();
-    }
-
-    private void validate(String input) {
-        if (input == null || input.trim().isEmpty()) {
-            throw new IllegalArgumentException("Input content cannot be empty.");
-        }
+    private String pick(List<String> options) {
+        return options.get(ThreadLocalRandom.current().nextInt(options.size()));
     }
 }

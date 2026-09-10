@@ -1,5 +1,7 @@
 spring:
   datasource:
+    # Credentials travel inside DATABASE_URL (as the current Cloud Run deployment
+    # supplies them), so username/password are intentionally not set here.
     url: ${DATABASE_URL}
     driver-class-name: org.postgresql.Driver
     hikari:
@@ -12,18 +14,16 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
+      # Flyway owns the schema. 'none' keeps a schema drift from blocking a deploy;
+      # dev uses 'validate' so drift surfaces there instead.
       ddl-auto: none
     show-sql: false
     open-in-view: false
 
   flyway:
-    enabled: false
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 2
 
 server:
   port: ${PORT:8080}
-
-gemini:
-  api:
-    key: ${GEMINI_API_KEY}
-  url:
-    template: ${GEMINI_URL_TEMPLATE:https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=%s}

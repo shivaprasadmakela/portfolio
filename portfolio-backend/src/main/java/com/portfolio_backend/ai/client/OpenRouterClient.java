@@ -73,60 +73,6 @@ public class OpenRouterClient implements AiClient {
     }
 
     @Override
-    public String call(String prompt) {
-        if (tokenPool.isEmpty()) {
-            throw new RuntimeException("AI feature is currently disabled (missing OpenRouter API Key).");
-        }
-
-        long cooldownMs = 60000; // 1 minute block on 429 rate limit
-        int maxAttempts = tokenPool.size();
-
-        for (int attempt = 0; attempt < maxAttempts; attempt++) {
-            ApiToken token = getAvailableToken();
-            if (token == null) {
-                logger.error("No active OpenRouter tokens available. All are on cooldown.");
-                throw new RateLimitException("All OpenRouter API keys in the pool are rate-limited.");
-            }
-
-            HttpHeaders headers = createHeaders(token.getKey());
-
-            // Build simple OpenAI message structure
-            List<Map<String, String>> messages = new ArrayList<>();
-            
-            Map<String, String> userMessage = new HashMap<>();
-            userMessage.put("role", "user");
-            userMessage.put("content", prompt);
-            messages.add(userMessage);
-
-            Map<String, Object> body = new HashMap<>();
-            body.put("model", model);
-            body.put("messages", messages);
-
-            HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
-
-            try {
-                logger.info("Executing OpenRouter call using token: {}", maskKey(token.getKey()));
-                String responseStr = restTemplate.postForObject(apiUrl, entity, String.class);
-                return parseOpenResponse(responseStr);
-            } catch (org.springframework.web.client.HttpStatusCodeException e) {
-                logger.error("OpenRouter HTTP Error: {}, Body: {}", e.getStatusCode(), e.getResponseBodyAsString());
-                if (e.getStatusCode().value() == 429) {
-                    logger.warn("OpenRouter API key rate limited: {}. Blocking token for {}ms and retrying.", maskKey(token.getKey()), cooldownMs);
-                    token.blockFor(cooldownMs);
-                    // continue loop to try next token
-                } else {
-                    throw new RuntimeException("OpenRouter service is temporarily unavailable. Error: " + e.getStatusCode());
-                }
-            } catch (Exception e) {
-                logger.error("Unexpected error during OpenRouter call", e);
-                throw new RuntimeException("Oops! Something went wrong while talking to OpenRouter.", e);
-            }
-        }
-
-        throw new RateLimitException("All available OpenRouter tokens are rate-limited.");
-    }
-
-    @Override
     public String call(String systemInstruction, List<ChatMessage> history, String currentInput) {
         if (tokenPool.isEmpty()) {
             throw new RuntimeException("AI feature is currently disabled (missing OpenRouter API Key).");

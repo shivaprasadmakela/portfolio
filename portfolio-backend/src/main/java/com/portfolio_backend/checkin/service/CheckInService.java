@@ -1,32 +1,36 @@
 package com.portfolio_backend.checkin.service;
 
-import com.portfolio_backend.checkin.exception.CheckInException;
-
 import com.portfolio_backend.checkin.dto.CheckInRequest;
 import com.portfolio_backend.checkin.dto.CheckInResponse;
+import com.portfolio_backend.checkin.dto.LeaderboardEntry;
+import com.portfolio_backend.checkin.dto.VerificationQuestionDto;
 import com.portfolio_backend.checkin.entity.DailyCheckIn;
 import com.portfolio_backend.checkin.entity.Participation;
+import com.portfolio_backend.checkin.entity.VerificationQuestion;
+import com.portfolio_backend.checkin.exception.CheckInException;
 import com.portfolio_backend.checkin.repository.DailyCheckInRepository;
 import com.portfolio_backend.checkin.repository.ParticipationRepository;
-import com.portfolio_backend.user.repository.UserRepository;
-import com.portfolio_backend.user.entity.User;
+import com.portfolio_backend.checkin.repository.VerificationQuestionRepository;
+import com.portfolio_backend.common.util.AnswerHasher;
 import com.portfolio_backend.common.util.IstTimeUtil;
+import com.portfolio_backend.user.entity.User;
+import com.portfolio_backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
-import com.portfolio_backend.checkin.entity.VerificationQuestion;
-import com.portfolio_backend.checkin.repository.VerificationQuestionRepository;
-import java.util.List;
-import com.portfolio_backend.checkin.dto.LeaderboardEntry;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CheckInService {
+
+    private static final LocalTime WINDOW_OPEN = LocalTime.of(5, 0);
+    private static final LocalTime WINDOW_CLOSE = LocalTime.of(7, 0);
 
     private final ParticipationRepository participationRepo;
     private final DailyCheckInRepository checkRepo;
@@ -37,32 +41,38 @@ public class CheckInService {
         return participationRepo.findAllLeaderboard();
     }
 
-    public VerificationQuestion getRandomQuestion() {
+    /**
+     * The question rotates once per IST day, so everyone sees the same one and it is
+     * stable across a page refresh mid-submission.
+     */
+    public VerificationQuestionDto getTodaysQuestion() {
         List<VerificationQuestion> activeQuestions = questionRepo.findAllByIsActiveTrueOrderByIdAsc();
         if (activeQuestions.isEmpty()) {
             throw new CheckInException("No verification questions found");
         }
 
         long dayIndex = IstTimeUtil.today().toEpochDay();
-        int questionIndex = (int) (dayIndex % activeQuestions.size());
+        VerificationQuestion question = activeQuestions.get((int) (dayIndex % activeQuestions.size()));
 
-        return activeQuestions.get(questionIndex);
-
+        return new VerificationQuestionDto(
+                question.getId(),
+                question.getQuestion(),
+                question.getPlaceholder()
+        );
     }
 
     @Transactional
     public CheckInResponse checkIn(CheckInRequest request) {
-        java.time.LocalTime start = java.time.LocalTime.of(5, 0);
-        java.time.LocalTime end = java.time.LocalTime.of(7, 0);
-        if (!IstTimeUtil.inWindow(start, end)) {
+        if (!IstTimeUtil.inWindow(WINDOW_OPEN, WINDOW_CLOSE)) {
             throw new CheckInException("Submission window is closed. Please check in between 5:00 AM and 7:00 AM IST.");
         }
 
         String email = request.getEmail().trim().toLowerCase();
         String name = request.getName().trim();
 
-        User user = getOrCreateUser(email, name);
         validateAnswer(request.getQuestionId(), request.getAnswer());
+
+        User user = getOrCreateUser(email, name);
         Participation p = getOrCreateParticipation(user.getId());
 
         LocalDate today = IstTimeUtil.today();
@@ -71,7 +81,15 @@ public class CheckInService {
         }
 
         updateStreaks(p, today);
-        recordDailyCheckIn(p.getId(), today);
+
+        try {
+            recordDailyCheckIn(p.getId(), today);
+        } catch (DataIntegrityViolationException e) {
+            // Two concurrent submissions can both pass the exists() check above; the
+            // uk_daily_checkin unique constraint is what actually settles it. Report
+            // that as the ordinary "already checked in" case rather than a 500.
+            throw new CheckInException("Already checked in today");
+        }
 
         String message = p.getCurrentStreak() > 1
                 ? String.format("Streak continued! Day %d locked in. 🔥", p.getCurrentStreak())
@@ -90,7 +108,8 @@ public class CheckInService {
 
     private void validateAnswer(Long questionId, String answer) {
         questionRepo.findById(questionId)
-                .filter(q -> q.getAnswerHash().equals(hashAnswer(answer.trim().toLowerCase())))
+                .filter(q -> q.getAnswerHash() != null
+                        && q.getAnswerHash().equalsIgnoreCase(AnswerHasher.hash(answer)))
                 .orElseThrow(() -> new CheckInException("Incorrect answer. Please try again."));
     }
 
@@ -117,27 +136,9 @@ public class CheckInService {
     }
 
     private void recordDailyCheckIn(Long participationId, LocalDate today) {
-        checkRepo.save(new DailyCheckIn()
+        checkRepo.saveAndFlush(new DailyCheckIn()
                 .setParticipationId(participationId)
                 .setCheckInDate(today)
                 .setVerified(true));
-    }
-
-    private String hashAnswer(String answer) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(answer.getBytes(java.nio.charset.StandardCharsets.UTF_8));
-            return bytesToHex(hash);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error hashing answer", e);
-        }
-    }
-
-    private String bytesToHex(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        for (byte b : bytes) {
-            sb.append(String.format("%02x", b));
-        }
-        return sb.toString();
     }
 }
