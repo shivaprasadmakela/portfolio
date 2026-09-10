@@ -1,15 +1,13 @@
 import { type Blog } from '../types/blog';
 import styles from '../pages/BlogList.module.css';
-import { FiEdit2, FiClock, FiLock, FiArrowRight } from 'react-icons/fi';
+import { FiClock, FiLock, FiArrowRight } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 interface BlogCardProps {
     blog: Blog;
-    onEdit: (blog: Blog) => void;
-    showEdit?: boolean;
 }
 
-export default function BlogCard({ blog, onEdit, showEdit = false }: BlogCardProps) {
+export default function BlogCard({ blog }: BlogCardProps) {
     const formattedDate = new Date(blog.createdAt).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
@@ -46,18 +44,6 @@ export default function BlogCard({ blog, onEdit, showEdit = false }: BlogCardPro
                     <Link to={`/blog/${blog.slug}`} className={styles.readMore}>
                         Read Article <FiArrowRight size={14} />
                     </Link>
-                    
-                    <div className={styles.cardActions}>
-                        {showEdit && (
-                            <button 
-                                className={styles.iconAction} 
-                                onClick={(e) => { e.preventDefault(); onEdit(blog); }}
-                                title="Edit post"
-                            >
-                                <FiEdit2 size={15} />
-                            </button>
-                        )}
-                    </div>
                 </div>
             </div>
         </article>

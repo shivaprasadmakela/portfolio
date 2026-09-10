@@ -7,22 +7,20 @@ interface Props {
 
 interface State {
   hasError: boolean;
-  error: Error | null;
 }
 
 export class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
-    hasError: false,
-    error: null
-  };
+  public state: State = { hasError: false };
 
-  public static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error };
+  public static getDerivedStateFromError(): State {
+    return { hasError: true };
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('Uncaught error in sub-tree boundary:', error, errorInfo);
   }
+
+  private handleRetry = () => this.setState({ hasError: false });
 
   public render() {
     if (this.state.hasError) {
@@ -30,22 +28,26 @@ export class ErrorBoundary extends Component<Props, State> {
         return this.props.fallback;
       }
       return (
-        <div style={{
-          padding: '2.5rem',
-          margin: '2rem auto',
-          maxWidth: '500px',
-          backgroundColor: 'rgba(255, 77, 77, 0.05)',
-          border: '1.5px dashed rgba(255, 77, 77, 0.3)',
-          borderRadius: '12px',
-          textAlign: 'center',
-          color: 'var(--color-text-primary)'
-        }}>
-          <h2 style={{ margin: '0 0 1rem 0', color: '#ff4d4d' }}>Something went wrong</h2>
+        <div
+          role="alert"
+          style={{
+            padding: '2.5rem',
+            margin: '2rem auto',
+            maxWidth: '500px',
+            backgroundColor: 'rgba(255, 77, 77, 0.05)',
+            border: '1.5px dashed rgba(255, 77, 77, 0.3)',
+            borderRadius: '12px',
+            textAlign: 'center',
+            color: 'var(--color-text-primary)'
+          }}
+        >
+          <h2 style={{ margin: '0 0 1rem 0', color: '#ff4d4d' }}>This section didn’t load</h2>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.95rem', lineHeight: '1.6', margin: '0 0 1.5rem 0' }}>
-            We've encountered an unexpected UI rendering error in this feature container.
+            Something went wrong while rendering it. Try again, or reload the page if it keeps happening.
           </p>
-          <button 
-            onClick={() => this.setState({ hasError: false, error: null })}
+          <button
+            type="button"
+            onClick={this.handleRetry}
             style={{
               padding: '0.5rem 1.25rem',
               backgroundColor: 'var(--color-surface)',
@@ -56,7 +58,7 @@ export class ErrorBoundary extends Component<Props, State> {
               fontWeight: 600
             }}
           >
-            Retry Section
+            Try again
           </button>
         </div>
       );

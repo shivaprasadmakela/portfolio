@@ -57,7 +57,7 @@ export const CheckInCard: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) 
                     setError(response.message);
                 }
             },
-            onError: (err: any) => {
+            onError: (err: Error) => {
                 setError(err.message || 'An error occurred during check-in.');
             }
         });

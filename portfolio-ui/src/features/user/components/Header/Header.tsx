@@ -1,7 +1,7 @@
 import styles from './Header.module.css';
 import { ThemeToggle } from '../ThemeToggle/ThemeToggle';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 function Logo() {
@@ -21,6 +21,12 @@ export default function Header() {
     setMenuOpen(false);
   };
 
+  // Close the mobile menu on any navigation, including browser back/forward,
+  // which the per-link handler alone does not cover.
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
   const getLinkClass = (path: string) =>
     `${styles.link} ${pathname === path ? styles.active : ''}`;
 
@@ -31,22 +37,33 @@ export default function Header() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
     >
-      <header className={styles.header}>
+      <div className={styles.header}>
         <Logo />
 
         <div className={styles.navContainer}>
-          <nav className={`${styles.nav} ${menuOpen ? styles.open : ''}`}>
+          <nav
+            id="primary-navigation"
+            aria-label="Primary"
+            className={`${styles.nav} ${menuOpen ? styles.open : ''}`}
+          >
             <Link to="/" className={getLinkClass('/')} onClick={closeMenu}>Home</Link>
             <Link to="/projects" className={getLinkClass('/projects')} onClick={closeMenu}>Projects</Link>
             <Link to="/challenge" className={getLinkClass('/challenge')} onClick={closeMenu}>Challenge</Link>
             <Link to="/blogs" className={getLinkClass('/blogs')} onClick={closeMenu}>Blog</Link>
           </nav>
           <ThemeToggle />
-          <button className={styles.menuButton} onClick={toggleMenu} aria-label="Toggle navigation">
+          <button
+            type="button"
+            className={styles.menuButton}
+            onClick={toggleMenu}
+            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={menuOpen}
+            aria-controls="primary-navigation"
+          >
             {menuOpen ? '✕' : '☰'}
           </button>
         </div>
-      </header>
+      </div>
     </motion.header>
   );
 }

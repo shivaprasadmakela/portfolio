@@ -3,16 +3,14 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { FiLock, FiClock, FiCalendar, FiArrowLeft } from 'react-icons/fi';
 import { Button } from '../../../shared/components';
-import { useToast } from '../../../shared/components/Toast/Toast';
-import { AiSummarizer } from '../components/AiSummarizer';
+import { useToast } from '../../../shared/components/Toast/useToast';
 import styles from './BlogDetail.module.css';
-import { useBlogDetail, useUpdateBlogSummary } from '../hooks/useBlogs';
+import { useBlogDetail } from '../hooks/useBlogs';
 
 export default function BlogDetail() {
     const { slug } = useParams<{ slug: string }>();
     const { showToast } = useToast();
     const { data: blog, isLoading } = useBlogDetail(slug || '');
-    const updateSummaryMutation = useUpdateBlogSummary();
 
     const handleUnlockPremium = () => {
         const messages = [
@@ -23,11 +21,6 @@ export default function BlogDetail() {
         ];
         const randomMsg = messages[Math.floor(Math.random() * messages.length)];
         showToast(randomMsg, 'info');
-    };
-
-    const handleSummaryGenerated = (summary: string) => {
-        if (!slug) return;
-        updateSummaryMutation.mutate({ slug, summary });
     };
 
     if (isLoading) return <div className={styles.loading}>Loading insightful content...</div>;
@@ -69,13 +62,6 @@ export default function BlogDetail() {
                         </div>
                         <h1 className={styles.title}>{blog.title}</h1>
                         <p className={styles.excerpt}>{blog.excerpt}</p>
-
-                        <AiSummarizer
-                            content={blog.content}
-                            isPremium={blog.isPremium}
-                            existingSummary={blog.summary}
-                            onSummaryGenerated={handleSummaryGenerated}
-                        />
                     </header>
 
                     {blog.isPremium && (

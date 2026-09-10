@@ -11,7 +11,5 @@ export interface Blog {
     summary?: string;
 }
 
-export type NewBlog = Omit<Blog, 'id' | 'createdAt' | 'updatedAt' | 'readTime'>;
-
 export type FilterType = 'All' | 'Premium' | 'Free';
 export type SortType = 'Latest' | 'Oldest';

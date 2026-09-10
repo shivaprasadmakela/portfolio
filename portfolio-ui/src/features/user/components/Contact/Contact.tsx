@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Contact.module.css';
 import {
   FaEnvelope,
@@ -8,12 +8,25 @@ import {
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
   const email = 'shivaprasadmekala@gmail.com';
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const resetTimer = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(resetTimer.current), []);
+
+  const copyToClipboard = async () => {
+    try {
+      // Rejects outside a secure context, and is undefined in some in-app browsers.
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+    } catch {
+      setCopyFailed(true);
+    }
+    window.clearTimeout(resetTimer.current);
+    resetTimer.current = window.setTimeout(() => {
+      setCopied(false);
+      setCopyFailed(false);
+    }, 2000);
   };
 
   return (
@@ -47,9 +60,9 @@ export default function Contact() {
                 <FaPaperPlane className={styles.btnIcon} />
                 Send Email
               </a>
-              <button onClick={copyToClipboard} className={styles.copyButton}>
-                <FaRegCopy className={styles.btnIcon} />
-                {copied ? 'Copied!' : 'Copy Email'}
+              <button type="button" onClick={copyToClipboard} className={styles.copyButton}>
+                <FaRegCopy className={styles.btnIcon} aria-hidden="true" />
+                {copyFailed ? 'Press Ctrl+C to copy' : copied ? 'Copied!' : 'Copy Email'}
               </button>
             </div>
           </div>

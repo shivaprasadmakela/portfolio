@@ -17,9 +17,9 @@ export function useIntersectionObserver(
 
   const frozen = entry?.isIntersecting && freezeOnceVisible;
 
-  const updateEntry = ([newEntry]: IntersectionObserverEntry[]): void => {
-    setEntry(newEntry);
-  };
+  // threshold may be an array; serialise it once so the dependency is a stable
+  // primitive the linter can check, instead of a new reference every render.
+  const thresholdKey = JSON.stringify(threshold);
 
   useEffect(() => {
     const node = elementRef?.current;
@@ -27,15 +27,17 @@ export function useIntersectionObserver(
 
     if (!hasIOSupport || frozen || !node) return;
 
-    const observerParams = { threshold, root, rootMargin };
-    const observer = new IntersectionObserver(updateEntry, observerParams);
+    const observer = new IntersectionObserver(
+      ([newEntry]) => setEntry(newEntry),
+      { threshold: JSON.parse(thresholdKey) as number | number[], root, rootMargin }
+    );
 
     observer.observe(node);
 
     return () => {
       observer.disconnect();
     };
-  }, [elementRef, JSON.stringify(threshold), root, rootMargin, frozen]);
+  }, [elementRef, thresholdKey, root, rootMargin, frozen]);
 
   return entry;
 }

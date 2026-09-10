@@ -1,9 +1,8 @@
-import { useState, createContext, useContext, useCallback, useMemo, type ReactNode } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiCheckCircle, FiAlertCircle, FiInfo, FiX } from 'react-icons/fi';
+import { ToastContext, type ToastType } from './useToast';
 import styles from './Toast.module.css';
-
-type ToastType = 'success' | 'error' | 'info';
 
 interface Toast {
     id: string;
@@ -11,49 +10,48 @@ interface Toast {
     type: ToastType;
 }
 
-interface ToastContextType {
-    showToast: (message: string, type: ToastType) => void;
-}
+const DISMISS_AFTER_MS = 3000;
 
-const ToastContext = createContext<ToastContextType | undefined>(undefined);
-
-export const useToast = () => {
-    const context = useContext(ToastContext);
-    if (!context) throw new Error('useToast must be used within a ToastProvider');
-    return context;
+const renderIcon = (type: ToastType) => {
+    switch (type) {
+        case 'success':
+            return <FiCheckCircle />;
+        case 'error':
+            return <FiAlertCircle />;
+        case 'info':
+        default:
+            return <FiInfo />;
+    }
 };
 
 export const ToastProvider = ({ children }: { children: ReactNode }) => {
     const [toasts, setToasts] = useState<Toast[]>([]);
+    const timers = useRef<number[]>([]);
 
     const removeToast = useCallback((id: string) => {
         setToasts(prev => prev.filter(t => t.id !== id));
     }, []);
 
     const showToast = useCallback((message: string, type: ToastType) => {
-        const id = Math.random().toString(36).substring(2, 9);
+        const id = crypto.randomUUID();
         setToasts(prev => [...prev, { id, message, type }]);
-        setTimeout(() => removeToast(id), 3000);
+        timers.current.push(window.setTimeout(() => removeToast(id), DISMISS_AFTER_MS));
     }, [removeToast]);
 
-    const value = useMemo(() => ({ showToast }), [showToast]);
+    // Pending dismissals would otherwise fire against an unmounted provider.
+    useEffect(() => () => {
+        timers.current.forEach(window.clearTimeout);
+        timers.current = [];
+    }, []);
 
-    const renderIcon = (type: ToastType) => {
-        switch (type) {
-            case 'success':
-                return <FiCheckCircle />;
-            case 'error':
-                return <FiAlertCircle />;
-            case 'info':
-            default:
-                return <FiInfo />;
-        }
-    };
+    const value = useMemo(() => ({ showToast }), [showToast]);
 
     return (
         <ToastContext.Provider value={value}>
             {children}
-            <div className={styles.container}>
+            {/* role="status" + aria-live so screen readers announce a toast;
+                without it these were invisible to non-sighted users. */}
+            <div className={styles.container} role="status" aria-live="polite" aria-atomic="false">
                 <AnimatePresence>
                     {toasts.map(toast => (
                         <motion.div
@@ -64,11 +62,16 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
                             exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
                             className={`${styles.toast} ${styles[toast.type]}`}
                         >
-                            <span className={styles.icon}>
+                            <span className={styles.icon} aria-hidden="true">
                                 {renderIcon(toast.type)}
                             </span>
                             <span className={styles.message}>{toast.message}</span>
-                            <button className={styles.close} onClick={() => removeToast(toast.id)}>
+                            <button
+                                type="button"
+                                className={styles.close}
+                                onClick={() => removeToast(toast.id)}
+                                aria-label="Dismiss notification"
+                            >
                                 <FiX />
                             </button>
                         </motion.div>

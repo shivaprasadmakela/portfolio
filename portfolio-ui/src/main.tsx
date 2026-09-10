@@ -5,13 +5,16 @@ import './styles/variables.css'
 import App from './app/App.tsx'
 import { ThemeProvider } from './app/providers/ThemeProvider'
 import { QueryProvider } from './app/providers/QueryProvider'
+import { ErrorBoundary } from './shared/components'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider>
-      <QueryProvider>
-        <App />
-      </QueryProvider>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <QueryProvider>
+          <App />
+        </QueryProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   </StrictMode>,
 )

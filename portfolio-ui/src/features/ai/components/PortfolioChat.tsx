@@ -33,13 +33,13 @@ export default function PortfolioChat() {
     const saved = localStorage.getItem('portfolio_chat_messages');
     if (saved) {
       try {
-        const parsed = JSON.parse(saved);
-        return parsed.map((msg: any) => ({
+        const parsed: Array<Omit<Message, 'timestamp'> & { timestamp: string }> = JSON.parse(saved);
+        return parsed.map(msg => ({
           ...msg,
           timestamp: new Date(msg.timestamp)
         }));
-      } catch (e) {
-        console.error('Failed to parse chat history', e);
+      } catch (error) {
+        console.error('Failed to parse chat history', error);
       }
     }
     return [

@@ -1,4 +1,4 @@
-import { useTheme } from '../../../../app/providers/ThemeProvider';
+import { useTheme } from '../../../../app/providers/useTheme';
 import sunIcon from '../../../../assets/brightness.png';
 import moonIcon from '../../../../assets/moon.png';
 

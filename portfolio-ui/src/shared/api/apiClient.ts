@@ -10,7 +10,6 @@ export async function apiClient<T>(
     const config: RequestInit = {
         ...options,
         cache: isMutation ? 'no-store' : (options.cache || 'default'),
-        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             ...options.headers,
@@ -24,8 +23,8 @@ export async function apiClient<T>(
         try {
             const errorData = await response.json();
             errorMessage = errorData.message || errorMessage;
-        } catch (e) {
-            // Fallback if not JSON
+        } catch {
+            // Response body was not JSON; keep the generic message.
         }
         throw new Error(errorMessage);
     }
